@@ -1,0 +1,574 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>DecodeBaseWindow</class>
+ <widget class="QWidget" name="DecodeBaseWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>887</width>
+    <height>554</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout_2">
+   <property name="spacing">
+    <number>10</number>
+   </property>
+   <property name="leftMargin">
+    <number>20</number>
+   </property>
+   <property name="topMargin">
+    <number>20</number>
+   </property>
+   <property name="rightMargin">
+    <number>20</number>
+   </property>
+   <property name="bottomMargin">
+    <number>20</number>
+   </property>
+   <item>
+    <widget class="QFrame" name="BackgroundFrame">
+     <property name="styleSheet">
+      <string notr="true">.QFrame{
+border:1px solid #B6B6B6;
+border-radius:5px;
+background-color:rgba(255,255,255);
+}</string>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::StyledPanel</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Raised</enum>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout">
+      <property name="spacing">
+       <number>0</number>
+      </property>
+      <property name="leftMargin">
+       <number>0</number>
+      </property>
+      <property name="topMargin">
+       <number>0</number>
+      </property>
+      <property name="rightMargin">
+       <number>0</number>
+      </property>
+      <property name="bottomMargin">
+       <number>5</number>
+      </property>
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout">
+        <property name="spacing">
+         <number>0</number>
+        </property>
+        <item>
+         <widget class="QFrame" name="TitleBar">
+          <property name="minimumSize">
+           <size>
+            <width>10</width>
+            <height>10</height>
+           </size>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">.QFrame{
+border:0px solid #B6B6B6;
+border-top-left-radius:5px; 
+border-top-right-radius:5px; 
+border-bottom-left-radius:0px; 
+border-bottom-right-radius: 0px; 
+background:qlineargradient(spread:pad,x1:0,y1:0,x2:0,y2:1,stop:0 #eaeaea,stop:1 #d8d8d8);
+}
+.QPushButton,.QToolButton{
+border-style:none;
+border:none;
+padding:0px;
+min-height:0px;
+border-radius:0px;
+background:none;
+}
+
+.QPushButton:hover,.QToolButton:hover{
+background:#f0f0f0;
+}
+
+.QPushButton:pressed,.QToolButton:pressed{
+background:#f2f2f2;
+}
+
+.QToolButton::menu-indicator{
+image:None;
+}
+
+QToolButton#btnMenu,QPushButton#btnMenu_Min,QPushButton#btnMenu_Max,QPushButton#btnMenu_Close{
+border-radius:3px;
+color:#57595B;
+padding:3px;
+margin:0px;
+background:none;
+border-style:none;
+}
+
+QToolButton#btnMenu:hover,QPushButton#btnMenu_Min:hover,QPushButton#btnMenu_Max:hover{
+color:#FFFFFF;
+margin:1px 1px 2px 1px;
+background-color:rgba(51,127,209,230);
+}
+
+QPushButton#btnMenu_Close:hover{
+color:#FFFFFF;
+margin:1px 1px 2px 1px;
+background-color:rgba(238,0,0,128);
+}</string>
+          </property>
+          <property name="frameShape">
+           <enum>QFrame::StyledPanel</enum>
+          </property>
+          <property name="frameShadow">
+           <enum>QFrame::Raised</enum>
+          </property>
+          <layout class="QVBoxLayout" name="verticalLayout_3">
+           <property name="spacing">
+            <number>0</number>
+           </property>
+           <property name="leftMargin">
+            <number>10</number>
+           </property>
+           <property name="topMargin">
+            <number>8</number>
+           </property>
+           <property name="rightMargin">
+            <number>10</number>
+           </property>
+           <property name="bottomMargin">
+            <number>9</number>
+           </property>
+           <item>
+            <layout class="QHBoxLayout" name="horizontalLayout_4">
+             <property name="spacing">
+              <number>10</number>
+             </property>
+             <property name="leftMargin">
+              <number>0</number>
+             </property>
+             <item>
+              <spacer name="horizontalSpacer_5">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeType">
+                <enum>QSizePolicy::Fixed</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>60</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item>
+              <spacer name="horizontalSpacer">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>40</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item>
+              <widget class="QPushButton" name="IconBtn">
+               <property name="enabled">
+                <bool>true</bool>
+               </property>
+               <property name="minimumSize">
+                <size>
+                 <width>26</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>9999</width>
+                 <height>9999</height>
+                </size>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">.QFrame{
+border:0px solid #B6B6B6;
+border-radius:5px;
+background:#fff
+}
+.QPushButton,.QToolButton{
+border-style:none;
+border:none;
+padding:0px;
+min-height:0px;
+border-radius:5px;
+background:none;
+}
+
+.QPushButton:hover,.QToolButton:hover{
+background:#f0f0f0;
+}
+
+.QPushButton:pressed,.QToolButton:pressed{
+background:#f2f2f2;
+}
+
+.QToolButton::menu-indicator{
+image:None;
+}
+
+QToolButton#btnMenu,QPushButton#btnMenu_Min,QPushButton#btnMenu_Max,QPushButton#btnMenu_Close{
+border-radius:3px;
+color:#57595B;
+padding:3px;
+margin:0px;
+background:none;
+border-style:none;
+}
+
+QToolButton#btnMenu:hover,QPushButton#btnMenu_Min:hover,QPushButton#btnMenu_Max:hover{
+color:#FFFFFF;
+margin:1px 1px 2px 1px;
+background-color:rgba(51,127,209,230);
+}
+
+QPushButton#btnMenu_Close:hover{
+color:#FFFFFF;
+margin:1px 1px 2px 1px;
+background-color:rgba(238,0,0,128);
+}</string>
+               </property>
+               <property name="text">
+                <string>Decode</string>
+               </property>
+               <property name="icon">
+                <iconset resource="../img.qrc">
+                 <normaloff>:/img/DecodeLOGO_BigSize.png</normaloff>:/img/DecodeLOGO_BigSize.png</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>20</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <spacer name="horizontalSpacer_2">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>40</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item>
+              <widget class="QPushButton" name="ShowMin">
+               <property name="minimumSize">
+                <size>
+                 <width>16</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>16</width>
+                 <height>16</height>
+                </size>
+               </property>
+               <property name="styleSheet">
+                <string notr="true"/>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+               <property name="icon">
+                <iconset resource="../img.qrc">
+                 <normaloff>:/img/Min.png</normaloff>:/img/Min.png</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>16</width>
+                 <height>16</height>
+                </size>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="TargetWindowSize">
+               <property name="minimumSize">
+                <size>
+                 <width>16</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>16</width>
+                 <height>16</height>
+                </size>
+               </property>
+               <property name="styleSheet">
+                <string notr="true"/>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+               <property name="icon">
+                <iconset resource="../img.qrc">
+                 <normaloff>:/img/Max.png</normaloff>:/img/Max.png</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>16</width>
+                 <height>16</height>
+                </size>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="CloseWindow">
+               <property name="minimumSize">
+                <size>
+                 <width>16</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>16</width>
+                 <height>16</height>
+                </size>
+               </property>
+               <property name="styleSheet">
+                <string notr="true"/>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+               <property name="icon">
+                <iconset resource="../img.qrc">
+                 <normaloff>:/img/Close.png</normaloff>:/img/Close.png</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>16</width>
+                 <height>16</height>
+                </size>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <layout class="QHBoxLayout" name="horizontalLayout_2">
+             <property name="spacing">
+              <number>10</number>
+             </property>
+             <property name="bottomMargin">
+              <number>0</number>
+             </property>
+             <item>
+              <widget class="QLineEdit" name="Title_SerachBox">
+               <property name="minimumSize">
+                <size>
+                 <width>200</width>
+                 <height>24</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>200</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="Title_SearchBtn">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                 <horstretch>20</horstretch>
+                 <verstretch>20</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="minimumSize">
+                <size>
+                 <width>24</width>
+                 <height>2</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>24</width>
+                 <height>24</height>
+                </size>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">.QPushButton,.QToolButton{
+border-style:none;
+border:1px solid #aaaaaa;
+padding:0px;
+min-height:0px;
+border-radius:2px;
+background:#fff;
+}
+
+.QPushButton:hover,.QToolButton:hover{
+background:#eaeaea;
+}
+
+.QPushButton:pressed,.QToolButton:pressed{
+background:#dddddd;
+}
+
+.QToolButton::menu-indicator{
+image:None;
+}
+
+QToolButton#btnMenu,QPushButton#btnMenu_Min,QPushButton#btnMenu_Max,QPushButton#btnMenu_Close{
+border-radius:3px;
+color:#57595B;
+padding:3px;
+margin:0px;
+background:none;
+border-style:none;
+}
+
+QToolButton#btnMenu:hover,QPushButton#btnMenu_Min:hover,QPushButton#btnMenu_Max:hover{
+color:#FFFFFF;
+margin:1px 1px 2px 1px;
+background-color:rgba(51,127,209,230);
+}
+
+QPushButton#btnMenu_Close:hover{
+color:#FFFFFF;
+margin:1px 1px 2px 1px;
+background-color:rgba(238,0,0,128);
+}</string>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <spacer name="horizontalSpacer_4">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeType">
+                <enum>QSizePolicy::Expanding</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>40</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+            </layout>
+           </item>
+          </layout>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <layout class="QVBoxLayout" name="MainArea">
+        <property name="bottomMargin">
+         <number>10</number>
+        </property>
+       </layout>
+      </item>
+      <item>
+       <spacer name="verticalSpacer">
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>20</width>
+          <height>40</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout_3">
+        <property name="spacing">
+         <number>0</number>
+        </property>
+        <property name="bottomMargin">
+         <number>0</number>
+        </property>
+        <item>
+         <widget class="QLabel" name="label_2">
+          <property name="minimumSize">
+           <size>
+            <width>400</width>
+            <height>0</height>
+           </size>
+          </property>
+          <property name="text">
+           <string>TextLabel</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <spacer name="horizontalSpacer_3">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>12</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources>
+  <include location="../img.qrc"/>
+ </resources>
+ <connections>
+  <connection>
+   <sender>ShowMin</sender>
+   <signal>clicked()</signal>
+   <receiver>DecodeBaseWindow</receiver>
+   <slot>showMinimized()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>807</x>
+     <y>44</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>89</x>
+     <y>143</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>
