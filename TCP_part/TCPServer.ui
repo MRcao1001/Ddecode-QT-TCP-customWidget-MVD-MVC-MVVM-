@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>628</width>
-    <height>416</height>
+    <width>903</width>
+    <height>518</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -19,7 +19,7 @@
      <item>
       <widget class="QGroupBox" name="groupBox">
        <property name="title">
-        <string>接收窗口</string>
+        <string>发言窗口</string>
        </property>
        <layout class="QHBoxLayout" name="horizontalLayout_6">
         <item>
@@ -47,7 +47,7 @@
         </sizepolicy>
        </property>
        <property name="title">
-        <string>网络设置</string>
+        <string>考场设置</string>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout_2">
         <item>
@@ -55,7 +55,7 @@
           <item>
            <widget class="QLabel" name="label">
             <property name="text">
-             <string>1）本机IP地址</string>
+             <string>1）考场IP地址</string>
             </property>
            </widget>
           </item>
@@ -69,47 +69,57 @@
           <item>
            <widget class="QLabel" name="label_2">
             <property name="text">
-             <string>2）本地端口号</string>
+             <string>2）考场端口号</string>
             </property>
            </widget>
           </item>
           <item>
            <widget class="QLineEdit" name="edtPort">
             <property name="text">
-             <string>8000</string>
+             <string>12345</string>
             </property>
            </widget>
           </item>
           <item>
            <widget class="QPushButton" name="btnConnect">
             <property name="text">
-             <string>监听</string>
+             <string>建立考场</string>
             </property>
            </widget>
           </item>
           <item>
-           <layout class="QHBoxLayout" name="horizontalLayout">
-            <item>
-             <widget class="QCheckBox" name="ckbHexShow">
-              <property name="text">
-               <string>Hex显示</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QPushButton" name="btnClear">
-              <property name="text">
-               <string>清除窗口</string>
-              </property>
-             </widget>
-            </item>
-           </layout>
+           <widget class="QPushButton" name="btnConnect_2">
+            <property name="text">
+             <string>开始考试</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="btnConnect_3">
+            <property name="text">
+             <string>结束考试</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="btnClear">
+            <property name="text">
+             <string>清除发言</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="btnClear_2">
+            <property name="text">
+             <string>禁言</string>
+            </property>
+           </widget>
           </item>
           <item>
            <widget class="QComboBox" name="cbxConnection">
             <item>
              <property name="text">
-              <string>全部连接</string>
+              <string>全部考生</string>
              </property>
             </item>
            </widget>
@@ -118,6 +128,13 @@
            <widget class="QCheckBox" name="ckbHexSend">
             <property name="text">
              <string>Hex发送</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QCheckBox" name="ckbHexShow">
+            <property name="text">
+             <string>Hex显示</string>
             </property>
            </widget>
           </item>
@@ -162,7 +179,7 @@
       </size>
      </property>
      <property name="title">
-      <string>发送窗口</string>
+      <string>广播窗口</string>
      </property>
      <layout class="QVBoxLayout" name="verticalLayout_4">
       <item>
@@ -190,7 +207,7 @@
          </widget>
         </item>
         <item>
-         <widget class="QPushButton" name="btnSend_2">
+         <widget class="QPushButton" name="ServerSendInfo">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
             <horstretch>0</horstretch>

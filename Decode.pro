@@ -43,7 +43,10 @@ SOURCES += \
     DataModeView/ExamChoiceQusetion.cpp \
     Client_part/ExmaPaperwindow.cpp\
     TCP_part/TCPServer.cpp \
-    TCP_part/TCPClient.cpp
+    TCP_part/TCPClient.cpp \
+    Public_part/DecodeAnimation.cpp \
+    Client_part/LeftBar.cpp \
+    Client_part/AnswerSheet.cpp
 
 
 HEADERS += \
@@ -65,7 +68,10 @@ HEADERS += \
     DataModeView/ExamChoiceQusetion.h \
     Client_part/ExmaPaperwindow.h\
     TCP_part/TCPServer.h \
-    TCP_part/TCPClient.h
+    TCP_part/TCPClient.h \
+    Public_part/DecodeAnimation.h \
+    Client_part/LeftBar.h \
+    Client_part/AnswerSheet.h
 
 FORMS += \
         Public_part/Decode.ui \
@@ -77,7 +83,9 @@ FORMS += \
     DataModeView/ExamChoiceQusetionFrame.ui \
     Client_part/ExmaPaperwindow.ui\
     TCP_part/TCPServer.ui \
-    TCP_part/TCPClient.ui
+    TCP_part/TCPClient.ui \
+    Client_part/LeftBar.ui \
+    Client_part/AnswerSheet.ui
 
 
 RC_ICONS = Decode.ico

@@ -59,7 +59,7 @@ DBState DataBaseManager::closeDataBase()
 DBState DataBaseManager::createDataTable(QString tabelName, QString colums)
 {
     sql_query = new QSqlQuery();
-    if(!sql_query->exec("create table if not exists"+ tabelName+"("+colums+")"))
+    if(!sql_query->exec("create table if not exists "+ tabelName+"( "+colums+" )"))
     {
         qWarning() << "Error: Fail to create table."<< sql_query->lastError();
     }
@@ -74,33 +74,20 @@ DBState DataBaseManager::createDataTable(QString tabelName, QString colums)
   Override event function
   查询用户信息,并判断是否存在,同时设置用户数据模型
 */
-DBState DataBaseManager::searchData(UserInfoModel *userModel,QString tableName, QString userName, QString userPassword)
+DBState DataBaseManager::searchData(QString SQL_Sentence)
 {
     sql_query = new QSqlQuery();
-    QString sqlSentence = "select * from "+tableName+" where Name = "+"'"+userName+"';";
-    sql_query->exec(sqlSentence);
+    sql_query->exec(SQL_Sentence);
     if(!sql_query->exec())
     {
         qWarning()<<sql_query->lastError();
+        delete sql_query;
         return INFONOTEXIT;
     }
     else
     {
-        while(sql_query->next())
-        {
-            QString Password = sql_query->value(2).toString();
-            if(Password == userPassword)
-            {
-//                if(userModel != nullptr)
-//                {
-//                    userModel->InitModel(sql_query->value(0).toString(),sql_query->value(1).toString(),sql_query->value(2).toString());
-//                }
-                return NOERROR;
-            }
-            else {
-                return INFONOTTRUE;
-            }
-        }
+        delete sql_query;
+        return NOERROR;
     }
-    delete sql_query;
+
 }

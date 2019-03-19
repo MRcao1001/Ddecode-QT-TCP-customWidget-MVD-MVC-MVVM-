@@ -16,10 +16,13 @@ class TCPClient : public QWidget
 public:
     explicit TCPClient(QWidget *parent = 0);
     ~TCPClient();
-
+    void InitTcp(QTcpSocket *getTcpClient);
+    QTcpSocket *tcpClient;
+    void ConnectToServer(QString Ip, quint16 Port);
+    void DisConnectToServer();
+    void SendInfo(const char*  Licence);
 private:
     Ui::TCPClient *ui;
-    QTcpSocket *tcpClient;
 
 private slots:
     //客户端槽函数
@@ -29,6 +32,8 @@ private slots:
     void on_btnConnect_clicked();
     void on_btnSend_clicked();
     void on_pushButton_clicked();
+signals:
+    void LicenceResult(int type);
 };
 
 #endif // TCPCLIENT_H

@@ -9,14 +9,46 @@ TCPServer::TCPServer(QWidget *parent) :
     tcpServer = new QTcpServer(this);
     ui->edtIP->setText(QNetworkInterface().allAddresses().at(1).toString());   //获取本地IP
     ui->btnConnect->setEnabled(true);
-    ui->btnSend_2->setEnabled(false);
+    //ui->btnSend_2->setEnabled(false);
 
     connect(tcpServer, SIGNAL(newConnection()), this, SLOT(NewConnectionSlot()));
+    //connect(this->ui->ServerSendInfo, SIGNAL(QPushButton::click()), this, SLOT(on_ServerSendInfo_clicked()));
+
 }
 
 TCPServer::~TCPServer()
 {
     delete ui;
+}
+
+void TCPServer::CreateServer(QString IP, QString Port)
+{
+    if(ui->btnConnect->text()=="建立考场")
+    {
+        bool ok = tcpServer->listen(QHostAddress::Any, Port.toInt());
+        if(ok)
+        {
+            ui->btnConnect->setText("关闭考场");
+            //ui->btnSend_2->setEnabled(true);
+        }
+    }
+    else
+    {
+        for(int i=0; i<tcpClient.length(); i++)//断开所有连接
+        {
+            tcpClient[i]->disconnectFromHost();
+//            bool ok = tcpClient[i]->waitForDisconnected(1000);
+//            if(!ok)
+//            {
+//                // 处理异常
+//                qDebug()<<"断开所有连接异常";
+//            }
+//            tcpClient.removeAt(i);  //从保存的客户端列表中取去除
+        }
+        tcpServer->close();     //不再监听端口
+        ui->btnConnect->setText("建立考场");
+        //ui->btnSend_2->setEnabled(false);
+    }
 }
 // newConnection -> newConnectionSlot 新连接建立的槽函数
 void TCPServer::NewConnectionSlot()
@@ -59,26 +91,37 @@ void TCPServer::ReadData()
         IP_Port = tr("[%1:%2]:").arg(tcpClient[i]->peerAddress().toString().split("::ffff:")[1])\
                 .arg(tcpClient[i]->peerPort());
 
+        // 如果是请求登陆的消息
+        if(buffer.split('_').count() > 0)
+        {
+            QString i = buffer.split('_')[0];
+            if(i == "LoginRequest")
+            {
+                emit LoginRequest(buffer);
+            }
+        }
         // 若此次消息的地址与上次不同，则需显示此次消息的客户端地址
         if(IP_Port != IP_Port_Pre)
             ui->edtRecv_2->append(IP_Port);
 
         ui->edtRecv_2->append(buffer);
 
+
         //更新ip_port
         IP_Port_Pre = IP_Port;
     }
 }
 
+
 void TCPServer::on_btnConnect_clicked()
 {
-    if(ui->btnConnect->text()=="监听")
+    if(ui->btnConnect->text()=="建立考场")
     {
         bool ok = tcpServer->listen(QHostAddress::Any, ui->edtPort->text().toInt());
         if(ok)
         {
-            ui->btnConnect->setText("断开");
-            ui->btnSend_2->setEnabled(true);
+            ui->btnConnect->setText("关闭考场");
+            //ui->btnSend_2->setEnabled(true);
         }
     }
     else
@@ -95,12 +138,17 @@ void TCPServer::on_btnConnect_clicked()
 //            tcpClient.removeAt(i);  //从保存的客户端列表中取去除
         }
         tcpServer->close();     //不再监听端口
-        ui->btnConnect->setText("监听");
-        ui->btnSend_2->setEnabled(false);
+        ui->btnConnect->setText("建立考场");
+        //ui->btnSend_2->setEnabled(false);
     }
 }
 
-void TCPServer::on_btnSend_2_clicked()
+void TCPServer::on_btnClear_clicked()
+{
+    ui->edtRecv_2->clear();
+}
+
+void TCPServer::on_ServerSendInfo_clicked()
 {
     QString data = ui->edtSend_2->toPlainText();
     if(data == "")  return;    // 文本输入框为空时
@@ -129,7 +177,18 @@ void TCPServer::on_btnSend_2_clicked()
     }
 }
 
-void TCPServer::on_btnClear_clicked()
+void TCPServer::SendInfoToClient(QString IP,int Port, QString Info)
 {
-    ui->edtRecv_2->clear();
+    QString clientIP = IP;
+    int clientPort = Port;
+    for(int i=0; i<tcpClient.length(); i++)
+    {
+        if(tcpClient[i]->peerAddress().toString().split("::ffff:")[1]==clientIP\
+                && tcpClient[i]->peerPort()==clientPort)
+        {
+            tcpClient[i]->write(Info.toLatin1());
+            return; //ip:port唯一，无需继续检索
+        }
+    }
+
 }

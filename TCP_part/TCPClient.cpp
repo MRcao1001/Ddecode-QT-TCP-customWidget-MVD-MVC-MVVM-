@@ -22,9 +22,44 @@ TCPClient::~TCPClient()
     delete ui;
 }
 
+void TCPClient::ConnectToServer(QString Ip, quint16 Port)
+{
+
+    tcpClient->connectToHost(Ip, Port);
+    if (tcpClient->waitForConnected(1000))  // 连接成功则进入if{}
+    {
+        ui->btnConnect->setText("断开");
+        ui->btnSend->setEnabled(true);
+    }
+    else {
+        QMessageBox message(QMessageBox::NoIcon, "提示", "无法连接到服务器，请检查网络连接");
+        message.setIconPixmap(QPixmap(":/img/Tip.png"));
+        message.exec();
+    }
+}
+
+void TCPClient::DisConnectToServer()
+{
+    tcpClient->disconnectFromHost();
+    if (tcpClient->state() == QAbstractSocket::UnconnectedState \
+            || tcpClient->waitForDisconnected(1000))  //已断开连接则进入if{}
+    {
+        ui->btnConnect->setText("连接");
+        ui->btnSend->setEnabled(false);
+    }
+}
+
 void TCPClient::ReadData()
 {
     QByteArray buffer = tcpClient->readAll();
+    if(buffer == "Licence_Is_Right")
+    {
+        emit LicenceResult(0);
+    }
+    if(buffer == "Licence_Is_False")
+    {
+        emit LicenceResult(-1);
+    }
     if(!buffer.isEmpty())
     {
         ui->edtRecv->append(buffer);
@@ -38,6 +73,14 @@ void TCPClient::ReadError(QAbstractSocket::SocketError)
     QMessageBox msgBox;
     msgBox.setText(tr("failed to connect server because %1").arg(tcpClient->errorString()));
     msgBox.exec();
+}
+
+void TCPClient::SendInfo(const char* Licence)
+{
+    if(tcpClient->write(Licence) == -1)
+    {
+        qDebug()<<"Send Error";
+    }
 }
 
 void TCPClient::on_btnConnect_clicked()

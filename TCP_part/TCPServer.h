@@ -6,7 +6,7 @@
 #include <QTcpSocket>
 #include <QNetworkInterface>
 #include <QMessageBox>
-
+#include <QPushButton>
 namespace Ui {
 class TCPServer;
 }
@@ -18,7 +18,8 @@ class TCPServer : public QWidget
 public:
     explicit TCPServer(QWidget *parent = 0);
     ~TCPServer();
-
+public slots:
+    void CreateServer(QString IP, QString Port);
 private:
     Ui::TCPServer *ui;
     QTcpServer *tcpServer;
@@ -29,11 +30,14 @@ private slots:
     void NewConnectionSlot();
     void disconnectedSlot();
     void ReadData();
-
+public slots:
     void on_btnConnect_clicked();
-    void on_btnSend_clicked();
     void on_btnClear_clicked();
-    void on_btnSend_2_clicked();
+    void on_ServerSendInfo_clicked();
+    void SendInfoToClient(QString IP, int Port, QString Info);
+
+signals:
+    void LoginRequest(QString LoginInfo);
 };
 
 #endif // TCPSERVER_H

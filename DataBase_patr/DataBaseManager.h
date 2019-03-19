@@ -54,7 +54,7 @@ public:
     /**
      * @brief searchData 查找用户信息数据
      */
-    DBState searchData(UserInfoModel *userModel,QString tableName, QString userName, QString userPassword);
+    DBState searchData(QString SQL_Sentence);
     /**
      * @brief deleteData 删除数据
      */

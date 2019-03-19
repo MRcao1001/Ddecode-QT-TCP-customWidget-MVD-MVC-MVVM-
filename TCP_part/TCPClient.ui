@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>586</width>
-    <height>457</height>
+    <width>891</width>
+    <height>563</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -53,13 +53,13 @@
         </size>
        </property>
        <property name="title">
-        <string>网络设置</string>
+        <string>考场设置</string>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout">
         <item>
          <widget class="QLabel" name="label">
           <property name="text">
-           <string>1）服务器IP地址</string>
+           <string>1）考场IP地址</string>
           </property>
          </widget>
         </item>
@@ -73,7 +73,7 @@
         <item>
          <widget class="QLabel" name="label_2">
           <property name="text">
-           <string>2）服务器端口号</string>
+           <string>2）考场端口号</string>
           </property>
          </widget>
         </item>
@@ -87,19 +87,19 @@
         <item>
          <widget class="QPushButton" name="btnConnect">
           <property name="text">
-           <string>连接</string>
+           <string>加入考场</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="btnConnect_2">
+          <property name="text">
+           <string>退出考场</string>
           </property>
          </widget>
         </item>
         <item>
          <layout class="QHBoxLayout" name="horizontalLayout">
-          <item>
-           <widget class="QCheckBox" name="ckbHexShow">
-            <property name="text">
-             <string>Hex显示</string>
-            </property>
-           </widget>
-          </item>
           <item>
            <widget class="QPushButton" name="pushButton">
             <property name="text">
@@ -113,6 +113,13 @@
          <widget class="QCheckBox" name="ckbHexSend">
           <property name="text">
            <string>Hex发送</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QCheckBox" name="ckbHexShow">
+          <property name="text">
+           <string>Hex显示</string>
           </property>
          </widget>
         </item>
