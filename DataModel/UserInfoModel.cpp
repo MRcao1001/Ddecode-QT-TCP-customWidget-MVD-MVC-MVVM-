@@ -54,13 +54,22 @@ QVariant UserInfoModel::data(const QModelIndex &index, int role) const
     return QVariant();
 }
 
-void UserInfoModel::add(int ID, QString Name)
+void UserInfoModel::add(QString IP, QString Port,int ID, QString Name, QString Ticket)
 {
     UserInfo* userinfo = new UserInfo();
     userinfo->setUserID(ID);
     userinfo->setUserName(Name);
+    userinfo->setUserIP(IP);
+    userinfo->setUserPort(Port);
+    userinfo->setUserTicket(Ticket);
     m_userInfoList.push_back(userinfo);
+    // 通知界面更新
     emit layoutChanged();
+}
+
+void UserInfoModel::add(UserInfo *userInfo)
+{
+    add(userInfo->getUserIP(), userInfo->getUserPort(),userInfo->getUserID(), userInfo->getUserName(), userInfo->getUserTicket());
 }
 
 UserInfo *UserInfoModel::at(int index)

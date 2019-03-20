@@ -9,21 +9,22 @@ namespace Ui {
 class TCPClient;
 }
 
+
 class TCPClient : public QWidget
 {
     Q_OBJECT
-
 public:
     explicit TCPClient(QWidget *parent = 0);
     ~TCPClient();
     void InitTcp(QTcpSocket *getTcpClient);
     QTcpSocket *tcpClient;
+    void InitFuncMap();
     void ConnectToServer(QString Ip, quint16 Port);
     void DisConnectToServer();
     void SendInfo(const char*  Licence);
 private:
     Ui::TCPClient *ui;
-
+    void LicenceResultSingal();
 private slots:
     //客户端槽函数
     void ReadData();

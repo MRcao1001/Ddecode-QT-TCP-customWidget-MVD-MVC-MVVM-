@@ -38,6 +38,7 @@ public slots:
 
 signals:
     void LoginRequest(QString LoginInfo);
+    void RegistRequset(QString RegistInfo);
 };
 
 #endif // TCPSERVER_H

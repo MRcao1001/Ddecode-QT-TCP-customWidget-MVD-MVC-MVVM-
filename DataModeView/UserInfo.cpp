@@ -2,8 +2,11 @@
 
 UserInfo::UserInfo()
 {
-    m_userName = "";
+    m_name = "";
     m_id = 0;
+    m_ip = "127.0.0.1";
+    m_Port = "0000";
+    m_Ticket = "zn-000000";
 }
 
 void UserInfo::setUserID(int ID)
@@ -13,7 +16,22 @@ void UserInfo::setUserID(int ID)
 
 void UserInfo::setUserName(QString Name)
 {
-    this->m_userName = Name;
+    this->m_name = Name;
+}
+
+void UserInfo::setUserIP(QString IP)
+{
+    this->m_ip = IP;
+}
+
+void UserInfo::setUserPort(QString Port)
+{
+    this->m_Port = Port;
+}
+
+void UserInfo::setUserTicket(QString Ticket)
+{
+    this->m_Ticket = Ticket;
 }
 
 int UserInfo::getUserID()
@@ -23,5 +41,20 @@ int UserInfo::getUserID()
 
 QString UserInfo::getUserName()
 {
-    return m_userName;
+    return m_name;
+}
+
+QString UserInfo::getUserIP()
+{
+    return  m_ip;
+}
+
+QString UserInfo::getUserPort()
+{
+    return m_Port;
+}
+
+QString UserInfo::getUserTicket()
+{
+    return m_Ticket;
 }

@@ -59,7 +59,9 @@ DBState DataBaseManager::closeDataBase()
 DBState DataBaseManager::createDataTable(QString tabelName, QString colums)
 {
     sql_query = new QSqlQuery();
-    if(!sql_query->exec("create table if not exists "+ tabelName+"( "+colums+" )"))
+    QString sqlSentence = "create table if not exists "+ tabelName+"( "+colums+" )";
+    qDebug()<<"创建新表的语句是："<<sqlSentence;
+    if(!sql_query->exec(sqlSentence))
     {
         qWarning() << "Error: Fail to create table."<< sql_query->lastError();
     }
@@ -71,13 +73,20 @@ DBState DataBaseManager::createDataTable(QString tabelName, QString colums)
 }
 
 /*!
-  Override event function
-  查询用户信息,并判断是否存在,同时设置用户数据模型
-*/
-DBState DataBaseManager::searchData(QString SQL_Sentence)
+ * \brief DataBaseManager::insertData 向数据库插入数据
+ * \param tableName
+ * \param info
+ * \return
+ */
+DBState DataBaseManager::insertUserData(UserInfo *userinfo)
 {
     sql_query = new QSqlQuery();
-    sql_query->exec(SQL_Sentence);
+    sql_query->prepare("INSERT INTO ExamineeInfo VALUES (:IP,:PORT,:NAME,:NUMBER,:TICKET)");
+    sql_query->bindValue(":IP", userinfo->getUserIP());
+    sql_query->bindValue(":PORT",userinfo->getUserPort());
+    sql_query->bindValue(":NAME",userinfo->getUserName());
+    sql_query->bindValue(":NUMBER",userinfo->getUserID());
+    sql_query->bindValue(":TICKET",userinfo->getUserTicket());
     if(!sql_query->exec())
     {
         qWarning()<<sql_query->lastError();
@@ -88,6 +97,36 @@ DBState DataBaseManager::searchData(QString SQL_Sentence)
     {
         delete sql_query;
         return NOERROR;
+    }
+}
+
+
+/*!
+  Override event function
+  根据传递的sql语句查询信息
+*/
+DBState DataBaseManager::searchUserData( UserInfo *userinfo)
+{
+    sql_query = new QSqlQuery();
+    sql_query->prepare("SELECT * FROM ExamineeInfo");
+    if(!sql_query->exec())
+    {
+        qWarning()<<sql_query->lastError();
+        return SQLERROR;
+    }
+    else
+    {
+        while (sql_query->next()) {
+            QString Number = sql_query->value(3).toString();
+            QString Ticket = sql_query->value(4).toString();
+            if(Number ==QString::number( userinfo->getUserID()) && Ticket == userinfo->getUserTicket())
+            {
+                delete sql_query;
+                return NOERROR;
+            }
+        }
+        delete sql_query;
+        return INFONOTEXIT;
     }
 
 }

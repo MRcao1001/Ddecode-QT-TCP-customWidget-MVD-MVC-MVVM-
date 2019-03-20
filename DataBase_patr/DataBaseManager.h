@@ -4,13 +4,14 @@
 #include <QSqlDatabase>
 #include <QSqlError>
 #include <QSqlQuery>
-#include "DataModel/UserInfoModel.h"
+#include "DataModeView/UserInfo.h"
 #include "Public_part/log.h"
 enum DBState{
     NOERROR = 0,
     CONNECTERROR = -1,
     INFONOTTRUE = -2,
-    INFONOTEXIT = -3
+    INFONOTEXIT = -3,
+    SQLERROR = -4,
 };
 
 class DataBaseManager
@@ -20,6 +21,7 @@ public:
     ~DataBaseManager();
     QSqlDatabase sql_database;
     QSqlQuery *sql_query;
+    QString userTable = "ExamineeInfo";
 
 public:
     /**
@@ -41,12 +43,7 @@ public:
     /**
      * @brief insertData 插入数据
      */
-    DBState insertData(QString tableName, QString info);
-    /**
-     * @brief insertData 插入数据
-     * @overload 传入用户数据模型插入
-     */
-    DBState insertData(QString tableName, UserInfoModel *userModel);
+    DBState insertUserData(UserInfo *userinfo = nullptr);
     /**
      * @brief updateData 更新数据
      */
@@ -54,7 +51,7 @@ public:
     /**
      * @brief searchData 查找用户信息数据
      */
-    DBState searchData(QString SQL_Sentence);
+    DBState searchUserData(UserInfo *userinfo = nullptr);
     /**
      * @brief deleteData 删除数据
      */

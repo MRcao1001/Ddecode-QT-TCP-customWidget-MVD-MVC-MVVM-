@@ -410,7 +410,7 @@ background:qlineargradient(spread:pad,x1:0,y1:0,x2:0,y2:1,stop:0 #eaeaea,stop:1 
                <item>
                 <layout class="QHBoxLayout" name="horizontalLayout_3">
                  <item>
-                  <widget class="QPushButton" name="pushButton_7">
+                  <widget class="QPushButton" name="SignIn">
                    <property name="text">
                     <string>以此身份登陆</string>
                    </property>
@@ -433,7 +433,7 @@ background:qlineargradient(spread:pad,x1:0,y1:0,x2:0,y2:1,stop:0 #eaeaea,stop:1 
                   </spacer>
                  </item>
                  <item>
-                  <widget class="QPushButton" name="pushButton_9">
+                  <widget class="QPushButton" name="SignUp">
                    <property name="text">
                     <string>注册为新考生</string>
                    </property>

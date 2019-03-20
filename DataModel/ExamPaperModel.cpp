@@ -86,3 +86,8 @@ ExamChoiceQusetion *ExamPaperModel::at(int index)
 {
     return m_examChoiceQusetionList.at(index);
 }
+
+QList<ExamChoiceQusetion *> ExamPaperModel::getExamList()
+{
+    return m_examChoiceQusetionList;
+}

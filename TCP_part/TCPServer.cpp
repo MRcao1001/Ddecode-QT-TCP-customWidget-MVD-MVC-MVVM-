@@ -100,6 +100,15 @@ void TCPServer::ReadData()
                 emit LoginRequest(buffer);
             }
         }
+        // 如果时请求注册的消息
+        if(buffer.split('_').count() > 0)
+        {
+            QString i = buffer.split('_')[0];
+            if(i == "RegistRequset")
+            {
+                emit RegistRequset(buffer);
+            }
+        }
         // 若此次消息的地址与上次不同，则需显示此次消息的客户端地址
         if(IP_Port != IP_Port_Pre)
             ui->edtRecv_2->append(IP_Port);

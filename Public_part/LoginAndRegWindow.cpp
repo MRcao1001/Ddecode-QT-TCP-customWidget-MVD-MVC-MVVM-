@@ -24,6 +24,12 @@ void LoginAndRegWindow::SetTcpClient(TCPClient *tcp)
 
 }
 
+void LoginAndRegWindow::SetUserInfoModel(UserInfoModel *userInfoModel)
+{
+    m_userInfoModel = userInfoModel;
+
+}
+
 void LoginAndRegWindow::on_tabWidget_currentChanged(int index)
 {
 
@@ -98,12 +104,22 @@ void LoginAndRegWindow::GetLicenceResult(int Result)
     m_tcpClient->DisConnectToServer();
 }
 
-void LoginAndRegWindow::on_pushButton_7_clicked()
+void LoginAndRegWindow::on_SignIn_clicked()
 {
     m_tcpClient->ConnectToServer(ui->ServerIp->text(),ui->ServerPort->text().toUShort());
-    QString info = "LoginRequest_"+ui->ServerIp->text()+"-"+ui->ServerPort->text()+"_"+ui->UserName->text()+"_"+ui->UserNumber->text()+"_"+ui->Ticket->text();
-    char*  ch;
+    QString info = "LoginRequest_"+ui->ServerIp->text()+":"+ui->ServerPort->text()+"_"+ui->UserName->text()+"_"+ui->UserNumber->text()+"_"+ui->Ticket->text();
+    char*  LoginRequest;
     QByteArray ba = info.toLatin1();
-    ch=ba.data();
-    m_tcpClient->SendInfo(ch);
+    LoginRequest=ba.data();
+    m_tcpClient->SendInfo(LoginRequest);
+}
+
+void LoginAndRegWindow::on_SignUp_clicked()
+{
+    m_tcpClient->ConnectToServer(ui->ServerIp->text(),ui->ServerPort->text().toUShort());
+    QString info = "RegistRequest"+ui->ServerIp->text()+":"+ui->ServerPort->text()+"_"+ui->UserName->text()+"_"+ui->UserNumber->text()+"_"+ui->Ticket->text();
+    char*  RegistRequest;
+    QByteArray ba = info.toLatin1();
+    RegistRequest=ba.data();
+    m_tcpClient->SendInfo(RegistRequest);
 }

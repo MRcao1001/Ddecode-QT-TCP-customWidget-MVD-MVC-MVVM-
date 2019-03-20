@@ -20,6 +20,8 @@ public:
     void add(bool isMarkd, bool isCollection, QString questionTxt, int score, int trueResult, QString ResultA, QString ResultB, QString ResultC, QString ResultD);
     ///以下标来获取模型中的Item
     ExamChoiceQusetion *at(int index);
+    /// 获取模型中的试题集合
+    QList<ExamChoiceQusetion* > getExamList();
 private:
     QList<ExamChoiceQusetion* > m_examChoiceQusetionList;
     int indexNumber;

@@ -22,6 +22,14 @@ TCPClient::~TCPClient()
     delete ui;
 }
 
+
+
+
+/*!
+ * \brief TCPClient::ConnectToServer
+ * \param Ip
+ * \param Port
+ */
 void TCPClient::ConnectToServer(QString Ip, quint16 Port)
 {
 
@@ -52,11 +60,29 @@ void TCPClient::DisConnectToServer()
 void TCPClient::ReadData()
 {
     QByteArray buffer = tcpClient->readAll();
+    // 接收到许可证正确指令
     if(buffer == "Licence_Is_Right")
     {
         emit LicenceResult(0);
     }
+    // 接收到许可证不正确指令
     if(buffer == "Licence_Is_False")
+    {
+        emit LicenceResult(-1);
+    }
+    if(buffer == "INFO_IS_RIGHT")
+    {
+        emit LicenceResult(-1);
+    }
+    if(buffer == "INFO_IS_NOT_RIGHT")
+    {
+        emit LicenceResult(-1);
+    }
+    if(buffer == "REGIST_SUCCESS")
+    {
+        emit LicenceResult(-1);
+    }
+    if(buffer == "USER_EXIST")
     {
         emit LicenceResult(-1);
     }
@@ -81,6 +107,13 @@ void TCPClient::SendInfo(const char* Licence)
     {
         qDebug()<<"Send Error";
     }
+}
+
+
+
+void TCPClient::LicenceResultSingal()
+{
+
 }
 
 void TCPClient::on_btnConnect_clicked()
