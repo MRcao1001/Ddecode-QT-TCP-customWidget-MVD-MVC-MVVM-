@@ -35,6 +35,8 @@ private slots:
     void on_pushButton_clicked();
 signals:
     void LicenceResult(int type);
+    void DoLogin(int type);
+    void DoRegiste(int type);
 };
 
 #endif // TCPCLIENT_H

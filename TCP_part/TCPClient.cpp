@@ -70,21 +70,25 @@ void TCPClient::ReadData()
     {
         emit LicenceResult(-1);
     }
+    // 登陆操作-是
     if(buffer == "INFO_IS_RIGHT")
     {
-        emit LicenceResult(-1);
+        emit DoLogin(0);
     }
+    // 登陆操作-否
     if(buffer == "INFO_IS_NOT_RIGHT")
     {
-        emit LicenceResult(-1);
+        emit DoLogin(-1);
     }
+    // 注册操作-是
     if(buffer == "REGIST_SUCCESS")
     {
-        emit LicenceResult(-1);
+        emit DoRegiste(0);
     }
+    // 注册操作-否
     if(buffer == "USER_EXIST")
     {
-        emit LicenceResult(-1);
+        emit DoRegiste(-1);
     }
     if(!buffer.isEmpty())
     {

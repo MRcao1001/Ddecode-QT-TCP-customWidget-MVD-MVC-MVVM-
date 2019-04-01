@@ -12,6 +12,7 @@
 #include "TCP_part/TCPServer.h"
 #include "LoginAndRegWindow.h"
 #include "Server_part/ServerWindow.h"
+#include "Client_part/ClientWindow.h"
 #include <QVBoxLayout>
 namespace Ui {
 class Decode;
@@ -22,7 +23,7 @@ class Decode :public DecodeBaseWindow
     Q_OBJECT
 
 public:
-    explicit Decode(QWidget *parent = 0);
+    explicit Decode(QWidget *parent = nullptr);
     ~Decode();
     void InitUI();
     void InitObject();
@@ -30,7 +31,10 @@ private slots:
     void on_pushButton_clicked();
 
     void on_pushButton_3_clicked();
+    // 创建考场成功-显示考场界面
     void on_CreateExamRoomSuccess_emit();
+    // 登录成功-显示用户界面
+    void on_LoginSuccessfuly_emit();
 private:
     Ui::Decode *ui;
     UserInfoModel *m_userInfoModel;
@@ -45,6 +49,7 @@ private:
 
     LoginAndRegWindow *LARW;
     ServerWindow *SW;
+    ClientWindow *CW;
 };
 
 #endif // DECODE_H

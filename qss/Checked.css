@@ -1,0 +1,21 @@
+﻿.QPushButton,.QToolButton{
+border-style:none;
+border-left:5px solid #B6B6B6;
+color:#57595B;
+padding-left:5;
+min-height:60px;
+border-radius:0px;
+background:qlineargradient(spread:pad,x1:0,y1:0,x2:1,y2:0,stop:0 #fff,stop:1 #fff);
+}
+
+.QPushButton:hover,.QToolButton:hover{
+background:qlineargradient(spread:pad,x1:0,y1:0,x2:1,y2:0,stop:0 #F6F6F6,stop:1 #fff);
+}
+
+.QPushButton:pressed,.QToolButton:pressed{
+background:qlineargradient(spread:pad,x1:0,y1:0,x2:1,y2:0,stop:0 #E4E4E4,stop:1 #fff);
+}
+
+.QToolButton::menu-indicator{
+image:None;
+}

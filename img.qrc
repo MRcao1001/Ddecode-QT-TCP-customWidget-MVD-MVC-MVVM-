@@ -11,5 +11,15 @@
         <file>img/error.png</file>
         <file>img/yes.png</file>
         <file>img/Tip.png</file>
+        <file>img/DecodeTitle.png</file>
+        <file>img/IndexGif.gif</file>
+        <file>img/IndexGif2.gif</file>
+        <file>img/IndexGif3.gif</file>
+        <file>img/UserControl.png</file>
+        <file>img/Updata.png</file>
+        <file>img/Infomation.png</file>
+        <file>img/CreateExamRoom.png</file>
+        <file>img/SignUp.png</file>
+        <file>img/Welcom.png</file>
     </qresource>
 </RCC>

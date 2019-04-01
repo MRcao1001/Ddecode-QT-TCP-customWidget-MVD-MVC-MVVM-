@@ -15,25 +15,25 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_2">
    <property name="spacing">
-    <number>10</number>
+    <number>0</number>
    </property>
    <property name="leftMargin">
-    <number>20</number>
+    <number>0</number>
    </property>
    <property name="topMargin">
-    <number>20</number>
+    <number>0</number>
    </property>
    <property name="rightMargin">
-    <number>20</number>
+    <number>0</number>
    </property>
    <property name="bottomMargin">
-    <number>20</number>
+    <number>0</number>
    </property>
    <item>
     <widget class="QFrame" name="BackgroundFrame">
      <property name="styleSheet">
       <string notr="true">.QFrame{
-border:1px solid #B6B6B6;
+border:0;
 border-radius:5px;
 background-color:rgba(255,255,255);
 }</string>

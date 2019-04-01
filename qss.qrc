@@ -39,5 +39,8 @@
         <file>qss/flatwhite/radiobutton_unchecked.png</file>
         <file>qss/flatwhite/radiobutton_unchecked_disable.png</file>
         <file>qss/Dark_yellow_style.css</file>
+        <file>qss/Checked.css</file>
+        <file>qss/UnChecked.css</file>
+        <file>img/Drop.png</file>
     </qresource>
 </RCC>

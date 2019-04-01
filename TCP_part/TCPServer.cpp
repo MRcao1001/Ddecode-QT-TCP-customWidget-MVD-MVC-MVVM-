@@ -90,20 +90,15 @@ void TCPServer::ReadData()
         static QString IP_Port, IP_Port_Pre;
         IP_Port = tr("[%1:%2]:").arg(tcpClient[i]->peerAddress().toString().split("::ffff:")[1])\
                 .arg(tcpClient[i]->peerPort());
-
-        // 如果是请求登陆的消息
         if(buffer.split('_').count() > 0)
         {
             QString i = buffer.split('_')[0];
+            // 如果是请求登陆的消息
             if(i == "LoginRequest")
             {
                 emit LoginRequest(buffer);
             }
-        }
-        // 如果时请求注册的消息
-        if(buffer.split('_').count() > 0)
-        {
-            QString i = buffer.split('_')[0];
+            // 如果时请求注册的消息
             if(i == "RegistRequset")
             {
                 emit RegistRequset(buffer);
@@ -114,8 +109,6 @@ void TCPServer::ReadData()
             ui->edtRecv_2->append(IP_Port);
 
         ui->edtRecv_2->append(buffer);
-
-
         //更新ip_port
         IP_Port_Pre = IP_Port;
     }

@@ -6,8 +6,8 @@ DecodeBaseWindow::DecodeBaseWindow(QWidget *parent) :
     ui(new Ui::DecodeBaseWindow)
 {
     ui->setupUi(this);
-    InitWindowStyle();
-    showAnimation_Appear(250,150,1280,768,this);
+    //InitWindowStyle();
+    //showAnimation_Appear(250,150,1280,768,this);
 }
 
 DecodeBaseWindow::~DecodeBaseWindow()

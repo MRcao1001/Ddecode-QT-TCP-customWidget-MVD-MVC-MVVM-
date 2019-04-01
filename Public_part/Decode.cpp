@@ -42,9 +42,10 @@ Decode::~Decode()
 
 void Decode::InitUI()
 {
-    this->SetCustomTitleBarStyle(ONLYBTN);
+    this->SetCustomTitleBarStyle(NOTITLEBAR);
     addWidgetToMainArea(LARW);
     addWidgetToMainArea(SW);
+    addWidgetToMainArea(CW);
 }
 
 void Decode::InitObject()
@@ -67,10 +68,15 @@ void Decode::InitObject()
     SW->SetUserInfoModel(this->m_userInfoModel);
     SW->setVisible(false);
 
+    //初始化用户端（客户端）界面
+    CW = new ClientWindow();
+    CW->SetClient(this->m_tcpClient);
+    CW->setVisible(false);
     // 信号槽绑定
     // 获取到许可证验证通过的信号和槽函数
     connect(LARW, SIGNAL(CreateExamRoomSuccess()), this, SLOT(on_CreateExamRoomSuccess_emit()));
-
+    // 登录成功的信号和槽的绑定
+    connect(LARW, SIGNAL(LoginSuccessfuly()), this, SLOT(on_LoginSuccessfuly_emit()));
 
 }
 
@@ -89,4 +95,10 @@ void Decode::on_CreateExamRoomSuccess_emit()
 {
     this->LARW->setVisible(false);
     this->SW->setVisible(true);
+}
+
+void Decode::on_LoginSuccessfuly_emit()
+{
+    this->LARW->setVisible(false);
+    this->CW->setVisible(true);
 }
