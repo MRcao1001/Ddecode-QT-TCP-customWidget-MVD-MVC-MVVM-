@@ -46,7 +46,8 @@ SOURCES += \
     TCP_part/TCPClient.cpp \
     Public_part/DecodeAnimation.cpp \
     Client_part/LeftBar.cpp \
-    Client_part/AnswerSheet.cpp
+    Client_part/AnswerSheet.cpp \
+    Public_part/MessageWindow.cpp
 
 
 HEADERS += \
@@ -71,7 +72,8 @@ HEADERS += \
     TCP_part/TCPClient.h \
     Public_part/DecodeAnimation.h \
     Client_part/LeftBar.h \
-    Client_part/AnswerSheet.h
+    Client_part/AnswerSheet.h \
+    Public_part/MessageWindow.h
 
 FORMS += \
         Public_part/Decode.ui \
@@ -85,7 +87,8 @@ FORMS += \
     TCP_part/TCPServer.ui \
     TCP_part/TCPClient.ui \
     Client_part/LeftBar.ui \
-    Client_part/AnswerSheet.ui
+    Client_part/AnswerSheet.ui \
+    Public_part/MessageWindow.ui
 
 
 RC_ICONS = Decode.ico

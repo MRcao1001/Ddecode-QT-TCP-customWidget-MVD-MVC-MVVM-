@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include <QMovie>
+#include <QGraphicsBlurEffect>
 #include "TCP_part/TCPClient.h"
 #include "DecodeAnimation.h"
 #include "DataModel/UserInfoModel.h"
@@ -39,6 +40,8 @@ private slots:
     void ToolButtonCliced();
 
 
+    void on_GetLicence_clicked();
+
 private:
     Ui::LoginAndRegWindow *ui;
     TCPClient *m_tcpClient;
@@ -46,6 +49,8 @@ private:
     QMovie *IndexMovie;
     QString qss_Checked;
     QString qss_Unchecked;
+    QWidget *m_parent;
+    QGraphicsDropShadowEffect *CreateGroupBoxEffect;
 signals:
     void CreateExamRoomSuccess();
     void LoginSuccessfuly();

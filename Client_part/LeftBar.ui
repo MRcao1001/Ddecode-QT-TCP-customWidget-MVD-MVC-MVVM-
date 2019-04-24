@@ -10,6 +10,18 @@
     <height>715</height>
    </rect>
   </property>
+  <property name="minimumSize">
+   <size>
+    <width>250</width>
+    <height>0</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>350</width>
+    <height>16777215</height>
+   </size>
+  </property>
   <property name="windowTitle">
    <string>Frame</string>
   </property>
@@ -130,7 +142,7 @@
         </size>
        </property>
        <property name="text">
-        <string>PushButton</string>
+        <string/>
        </property>
       </widget>
      </item>
@@ -149,7 +161,7 @@
         </size>
        </property>
        <property name="text">
-        <string>PushButton</string>
+        <string/>
        </property>
       </widget>
      </item>
@@ -168,7 +180,7 @@
         </size>
        </property>
        <property name="text">
-        <string>PushButton</string>
+        <string/>
        </property>
       </widget>
      </item>
@@ -187,7 +199,7 @@
         </size>
        </property>
        <property name="text">
-        <string>PushButton</string>
+        <string/>
        </property>
       </widget>
      </item>
@@ -206,7 +218,7 @@
         </size>
        </property>
        <property name="text">
-        <string>PushButton</string>
+        <string/>
        </property>
       </widget>
      </item>
@@ -227,7 +239,7 @@
       </size>
      </property>
      <property name="text">
-      <string>PushButton</string>
+      <string>考试界面</string>
      </property>
     </widget>
    </item>
@@ -246,7 +258,7 @@
       </size>
      </property>
      <property name="text">
-      <string>PushButton</string>
+      <string>网络配置</string>
      </property>
     </widget>
    </item>
@@ -265,7 +277,7 @@
       </size>
      </property>
      <property name="text">
-      <string>PushButton</string>
+      <string>消息查收</string>
      </property>
     </widget>
    </item>
@@ -284,7 +296,7 @@
       </size>
      </property>
      <property name="text">
-      <string>PushButton</string>
+      <string>历史记录</string>
      </property>
     </widget>
    </item>
@@ -303,7 +315,7 @@
       </size>
      </property>
      <property name="text">
-      <string>PushButton</string>
+      <string>个人信息</string>
      </property>
     </widget>
    </item>

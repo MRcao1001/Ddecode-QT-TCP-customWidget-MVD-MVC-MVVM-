@@ -1,12 +1,16 @@
 ﻿#include "LoginAndRegWindow.h"
 #include "ui_LoginAndRegWindow.h"
-
+//静态的自定义提示框
+#include "Public_part/MessageWindow.h"
+Q_GLOBAL_STATIC(MessageWindow, messageWindow);
 LoginAndRegWindow::LoginAndRegWindow(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::LoginAndRegWindow)
 {
+    m_parent = parent;
     ui->setupUi(this);
     InitUI();
+
 }
 
 LoginAndRegWindow::~LoginAndRegWindow()
@@ -95,19 +99,14 @@ void LoginAndRegWindow::GetLicenceResult(int Result)
     if(Result == 0)
     {
         this->ui->ERLTip->setIcon(QIcon(":/img/yes.png"));
-        QMessageBox message(QMessageBox::NoIcon, "提示", "考场创建成功");
-        message.setIconPixmap(QPixmap(":/img/Tip.png"));
-        message.exec();
+        messageWindow->ShowMessage(m_parent, "考场创建成功");
         // 正确，关闭登陆界面，发送许可证正确指令
         emit CreateExamRoomSuccess();
     }
     if(Result == -1)
     {
         this->ui->ERLTip->setIcon(QIcon(":/img/error.png"));
-        //
-        QMessageBox message(QMessageBox::NoIcon, "提示", "许可证不存在，请联系caoyong_work@outlook.com");
-        message.setIconPixmap(QPixmap(":/img/Tip.png"));
-        message.exec();
+        messageWindow->ShowMessage(m_parent, "许可证不存在，请联系caoyong_work@outlook.com");
     }
     m_tcpClient->DisConnectToServer();
 }
@@ -172,15 +171,22 @@ void LoginAndRegWindow::on_SignUp_clicked()
 
 void LoginAndRegWindow::ToolButtonCliced()
 {
+
     QToolButton &btn = *qobject_cast<QToolButton*>(sender());
     SetToolButtonToDefult();
     btn.setStyleSheet(qss_Checked);
     if(ui->TAB_WELCOME == &btn)
         this->ui->stackedWidget->setCurrentIndex(0);
     if(ui->TAB_CREATEER == &btn)
+    {
         this->ui->stackedWidget->setCurrentIndex(1);
+    }
+
     if(ui->TAB_SIGNIN == &btn)
+    {
         this->ui->stackedWidget->setCurrentIndex(2);
+    }
+
     if(ui->TAB_INFO == &btn)
         this->ui->stackedWidget->setCurrentIndex(3);
     if(ui->TAB_UPDATE == &btn)
@@ -210,6 +216,12 @@ void LoginAndRegWindow::InitUI()
         fileB.close();
     }
 
+    //设置阴影效果
+    CreateGroupBoxEffect = new QGraphicsDropShadowEffect;
+    CreateGroupBoxEffect->setOffset(0,0);
+    CreateGroupBoxEffect->setColor(QColor(0,0,0,50));
+    CreateGroupBoxEffect->setBlurRadius(20);
+
     // 绑定
     connect(this->ui->TAB_WELCOME, SIGNAL(clicked()), this, SLOT(ToolButtonCliced()));
     connect(this->ui->TAB_INFO, SIGNAL(clicked()), this, SLOT(ToolButtonCliced()));
@@ -220,3 +232,8 @@ void LoginAndRegWindow::InitUI()
 
 
 
+
+void LoginAndRegWindow::on_GetLicence_clicked()
+{
+
+}

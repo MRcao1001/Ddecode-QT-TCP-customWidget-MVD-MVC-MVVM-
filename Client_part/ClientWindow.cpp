@@ -21,7 +21,8 @@ void ClientWindow::SetClient(TCPClient *tcp)
 
 void ClientWindow::InitUI()
 {
-
+    leftbar = new LeftBar();
+    ui->LeftBarArea->addWidget(leftbar);
 }
 
 void ClientWindow::SetConnect()

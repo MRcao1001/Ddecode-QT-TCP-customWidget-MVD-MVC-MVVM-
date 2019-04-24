@@ -21,5 +21,16 @@
         <file>img/CreateExamRoom.png</file>
         <file>img/SignUp.png</file>
         <file>img/Welcom.png</file>
+        <file>img/lock.png</file>
+        <file>img/addpeople.png</file>
+        <file>img/mine.png</file>
+        <file>img/homepage.png</file>
+        <file>img/LOGO_ONCOLOR.png</file>
+        <file>img/regbg2.png</file>
+        <file>img/flip_fill.png</file>
+        <file>img/barrage.png</file>
+        <file>img/LoginBG.png</file>
+        <file>img/LogoBG.png</file>
+        <file>img/birdLogowhite.png</file>
     </qresource>
 </RCC>

@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include "TCP_part/TCPClient.h"
+#include "LeftBar.h"
 namespace Ui {
 class ClientWindow;
 }
@@ -17,6 +18,7 @@ public:
     void SetClient(TCPClient *tcp);
 private:
     Ui::ClientWindow *ui;
+    LeftBar *leftbar;
     void InitUI();
     void SetConnect();
 };

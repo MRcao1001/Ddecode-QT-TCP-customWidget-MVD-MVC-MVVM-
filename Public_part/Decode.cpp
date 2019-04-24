@@ -59,9 +59,10 @@ void Decode::InitObject()
     //初始化数据库模块
     DBManager = new DataBaseManager();
     //初始化登陆界面模块
-    LARW = new LoginAndRegWindow();
+    LARW = new LoginAndRegWindow(this);
     LARW->SetTcpClient(this->m_tcpClient);// 必须
     LARW->SetUserInfoModel(this->m_userInfoModel);// 必须
+
     //初始化考场（服务器）界面
     SW = new ServerWindow();
     SW->SetTcpServer(this->m_tcpServer);
@@ -72,6 +73,7 @@ void Decode::InitObject()
     CW = new ClientWindow();
     CW->SetClient(this->m_tcpClient);
     CW->setVisible(false);
+
     // 信号槽绑定
     // 获取到许可证验证通过的信号和槽函数
     connect(LARW, SIGNAL(CreateExamRoomSuccess()), this, SLOT(on_CreateExamRoomSuccess_emit()));

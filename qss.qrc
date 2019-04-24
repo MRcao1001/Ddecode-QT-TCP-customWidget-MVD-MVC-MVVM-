@@ -42,5 +42,7 @@
         <file>qss/Checked.css</file>
         <file>qss/UnChecked.css</file>
         <file>img/Drop.png</file>
+        <file>qss/Checked_TopBar.css</file>
+        <file>qss/UnChecked_TopBar.css</file>
     </qresource>
 </RCC>
