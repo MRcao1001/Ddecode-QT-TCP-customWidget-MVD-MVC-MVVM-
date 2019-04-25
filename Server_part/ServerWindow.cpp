@@ -9,7 +9,10 @@ ServerWindow::ServerWindow(QWidget *parent) :
     this->DBManager = new DataBaseManager();
     QString tableColums = "IP varchar(255) not NULL, PORT varchar(255) not NULL,Name varchar(255) not NULL,Number varchar(255) primary key not NULL,Ticket varchar(255) not NULL";
     DBManager->createDataTable("ExamineeInfo",tableColums);
+
+    InitExamRoom();
     InitUI();
+
 }
 
 ServerWindow::~ServerWindow()
@@ -17,26 +20,35 @@ ServerWindow::~ServerWindow()
     delete ui;
 }
 
-void ServerWindow::SetTcpServer(TCPServer *tcp)
-{
-    if(tcp != nullptr)
-    {
-        this->m_tcpServer = tcp;
-        //this->ui->ServerArea->addWidget(m_tcpServer);
-        this->m_tcpServer->on_btnConnect_clicked();
-        // 绑定接收到数据信号和判断槽函数
-        connect(m_tcpServer, SIGNAL(LoginRequest(QString)), this, SLOT(GetLoginRequest(QString)));
-        connect(m_tcpServer, SIGNAL(RegistRequset(QString)), this, SLOT(GetRegistRequest(QString)));
-    }
-}
-
+/**
+ * @brief ServerWindow::SetUserInfoModel
+ * @param userInfoModel
+ * 初始化UserInfoModel
+ */
 void ServerWindow::SetUserInfoModel(UserInfoModel *userInfoModel)
 {
     this->m_userInfoModel = userInfoModel;
 }
 
+/**
+ * @brief ServerWindow::InitUI
+ * 初始化界面UI元素和信号槽绑定
+ */
 void ServerWindow::InitUI()
 {
+    /// 绑定界面ListView和数据模型
+    // 绑定所有试卷列表和数据模型
+    ui->AllExamPapersListView->setModel(ExamRoom->examRoom->AllPaperListModel);
+    // 绑定当前试卷视图和模型
+    ui->ExamPaperListView->setModel(ExamRoom->examRoom->ExamPaper);
+    ui->ExamPaperListView->setItemDelegate(ExamRoom->examRoom->ExamPaperView);
+    // 绑定题库视图和模型
+    ui->QusetionLibListView->setModel(ExamRoom->examRoom->QuestionLib);
+    ui->QusetionLibListView->setItemDelegate(ExamRoom->examRoom->QuestionLibView);
+    // 绑定用户列表视图和模型
+    ui->UserListView->setModel(ExamRoom->examRoom->UserList);
+    ui->UserListView->setItemDelegate(ExamRoom->examRoom->UserListView);
+
     //设置阴影效果
     TopBarFrameShadow = new QGraphicsDropShadowEffect;
     TopBarFrameShadow->setOffset(0,0);
@@ -69,6 +81,10 @@ void ServerWindow::InitUI()
     connect(this->ui->TAB_ExamQusetionSet, SIGNAL(clicked()), this, SLOT(ToolButtonCliced()));
 }
 
+/**
+ * @brief ServerWindow::SetTopBarButtonStyleDefult
+ * 设置标题栏按钮的样式为默认样式
+ */
 void ServerWindow::SetTopBarButtonStyleDefult()
 {
     this->ui->TAB_ExamPaperConfigure->setStyleSheet(qss_Unchecked);
@@ -78,6 +94,38 @@ void ServerWindow::SetTopBarButtonStyleDefult()
     this->ui->TAB_ExamQusetionSet->setStyleSheet(qss_Unchecked);
 }
 
+/**
+ * @brief ServerWindow::SetExamRoomModel
+ * 初始化考场模型
+ */
+void ServerWindow::InitExamRoom()
+{
+    ExamRoom = new ExamRoomModelView();
+}
+
+/**
+ * @brief ServerWindow::SetTcpServer
+ * @param tcp
+ * 初始化TCP组件
+ */
+void ServerWindow::SetTcpServer(TCPServer *tcp)
+{
+    if(tcp != nullptr)
+    {
+        this->m_tcpServer = tcp;
+        //this->ui->ServerArea->addWidget(m_tcpServer);
+        this->m_tcpServer->on_btnConnect_clicked();
+        // 绑定接收到数据信号和判断槽函数
+        connect(m_tcpServer, SIGNAL(LoginRequest(QString)), this, SLOT(GetLoginRequest(QString)));
+        connect(m_tcpServer, SIGNAL(RegistRequset(QString)), this, SLOT(GetRegistRequest(QString)));
+    }
+}
+
+
+/**
+ * @brief ServerWindow::ToolButtonCliced
+ * 标题栏按钮槽函数
+ */
 void ServerWindow::ToolButtonCliced()
 {
     QToolButton &btn = *qobject_cast<QToolButton*>(sender());
@@ -87,6 +135,11 @@ void ServerWindow::ToolButtonCliced()
 }
 
 // login Info : "LoginRequset"+ip-port+name+number+Ticket;
+/**
+ * @brief ServerWindow::GetLoginRequest
+ * @param LoginInfo
+ * 登陆信号传来时的槽函数，判断登陆信息是否正确
+ */
 void ServerWindow::GetLoginRequest(QString LoginInfo)
 {
     //创建一个用户数据对象
@@ -111,6 +164,11 @@ void ServerWindow::GetLoginRequest(QString LoginInfo)
 }
 
 // Regist Info : "RegistRequset"+ip-port+name+number+Ticket;
+/**
+ * @brief ServerWindow::GetRegistRequest
+ * @param RegistInfo
+ * 注册信号传来时的槽函数，并执行注册操作
+ */
 void ServerWindow::GetRegistRequest(QString RegistInfo)
 {
     //创建一个用户数据对象

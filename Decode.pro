@@ -34,20 +34,22 @@ SOURCES += \
     Public_part/log.cpp\
     Public_part/LoginAndRegWindow.cpp \
     DataModel/UserInfoModel.cpp \
-    DataModeView/UserInfo.cpp \
+    DataModel/UserInfo.cpp \
     DataModeView/UserInfoFrame.cpp \
     DataModel/ExamPaperModel.cpp \
     DataModeView/ExamChoiceQusetionFrame.cpp \
     DataDelegate/ExamPaperDelegate.cpp \
     DataDelegate/UserInfoDelegate.cpp \
-    DataModeView/ExamChoiceQusetion.cpp \
+    DataModel/ExamChoiceQusetion.cpp \
     Client_part/ExmaPaperwindow.cpp\
     TCP_part/TCPServer.cpp \
     TCP_part/TCPClient.cpp \
     Public_part/DecodeAnimation.cpp \
     Client_part/LeftBar.cpp \
     Client_part/AnswerSheet.cpp \
-    Public_part/MessageWindow.cpp
+    Public_part/MessageWindow.cpp \
+    DataModel/ExamRoomModel.cpp \
+    DataModeView/ExamRoomModelView.cpp
 
 
 HEADERS += \
@@ -60,20 +62,22 @@ HEADERS += \
     Public_part/log.h\
     Public_part/LoginAndRegWindow.h \
     DataModel/UserInfoModel.h \
-    DataModeView/UserInfo.h \
+    DataModel/UserInfo.h \
     DataModeView/UserInfoFrame.h \
     DataModel/ExamPaperModel.h \
     DataModeView/ExamChoiceQusetionFrame.h \
     DataDelegate/ExamPaperDelegate.h \
     DataDelegate/UserInfoDelegate.h \
-    DataModeView/ExamChoiceQusetion.h \
+    DataModel/ExamChoiceQusetion.h \
     Client_part/ExmaPaperwindow.h\
     TCP_part/TCPServer.h \
     TCP_part/TCPClient.h \
     Public_part/DecodeAnimation.h \
     Client_part/LeftBar.h \
     Client_part/AnswerSheet.h \
-    Public_part/MessageWindow.h
+    Public_part/MessageWindow.h \
+    DataModel/ExamRoomModel.h \
+    DataModeView/ExamRoomModelView.h
 
 FORMS += \
         Public_part/Decode.ui \

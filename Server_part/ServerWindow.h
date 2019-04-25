@@ -5,6 +5,8 @@
 #include "TCP_part/TCPServer.h"
 #include "DataBase_patr/DataBaseManager.h"
 #include "DataModel/UserInfoModel.h"
+#include <DataModeView/ExamRoomModelView.h>
+
 #include <QGraphicsDropShadowEffect>
 namespace Ui {
 class ServerWindow;
@@ -23,7 +25,7 @@ public:
     void SetUserInfoModel(UserInfoModel *userInfoModel);
     void InitUI();
     void SetTopBarButtonStyleDefult();
-
+    void InitExamRoom();
 private:
     Ui::ServerWindow *ui;
     TCPServer *m_tcpServer;
@@ -32,6 +34,8 @@ private:
     QGraphicsDropShadowEffect *TopBarFrameShadow;
     QString qss_Checked;
     QString qss_Unchecked;
+
+    ExamRoomModelView *ExamRoom;
 public slots:
     void GetLoginRequest(QString LoginInfo);
     void GetRegistRequest(QString RegistInfo);
