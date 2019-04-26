@@ -133,38 +133,22 @@ border-radius:0px;</string>
           <widget class="QLabel" name="label_7">
            <property name="minimumSize">
             <size>
-             <width>120</width>
-             <height>50</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>100</width>
+             <width>130</width>
              <height>50</height>
             </size>
            </property>
            <property name="font">
             <font>
              <family>苹方 中等</family>
-             <pointsize>18</pointsize>
+             <pointsize>23</pointsize>
             </font>
            </property>
            <property name="styleSheet">
-            <string notr="true">border-image: url(:/img/LogoBG.png);
-color: rgb(255, 255, 255);
-font: 18pt &quot;苹方 中等&quot;;</string>
+            <string notr="true">color: rgb(255, 255, 255);
+border-image: url(:/img/LogoBG.png);</string>
            </property>
            <property name="text">
-            <string/>
-           </property>
-           <property name="pixmap">
-            <pixmap resource="../img.qrc">:/img/DecodeTitle.png</pixmap>
-           </property>
-           <property name="scaledContents">
-            <bool>true</bool>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+            <string>Decode</string>
            </property>
           </widget>
          </item>
@@ -263,7 +247,26 @@ image:None;
                <cursorShape>PointingHandCursor</cursorShape>
               </property>
               <property name="styleSheet">
-               <string notr="true"/>
+               <string notr="true">.QPushButton,.QToolButton{
+color:#57595B;
+border-radius:0px;
+background:qlineargradient(spread:pad,x1:0,y1:0,x2:1,y2:0,stop:0 #fff,stop:1 #fff);
+border:none;
+border-bottom:3px solid #4a81ff;
+}
+
+.QPushButton:hover,.QToolButton:hover{
+background:qlineargradient(spread:pad,x1:0,y1:0,x2:1,y2:0,stop:0 #f5f5f5,stop:1 #f5f5f5);
+border-bottom:3px solid #4a81ff;
+}
+
+.QPushButton:pressed,.QToolButton:pressed{
+border-bottom:3px solid #4a81ff;
+}
+
+.QToolButton::menu-indicator{
+image:None;
+}</string>
               </property>
               <property name="text">
                <string>试卷设置</string>
@@ -669,7 +672,7 @@ image:None;
              </layout>
             </item>
             <item>
-             <widget class="QListView" name="listView_3"/>
+             <widget class="QListView" name="AllExamPapersListView2"/>
             </item>
            </layout>
           </item>
@@ -909,7 +912,7 @@ image:None;
              </layout>
             </item>
             <item>
-             <widget class="QListView" name="listView_5"/>
+             <widget class="QListView" name="AllExamPapersListView3"/>
             </item>
            </layout>
           </item>
@@ -983,14 +986,14 @@ image:None;
               <item>
                <widget class="QLabel" name="label_13">
                 <property name="text">
-                 <string>试卷库</string>
+                 <string>题库</string>
                 </property>
                </widget>
               </item>
              </layout>
             </item>
             <item>
-             <widget class="QListView" name="QusetionLibListView"/>
+             <widget class="QListView" name="QsestionListView"/>
             </item>
            </layout>
           </item>

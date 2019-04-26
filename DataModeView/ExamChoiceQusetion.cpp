@@ -74,18 +74,18 @@ void ExamChoiceQusetion::setScore(int score)
     this->m_score = score;
 }
 
-void ExamChoiceQusetion::setTrueResult(int result)
+void ExamChoiceQusetion::setTrueResult(QString result)
 {
-    if(result>=0 && result <=4)
+    if(result>="A" && result <="D")
     {
         this->m_trueResult = result;
     }
 
 }
 
-void ExamChoiceQusetion::setCheckResult(int result)
+void ExamChoiceQusetion::setCheckResult(QString result)
 {
-    if(result>=0 && result <=4)
+    if(result>="A" && result <="D")
     {
         this->m_checkResult = result;
     }

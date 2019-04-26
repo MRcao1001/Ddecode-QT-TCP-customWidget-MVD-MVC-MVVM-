@@ -66,7 +66,7 @@ QVariant ExamPaperModel::data(const QModelIndex &index, int role) const
     return QVariant();
 }
 
-void ExamPaperModel::add(bool isMarkd, bool isCollection, QString questionTxt, int score, int trueResult, QString ResultA, QString ResultB, QString ResultC, QString ResultD)
+void ExamPaperModel::add(bool isMarkd, bool isCollection, QString questionTxt, int score, QString trueResult, QString ResultA, QString ResultB, QString ResultC, QString ResultD)
 {
     ExamChoiceQusetion* examChoiceQusetion = new ExamChoiceQusetion();
     examChoiceQusetion->setNumber(indexNumber);
@@ -77,11 +77,15 @@ void ExamPaperModel::add(bool isMarkd, bool isCollection, QString questionTxt, i
     examChoiceQusetion->setResultB(ResultB);
     examChoiceQusetion->setResultC(ResultC);
     examChoiceQusetion->setResultD(ResultD);
+    add(examChoiceQusetion);
+    emit layoutChanged();
+}
+void ExamPaperModel::add(ExamChoiceQusetion* examChoiceQusetion)
+{
     indexNumber += 1;
     m_examChoiceQusetionList.push_back(examChoiceQusetion);
     emit layoutChanged();
 }
-
 ExamChoiceQusetion *ExamPaperModel::at(int index)
 {
     return m_examChoiceQusetionList.at(index);

@@ -53,6 +53,12 @@ public:
      */
     DBState searchUserData(UserInfo *userinfo = nullptr);
     /**
+     * @brief searchExamQuestionLib 查找题库内所有的试题
+     * @param examPaper
+     * @return
+     */
+    DBState searchExamQuestionLib(ExamPaperModel *examPaper);
+    /**
      * @brief deleteData 删除数据
      */
     DBState deleteData(QString tableName, QString keyWord);

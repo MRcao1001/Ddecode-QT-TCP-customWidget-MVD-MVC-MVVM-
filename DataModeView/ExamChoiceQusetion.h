@@ -28,8 +28,8 @@ public:
     void setNumber(int number);
     void setQuestion(QString questionTxt);
     void setScore(int score);
-    void setTrueResult(int result);
-    void setCheckResult(int result);
+    void setTrueResult(QString result);
+    void setCheckResult(QString result);
     void setResultA(QString Result);
     void setResultB(QString Result);
     void setResultC(QString Result);
@@ -40,8 +40,8 @@ private:
     int m_number;
     QString m_questionText;
     int m_score;
-    int m_trueResult;
-    int m_checkResult;
+    QString m_trueResult;
+    QString m_checkResult;
     QString m_Result_A;
     QString m_Result_B;
     QString m_Result_C;

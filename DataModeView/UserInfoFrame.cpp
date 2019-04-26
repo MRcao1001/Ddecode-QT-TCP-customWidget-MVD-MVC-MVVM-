@@ -10,12 +10,23 @@ UserInfoFrame::UserInfoFrame(QWidget *parent) :
 
 UserInfoFrame::~UserInfoFrame()
 {
+    ui->IconButton->setFixedSize(100,100);
     delete ui;
 }
 
 void UserInfoFrame::setName(const QString Name)
 {
     ui->UserNameLabel->setText(Name);
+}
+
+void UserInfoFrame::SetIP(const QString IP)
+{
+    ui->UserIPLabel->setText(IP);
+}
+
+void UserInfoFrame::SetTicket(const QString Ticket)
+{
+    ui->UserTicketLabel->setText(Ticket);
 }
 
 void UserInfoFrame::setSelected(bool selected)

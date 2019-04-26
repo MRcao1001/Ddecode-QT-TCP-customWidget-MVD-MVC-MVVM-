@@ -130,3 +130,39 @@ DBState DataBaseManager::searchUserData( UserInfo *userinfo)
     }
 
 }
+/**
+ * @brief DataBaseManager::searchExamQuestionLib
+ * @param examPaper
+ * @return
+ * 查找题库内所有的试题
+ */
+DBState DataBaseManager::searchExamQuestionLib(ExamPaperModel *examPaper)
+{
+    sql_query = new QSqlQuery();
+    sql_query->prepare("SELECT * FROM ExamQuestionLib");
+    if(!sql_query->exec())
+    {
+        qWarning()<<sql_query->lastError();
+        return SQLERROR;
+    }
+    else
+    {
+        while (sql_query->next()) {
+            ExamChoiceQusetion *examQusetion = new ExamChoiceQusetion();
+            examQusetion->setNumber(sql_query->value(0).toString().toInt());
+            examQusetion->setScore(sql_query->value(1).toString().toInt());
+            examQusetion->setTrueResult(sql_query->value(1).toString());
+            examQusetion->setQuestion(sql_query->value(3).toString());
+            QStringList DefultResult = sql_query->value(4).toString().split(',');
+            if(DefultResult.count() != 4)
+                return SQLERROR;
+            examQusetion->setResultA(DefultResult.at(0));
+            examQusetion->setResultB(DefultResult.at(1));
+            examQusetion->setResultC(DefultResult.at(2));
+            examQusetion->setResultD(DefultResult.at(3));
+            examPaper->add(examQusetion);
+        }
+        delete sql_query;
+        return NOERROR;
+    }
+}

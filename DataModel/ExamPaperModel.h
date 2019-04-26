@@ -17,7 +17,8 @@ public:
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
 
     ///向模型中添加数据
-    void add(bool isMarkd, bool isCollection, QString questionTxt, int score, int trueResult, QString ResultA, QString ResultB, QString ResultC, QString ResultD);
+    void add(bool isMarkd, bool isCollection, QString questionTxt, int score, QString trueResult, QString ResultA, QString ResultB, QString ResultC, QString ResultD);
+    void add(ExamChoiceQusetion* examChoiceQusetion);
     ///以下标来获取模型中的Item
     ExamChoiceQusetion *at(int index);
     /// 获取模型中的试题集合

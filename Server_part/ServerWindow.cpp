@@ -36,18 +36,7 @@ void ServerWindow::SetUserInfoModel(UserInfoModel *userInfoModel)
  */
 void ServerWindow::InitUI()
 {
-    /// 绑定界面ListView和数据模型
-    // 绑定所有试卷列表和数据模型
-    ui->AllExamPapersListView->setModel(ExamRoom->examRoom->AllPaperListModel);
-    // 绑定当前试卷视图和模型
-    ui->ExamPaperListView->setModel(ExamRoom->examRoom->ExamPaper);
-    ui->ExamPaperListView->setItemDelegate(ExamRoom->examRoom->ExamPaperView);
-    // 绑定题库视图和模型
-    ui->QusetionLibListView->setModel(ExamRoom->examRoom->QuestionLib);
-    ui->QusetionLibListView->setItemDelegate(ExamRoom->examRoom->QuestionLibView);
-    // 绑定用户列表视图和模型
-    ui->UserListView->setModel(ExamRoom->examRoom->UserList);
-    ui->UserListView->setItemDelegate(ExamRoom->examRoom->UserListView);
+
 
     //设置阴影效果
     TopBarFrameShadow = new QGraphicsDropShadowEffect;
@@ -100,7 +89,21 @@ void ServerWindow::SetTopBarButtonStyleDefult()
  */
 void ServerWindow::InitExamRoom()
 {
-    ExamRoom = new ExamRoomModelView();
+    ExamRoom = new ExamRoomModelView(DBManager);
+    /// 绑定界面ListView和数据模型
+    // 绑定所有试卷列表和数据模型
+    ui->AllExamPapersListView->setModel(ExamRoom->examRoom->AllPaperListModel);
+    ui->AllExamPapersListView2->setModel(ExamRoom->examRoom->AllPaperListModel);
+    ui->AllExamPapersListView3->setModel(ExamRoom->examRoom->AllPaperListModel);
+    // 绑定当前试卷视图和模型
+    ui->ExamPaperListView->setModel(ExamRoom->examRoom->ExamPaper);
+    ui->ExamPaperListView->setItemDelegate(ExamRoom->examRoom->ExamPaperView);
+    // 绑定题库视图和模型
+    ui->QsestionListView->setModel(ExamRoom->examRoom->QuestionLib);
+    ui->QsestionListView->setItemDelegate(ExamRoom->examRoom->QuestionLibView);
+    // 绑定用户列表视图和模型
+    ui->UserListView->setModel(ExamRoom->examRoom->UserList);
+    ui->UserListView->setItemDelegate(ExamRoom->examRoom->UserListView);
 }
 
 /**
@@ -131,6 +134,26 @@ void ServerWindow::ToolButtonCliced()
     QToolButton &btn = *qobject_cast<QToolButton*>(sender());
     SetTopBarButtonStyleDefult();
     btn.setStyleSheet(qss_Checked);
+    if(ui->TAB_ExamPaperSet == &btn)
+        this->ui->stackedWidget->setCurrentIndex(3);
+    if(ui->TAB_ExamQusetionSet == &btn)
+    {
+        this->ui->stackedWidget->setCurrentIndex(4);
+    }
+
+    if(ui->TAB_Students == &btn)
+    {
+        this->ui->stackedWidget->setCurrentIndex(2);
+    }
+
+    if(ui->TAB_ExamRoomConfigure == &btn)
+    {
+        this->ui->stackedWidget->setCurrentIndex(1);
+    }
+    if(ui->TAB_ExamPaperConfigure == &btn)
+    {
+        this->ui->stackedWidget->setCurrentIndex(0);
+    }
 
 }
 
@@ -155,8 +178,8 @@ void ServerWindow::GetLoginRequest(QString LoginInfo)
     {
         // 查找到了对应的登陆信息，准许登陆
         m_tcpServer->SendInfoToClient(userInfo->getUserIP(),userInfo->getUserPort().toInt(), "INFO_IS_RIGHT");
-        //用户对象置入模型
-        m_userInfoModel->add(userInfo);
+        //用户对象置入考场的用户表
+        ExamRoom->examRoom->UserList->add(userInfo);
     }
     else {
          m_tcpServer->SendInfoToClient(userInfo->getUserIP(),userInfo->getUserPort().toInt(), "INFO_IS_NOT_RIGHT");

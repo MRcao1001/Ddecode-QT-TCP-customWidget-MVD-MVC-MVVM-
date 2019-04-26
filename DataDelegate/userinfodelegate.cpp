@@ -23,6 +23,8 @@ void UserInfoDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opti
         if(userinfo != nullptr)
         {
             m_userInfoFrame->setName(userinfo->getUserName());
+            m_userInfoFrame->SetIP(userinfo->getUserIP());
+            m_userInfoFrame->SetTicket(userinfo->getUserTicket());
             m_userInfoFrame->resize(option.rect.width(),option.rect.height());
             if(option.state & QStyle::State_Selected)
             {
