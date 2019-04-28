@@ -3,7 +3,7 @@
 
 #include <QAbstractItemModel>
 #include <QSize>
-#include <DataModeView/UserInfo.h>
+#include <DataModel/UserInfo.h>
 class UserInfoModel : public QAbstractListModel
 {
     Q_OBJECT
@@ -21,6 +21,7 @@ public:
     void add(UserInfo* userInfo);
     ///以下标来获取模型中的Item
     UserInfo *at(int index);
+    void Clear();
 private:
     QList<UserInfo* > m_userInfoList;
     int indexNumber;

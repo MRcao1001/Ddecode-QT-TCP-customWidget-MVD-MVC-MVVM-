@@ -4,7 +4,8 @@
 #include <QSqlDatabase>
 #include <QSqlError>
 #include <QSqlQuery>
-#include "DataModeView/UserInfo.h"
+#include <DataModel/UserInfo.h>
+#include <DataModel/ExamChoiceQusetion.h>
 #include "Public_part/log.h"
 enum DBState{
     NOERROR = 0,
@@ -59,9 +60,39 @@ public:
      */
     DBState searchExamQuestionLib(ExamPaperModel *examPaper);
     /**
+     * @brief searchEcamPaper 查询试卷名信息
+     * @param ExamPaperList 传出
+     * @return
+     */
+    DBState searchExamPaper(QStringList *ExamPaperList);
+    /**
+     * @brief searchExamPaperQuestion 查询试卷包含的题目ID
+     * @param ExamPaperQuestionList
+     * @return
+     */
+    DBState searchExamPaperQuestion(QStringList *ExamPaperQuestionList, QString PaperName);
+    /**
+     * @brief InsertNewPaper 新增试卷到试卷库
+     * @param newPaperModel
+     * @return
+     */
+    DBState InsertNewPaper(ExamPaperModel *newPaperModel);
+    /**
+     * @brief InsertNewQueStIon 新增试题到题库
+     * @param newExamChoiceQuestion
+     * @return
+     */
+    DBState InsertNewQuestion(ExamChoiceQusetion *newExamChoiceQuestion);
+    /**
+     * @brief UpdataQuestion 修改对应ID的试题信息
+     * @param examChoiceQuestion
+     * @return
+     */
+    DBState UpdataQuestion(ExamChoiceQusetion *examChoiceQuestion);
+    /**
      * @brief deleteData 删除数据
      */
-    DBState deleteData(QString tableName, QString keyWord);
+    DBState DeleteQuestion(ExamChoiceQusetion *examChoiceQuestion);
 };
 
 #endif // DATABASEMANAGER_H

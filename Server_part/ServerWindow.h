@@ -34,12 +34,29 @@ private:
     QGraphicsDropShadowEffect *TopBarFrameShadow;
     QString qss_Checked;
     QString qss_Unchecked;
-
+    QWidget *m_parent;
     ExamRoomModelView *ExamRoom;
+    ExamChoiceQusetion *TempQuestion;
+
+    void SetupINFOtoUI(ExamChoiceQusetion* exq);
+    ExamChoiceQusetion* GetINFOfromUI();
 public slots:
     void GetLoginRequest(QString LoginInfo);
     void GetRegistRequest(QString RegistInfo);
     void ToolButtonCliced();
+private slots:
+    void on_ExamPaperListView_clicked(const QModelIndex &index);
+    void on_AllExamPapersListView_clicked(const QModelIndex &index);
+    void on_AddExamQuestion_clicked();
+    void on_RemoveExamItem_clicked();
+    void on_SaveExamPaperToLib_clicked();
+    void on_SaveExamPaper_clicked();
+    void on_SaveExamQuestionToLib_clicked();
+    void on_AddQuestion_clicked();
+    void on_SaveQuestion_clicked();
+    void on_EditQuestion_clicked();
+    void on_QsestionListView_clicked(const QModelIndex &index);
+    void on_DeleteQuestion_clicked();
 };
 
 #endif // SERVERWINDOW_H

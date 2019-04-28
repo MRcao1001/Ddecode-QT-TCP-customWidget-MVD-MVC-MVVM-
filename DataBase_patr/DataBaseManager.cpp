@@ -112,6 +112,7 @@ DBState DataBaseManager::searchUserData( UserInfo *userinfo)
     if(!sql_query->exec())
     {
         qWarning()<<sql_query->lastError();
+        delete sql_query;
         return SQLERROR;
     }
     else
@@ -143,14 +144,19 @@ DBState DataBaseManager::searchExamQuestionLib(ExamPaperModel *examPaper)
     if(!sql_query->exec())
     {
         qWarning()<<sql_query->lastError();
+        delete sql_query;
         return SQLERROR;
     }
     else
     {
         while (sql_query->next()) {
             ExamChoiceQusetion *examQusetion = new ExamChoiceQusetion();
+            if(sql_query->value(5).toString() == "FORBIDDEN")
+            {
+                continue;
+            }
             examQusetion->setNumber(sql_query->value(0).toString().toInt());
-            examQusetion->setScore(sql_query->value(1).toString().toInt());
+            examQusetion->setScore(sql_query->value(1).toString());
             examQusetion->setTrueResult(sql_query->value(1).toString());
             examQusetion->setQuestion(sql_query->value(3).toString());
             QStringList DefultResult = sql_query->value(4).toString().split(',');
@@ -165,4 +171,152 @@ DBState DataBaseManager::searchExamQuestionLib(ExamPaperModel *examPaper)
         delete sql_query;
         return NOERROR;
     }
+}
+
+DBState DataBaseManager::searchExamPaper(QStringList *ExamPaperList)
+{
+    sql_query = new QSqlQuery();
+    sql_query->prepare("SELECT * FROM AllPaper");
+    if(!sql_query->exec())
+    {
+        qWarning()<<sql_query->lastError();
+        delete sql_query;
+        return SQLERROR;
+    }
+    else
+    {
+        while (sql_query->next()) {
+
+            QString result = sql_query->value(1).toString() +","+ sql_query->value(3).toString();
+            ExamPaperList->append(result);
+        }
+        delete sql_query;
+        return NOERROR;
+    }
+}
+
+DBState DataBaseManager::searchExamPaperQuestion(QStringList *ExamPaperQuestionList, QString PaperName)
+{
+    sql_query = new QSqlQuery();
+    sql_query->prepare("SELECT QUESTIONS FROM AllPaper WHERE NAME = :PaperName");
+    sql_query->bindValue(":PaperName", PaperName);
+    if(!sql_query->exec())
+    {
+        qWarning()<<sql_query->lastError();
+        delete sql_query;
+        return SQLERROR;
+    }
+    else
+    {
+        while (sql_query->next()) {
+            *ExamPaperQuestionList = sql_query->value(0).toString().split(',');
+
+        }
+        delete sql_query;
+        return NOERROR;
+    }
+}
+
+DBState DataBaseManager::InsertNewPaper(ExamPaperModel *newPaperModel)
+{
+    sql_query = new QSqlQuery();
+    sql_query->prepare("INSERT INTO AllPaper VALUES (NULL,:NAME,:QUESTIONS,:TIME)");
+    QString QUESTIONS;
+    QList<ExamChoiceQusetion* > examList = newPaperModel->getExamList();
+    foreach(ExamChoiceQusetion *ecq, examList)
+    {
+        QUESTIONS += QString::number(ecq->getNumber());
+        QUESTIONS += ",";
+    }
+    QUESTIONS = QUESTIONS.left(QUESTIONS.length()-1);
+    if(newPaperModel->PaperName == "" || QUESTIONS == "" || newPaperModel->TotalTestTime=="")
+    {
+        delete  sql_query;
+        return INFONOTTRUE;
+    }
+    sql_query->bindValue(":NAME", newPaperModel->PaperName);
+    sql_query->bindValue(":QUESTIONS", QUESTIONS);
+    sql_query->bindValue(":TIME", newPaperModel->TotalTestTime);
+
+    if(!sql_query->exec())
+    {
+        qWarning()<<sql_query->lastError();
+        delete sql_query;
+        return SQLERROR;
+    }
+    delete sql_query;
+}
+
+DBState DataBaseManager::InsertNewQuestion(ExamChoiceQusetion *newExamChoiceQuestion)
+{
+    sql_query = new QSqlQuery();
+    sql_query->prepare("INSERT INTO ExamQuestionLib VALUES (NULL,:SCORE,:RESULT,:TEXT,:DEFULTRESULT)");
+    QString DEFULTRESULT;
+    DEFULTRESULT += newExamChoiceQuestion->getResultA() + ",";
+    DEFULTRESULT += newExamChoiceQuestion->getResultB() + ",";
+    DEFULTRESULT += newExamChoiceQuestion->getResultC() + ",";
+    DEFULTRESULT += newExamChoiceQuestion->getResultD();
+    if(newExamChoiceQuestion->getScore() == "" || newExamChoiceQuestion->getTrueResult() == "" || newExamChoiceQuestion->getQuestion()=="" || DEFULTRESULT == ",,,")
+    {
+        delete  sql_query;
+        return INFONOTTRUE;
+    }
+    sql_query->bindValue(":SCORE", newExamChoiceQuestion->getScore());
+    sql_query->bindValue(":RESULT",newExamChoiceQuestion->getTrueResult());
+    sql_query->bindValue(":TEXT", newExamChoiceQuestion->getQuestion());
+    sql_query->bindValue(":DEFULTRESULT", DEFULTRESULT);
+
+    if(!sql_query->exec())
+    {
+        qWarning()<<sql_query->lastError();
+        delete sql_query;
+        return SQLERROR;
+    }
+    delete sql_query;
+    return NOERROR;
+}
+
+DBState DataBaseManager::UpdataQuestion(ExamChoiceQusetion *examChoiceQuestion)
+{
+    sql_query = new QSqlQuery();
+    sql_query->prepare("UPDATE ExamQuestionLib SET SCORE = :SCORE, RESULT = :RESULT, TEXT = :TEXT, DEFULTRESULT = :DEFULTRESULT WHERE ID = :ID");
+    QString DEFULTRESULT;
+    DEFULTRESULT += examChoiceQuestion->getResultA() + ",";
+    DEFULTRESULT += examChoiceQuestion->getResultB() + ",";
+    DEFULTRESULT += examChoiceQuestion->getResultC() + ",";
+    DEFULTRESULT += examChoiceQuestion->getResultD();
+    if(examChoiceQuestion->getScore() == "" || examChoiceQuestion->getTrueResult() == "" || examChoiceQuestion->getQuestion()=="" || DEFULTRESULT == ",,,")
+    {
+        delete  sql_query;
+        return INFONOTTRUE;
+    }
+    sql_query->bindValue(":SCORE", examChoiceQuestion->getScore());
+    sql_query->bindValue(":RESULT",examChoiceQuestion->getTrueResult());
+    sql_query->bindValue(":TEXT", examChoiceQuestion->getQuestion());
+    sql_query->bindValue(":DEFULTRESULT", DEFULTRESULT);
+    sql_query->bindValue(":ID", examChoiceQuestion->getNumber());
+    if(!sql_query->exec())
+    {
+        qWarning()<<sql_query->lastError();
+        delete sql_query;
+        return SQLERROR;
+    }
+    delete sql_query;
+    return NOERROR;
+}
+
+DBState DataBaseManager::DeleteQuestion(ExamChoiceQusetion *examChoiceQuestion)
+{
+    sql_query = new QSqlQuery();
+    sql_query->prepare("UPDATE ExamQuestionLib SET DELETED = :DELETED WHERE ID = :ID");
+    sql_query->bindValue(":DELETED", "FORBIDDEN");
+    sql_query->bindValue(":ID", examChoiceQuestion->getNumber());
+    if(!sql_query->exec())
+    {
+        qWarning()<<sql_query->lastError();
+        delete sql_query;
+        return SQLERROR;
+    }
+    delete sql_query;
+    return NOERROR;
 }

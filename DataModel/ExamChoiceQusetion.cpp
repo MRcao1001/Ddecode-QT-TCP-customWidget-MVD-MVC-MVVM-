@@ -6,9 +6,9 @@ ExamChoiceQusetion::ExamChoiceQusetion()
     this->m_isCollection = false;
     this->m_number = 1;
     this->m_questionText = "";
-    this->m_score = 0;
-    this->m_checkResult = 0;
-    this->m_trueResult = 0;
+    this->m_score = "0";
+    this->m_checkResult = "A";
+    this->m_trueResult = "A";
 }
 
 
@@ -23,17 +23,17 @@ QString ExamChoiceQusetion::getQuestion()
     return m_questionText;
 }
 
-int ExamChoiceQusetion::getScore()
+QString ExamChoiceQusetion::getScore()
 {
     return m_score;
 }
 
-int ExamChoiceQusetion::getTrueResult()
+QString ExamChoiceQusetion::getTrueResult()
 {
     return m_trueResult;
 }
 
-int ExamChoiceQusetion::getCheckResult()
+QString ExamChoiceQusetion::getCheckResult()
 {
     return m_checkResult;
 }
@@ -69,7 +69,7 @@ void ExamChoiceQusetion::setQuestion(QString questionTxt)
     this->m_questionText = questionTxt;
 }
 
-void ExamChoiceQusetion::setScore(int score)
+void ExamChoiceQusetion::setScore(QString score)
 {
     this->m_score = score;
 }

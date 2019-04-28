@@ -2,6 +2,7 @@
 ExamPaperDelegate::ExamPaperDelegate(ExamPaperModel *examPaperModel, QObject *parent)
 {
     this->m_examPaperModel = examPaperModel;
+    mutex = new QMutex();
     m_examChoiceQusetionFrame = new ExamChoiceQusetionFrame();
 }
 
@@ -18,7 +19,9 @@ void ExamPaperDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opt
 {
     if(index.column() == 0)
     {
+        mutex->lock();
         ExamChoiceQusetion *examChoiceQuestion = m_examPaperModel->at(index.row());
+        mutex->unlock();
         if(examChoiceQuestion != nullptr)
         {
             m_examChoiceQusetionFrame->setNumber(examChoiceQuestion->getNumber());
@@ -43,4 +46,11 @@ void ExamPaperDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opt
         }
         QStyledItemDelegate::paint(painter,option,index);
     }
+}
+
+QSize ExamPaperDelegate::sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const
+{
+    QSize size = QStyledItemDelegate::sizeHint(option, index);
+    size.setHeight( size.height() + 100 );
+    return size;
 }

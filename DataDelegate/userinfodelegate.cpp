@@ -4,6 +4,7 @@ UserInfoDelegate::UserInfoDelegate(UserInfoModel *userInfoModel, QObject *parent
 {
     this->m_userInfoModel = userInfoModel;
     m_userInfoFrame = new UserInfoFrame();
+    mutex = new QMutex();
 }
 
 UserInfoDelegate::~UserInfoDelegate()
@@ -19,7 +20,9 @@ void UserInfoDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opti
 {
     if(index.column() == 0)
     {
+        mutex->lock();
         UserInfo *userinfo = m_userInfoModel->at(index.row());
+        mutex->unlock();
         if(userinfo != nullptr)
         {
             m_userInfoFrame->setName(userinfo->getUserName());

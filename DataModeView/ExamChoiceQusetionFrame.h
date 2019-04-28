@@ -15,7 +15,7 @@ public:
     ~ExamChoiceQusetionFrame();
     void setNumber(const int number);
     void setQuestion(const QString questionTxt);
-    void setScore(const int score);
+    void setScore(const QString score);
     void setTrueResult(const int result);
     void setCheckResult(const int result);
     void setResultA(QString Result);

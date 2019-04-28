@@ -2,6 +2,8 @@
 #define EXAMCHOICEQUSETION_H
 
 #include <QString>
+#include <QMetaType>
+
 enum Result{
     N = 0,
     A = 1,
@@ -17,9 +19,9 @@ public:
     bool getCollection();
     int getNumber();
     QString getQuestion();
-    int getScore();
-    int getTrueResult();
-    int getCheckResult();
+    QString getScore();
+    QString getTrueResult();
+    QString getCheckResult();
     QString getResultA();
     QString getResultB();
     QString getResultC();
@@ -27,7 +29,7 @@ public:
 public:
     void setNumber(int number);
     void setQuestion(QString questionTxt);
-    void setScore(int score);
+    void setScore(QString score);
     void setTrueResult(QString result);
     void setCheckResult(QString result);
     void setResultA(QString Result);
@@ -38,14 +40,14 @@ private:
     bool m_isMarked;
     bool m_isCollection;
     int m_number;
-    QString m_questionText;
-    int m_score;
+    QString m_score;
     QString m_trueResult;
     QString m_checkResult;
+    QString m_questionText;
     QString m_Result_A;
     QString m_Result_B;
     QString m_Result_C;
     QString m_Result_D;
 };
-
+Q_DECLARE_METATYPE(ExamChoiceQusetion);
 #endif // EXAMCHOICEQUSETION_H

@@ -23,9 +23,9 @@ void ExamChoiceQusetionFrame::setQuestion(const QString questionTxt)
     ui->Question->setText(questionTxt);
 }
 
-void ExamChoiceQusetionFrame::setScore(const int score)
+void ExamChoiceQusetionFrame::setScore(const QString score)
 {
-    ui->score->setText(QString::number(score));
+    ui->score->setText(score);
 }
 
 void ExamChoiceQusetionFrame::setTrueResult(const int result)

@@ -3,8 +3,9 @@
 
 #include <QStyledItemDelegate>
 #include <QPainter>
-#include "DataModel/ExamPaperModel.h"
-#include "DataModeView/ExamChoiceQusetionFrame.h"
+#include <DataModel/ExamPaperModel.h>
+#include <DataModel/ExamChoiceQusetion.h>
+#include <DataModeView/ExamChoiceQusetionFrame.h>
 class ExamPaperDelegate : public QStyledItemDelegate
 {
     Q_OBJECT
@@ -14,11 +15,11 @@ public:
 
 protected:
     void paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const;
-
+    QSize sizeHint ( const QStyleOptionViewItem & option, const QModelIndex & index ) const;
 private:
     ExamPaperModel *m_examPaperModel;
     ExamChoiceQusetionFrame *m_examChoiceQusetionFrame;
-
+    QMutex *mutex;
     int parentHeight;
 };
 #endif // EXAMPAPERDELEGATE_H

@@ -1,9 +1,11 @@
 ﻿#include "ExamPaperModel.h"
-
+#include <QDebug>
 ExamPaperModel::ExamPaperModel(QObject *parent)
     : QAbstractListModel(parent)
 {
     indexNumber = 1;
+    mutex = new QMutex();
+    PaperName = "默认试卷";
 }
 
 ExamPaperModel::~ExamPaperModel()
@@ -66,7 +68,7 @@ QVariant ExamPaperModel::data(const QModelIndex &index, int role) const
     return QVariant();
 }
 
-void ExamPaperModel::add(bool isMarkd, bool isCollection, QString questionTxt, int score, QString trueResult, QString ResultA, QString ResultB, QString ResultC, QString ResultD)
+void ExamPaperModel::add(bool isMarkd, bool isCollection, QString questionTxt, QString score, QString trueResult, QString ResultA, QString ResultB, QString ResultC, QString ResultD)
 {
     ExamChoiceQusetion* examChoiceQusetion = new ExamChoiceQusetion();
     examChoiceQusetion->setNumber(indexNumber);
@@ -89,6 +91,26 @@ void ExamPaperModel::add(ExamChoiceQusetion* examChoiceQusetion)
 ExamChoiceQusetion *ExamPaperModel::at(int index)
 {
     return m_examChoiceQusetionList.at(index);
+}
+
+
+void ExamPaperModel::remove(int index)
+{
+    if(index >= 0 && index < m_examChoiceQusetionList.size())
+    {
+        mutex->lock();
+        beginRemoveRows(QModelIndex(), index, index);
+        m_examChoiceQusetionList.removeAt(index);
+        endRemoveRows();
+        mutex->unlock();
+    }
+}
+
+void ExamPaperModel::Clear()
+{
+    mutex->lock();
+    m_examChoiceQusetionList.clear();
+    mutex->unlock();
 }
 
 QList<ExamChoiceQusetion *> ExamPaperModel::getExamList()

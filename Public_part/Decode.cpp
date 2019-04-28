@@ -64,7 +64,7 @@ void Decode::InitObject()
     LARW->SetUserInfoModel(this->m_userInfoModel);// 必须
 
     //初始化考场（服务器）界面
-    SW = new ServerWindow();
+    SW = new ServerWindow(this);
     SW->SetTcpServer(this->m_tcpServer);
     SW->SetUserInfoModel(this->m_userInfoModel);
     SW->setVisible(false);

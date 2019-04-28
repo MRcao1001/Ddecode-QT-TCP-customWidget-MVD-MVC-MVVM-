@@ -76,3 +76,8 @@ UserInfo *UserInfoModel::at(int index)
 {
     return m_userInfoList.at(index);
 }
+
+void UserInfoModel::Clear()
+{
+    m_userInfoList.clear();
+}
