@@ -3,6 +3,8 @@
 
 #include <QWidget>
 #include "TCP_part/TCPClient.h"
+#include <DataModeView/ExamRoomModelView.h>
+#include "ExmaPaperwindow.h"
 #include "LeftBar.h"
 namespace Ui {
 class ClientWindow;
@@ -19,8 +21,14 @@ public:
 private:
     Ui::ClientWindow *ui;
     LeftBar *leftbar;
+    TCPClient *m_tcpclient;
+    // 考场模型
+    ExamRoomModelView *ExamRoom;
+    ExmaPaperwindow *examPaperWindow;
     void InitUI();
     void SetConnect();
+    // 考试开始执行函数
+    void ExaminationBegins(QString ExamRoomInfo);
 };
 
 #endif // CLIENTWINDOW_H

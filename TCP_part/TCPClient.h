@@ -37,6 +37,7 @@ signals:
     void LicenceResult(int type);
     void DoLogin(int type);
     void DoRegiste(int type);
+    void ExaminationBegins(QString ExamRoomInfo);
 };
 
 #endif // TCPCLIENT_H

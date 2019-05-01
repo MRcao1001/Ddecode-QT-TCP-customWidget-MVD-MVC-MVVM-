@@ -6,7 +6,7 @@
 #include "DataBase_patr/DataBaseManager.h"
 #include "DataModel/UserInfoModel.h"
 #include <DataModeView/ExamRoomModelView.h>
-
+#include <QTimer>
 #include <QGraphicsDropShadowEffect>
 namespace Ui {
 class ServerWindow;
@@ -38,12 +38,14 @@ private:
     ExamRoomModelView *ExamRoom;
     ExamChoiceQusetion *TempQuestion;
 
+    QTimer *ExamRoomStartAndStopTimer;
     void SetupINFOtoUI(ExamChoiceQusetion* exq);
     ExamChoiceQusetion* GetINFOfromUI();
 public slots:
     void GetLoginRequest(QString LoginInfo);
     void GetRegistRequest(QString RegistInfo);
     void ToolButtonCliced();
+    void ExamRoomStartAndStop();
 private slots:
     void on_ExamPaperListView_clicked(const QModelIndex &index);
     void on_AllExamPapersListView_clicked(const QModelIndex &index);
@@ -57,6 +59,8 @@ private slots:
     void on_EditQuestion_clicked();
     void on_QsestionListView_clicked(const QModelIndex &index);
     void on_DeleteQuestion_clicked();
+
+    void on_ExamStart_clicked();
 };
 
 #endif // SERVERWINDOW_H

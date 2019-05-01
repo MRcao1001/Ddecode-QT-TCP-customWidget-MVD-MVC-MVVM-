@@ -110,3 +110,15 @@ void ExamChoiceQusetion::setResultD(QString Result)
 {
     this->m_Result_D = Result;
 }
+
+QDataStream &operator<<(QDataStream &output, const ExamChoiceQusetion &obj)
+{
+    output<< obj.m_score << obj.m_number<<obj.m_Result_A<<obj.m_Result_B<<obj.m_Result_C<<obj.m_Result_D<<obj.m_isMarked<<obj.m_trueResult<<obj.m_checkResult<<obj.m_isCollection<<obj.m_questionText;
+    return output;
+}
+
+QDataStream &operator>>(QDataStream &input, ExamChoiceQusetion &obj)
+{
+    input >> obj.m_score >> obj.m_number>>obj.m_Result_A>>obj.m_Result_B>>obj.m_Result_C>>obj.m_Result_D>>obj.m_isMarked>>obj.m_trueResult>>obj.m_checkResult>>obj.m_isCollection>>obj.m_questionText;
+    return input;
+}

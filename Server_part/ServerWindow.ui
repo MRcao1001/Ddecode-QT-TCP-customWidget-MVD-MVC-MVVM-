@@ -491,7 +491,7 @@ image:None;
       <item>
        <widget class="QStackedWidget" name="stackedWidget">
         <property name="currentIndex">
-         <number>4</number>
+         <number>1</number>
         </property>
         <widget class="QWidget" name="page">
          <layout class="QHBoxLayout" name="horizontalLayout_9">
@@ -523,7 +523,11 @@ image:None;
              </layout>
             </item>
             <item>
-             <widget class="QListView" name="AllExamPapersListView"/>
+             <widget class="QListView" name="AllExamPapersListView">
+              <property name="verticalScrollMode">
+               <enum>QAbstractItemView::ScrollPerPixel</enum>
+              </property>
+             </widget>
             </item>
            </layout>
           </item>
@@ -583,7 +587,11 @@ image:None;
              </layout>
             </item>
             <item>
-             <widget class="QListView" name="ExamPaperListView"/>
+             <widget class="QListView" name="ExamPaperListView">
+              <property name="verticalScrollMode">
+               <enum>QAbstractItemView::ScrollPerPixel</enum>
+              </property>
+             </widget>
             </item>
             <item>
              <widget class="QPushButton" name="SaveExamPaperToLib">
@@ -763,7 +771,11 @@ image:None;
              </layout>
             </item>
             <item>
-             <widget class="QListView" name="AllExamPapersListView2"/>
+             <widget class="QListView" name="AllExamPapersListView2">
+              <property name="verticalScrollMode">
+               <enum>QAbstractItemView::ScrollPerPixel</enum>
+              </property>
+             </widget>
             </item>
            </layout>
           </item>
@@ -779,7 +791,7 @@ image:None;
                </widget>
               </item>
               <item>
-               <widget class="QLineEdit" name="lineEdit_3">
+               <widget class="QLineEdit" name="TotalTestTime">
                 <property name="minimumSize">
                  <size>
                   <width>0</width>
@@ -791,7 +803,7 @@ image:None;
              </layout>
             </item>
             <item>
-             <widget class="QCheckBox" name="checkBox">
+             <widget class="QCheckBox" name="allowCopy">
               <property name="minimumSize">
                <size>
                 <width>0</width>
@@ -804,7 +816,7 @@ image:None;
              </widget>
             </item>
             <item>
-             <widget class="QCheckBox" name="checkBox_2">
+             <widget class="QCheckBox" name="allowPaste">
               <property name="minimumSize">
                <size>
                 <width>0</width>
@@ -817,7 +829,7 @@ image:None;
              </widget>
             </item>
             <item>
-             <widget class="QCheckBox" name="checkBox_3">
+             <widget class="QCheckBox" name="AutoJudging">
               <property name="minimumSize">
                <size>
                 <width>0</width>
@@ -830,7 +842,7 @@ image:None;
              </widget>
             </item>
             <item>
-             <widget class="QCheckBox" name="checkBox_4">
+             <widget class="QCheckBox" name="AutoStatistics">
               <property name="minimumSize">
                <size>
                 <width>0</width>
@@ -845,7 +857,7 @@ image:None;
             <item>
              <layout class="QHBoxLayout" name="horizontalLayout_12">
               <item>
-               <widget class="QPushButton" name="pushButton_10">
+               <widget class="QPushButton" name="ExamStart">
                 <property name="minimumSize">
                  <size>
                   <width>0</width>
@@ -909,7 +921,7 @@ image:None;
         <widget class="QWidget" name="page_3">
          <layout class="QHBoxLayout" name="horizontalLayout_15">
           <item>
-           <layout class="QVBoxLayout" name="verticalLayout_7">
+           <layout class="QVBoxLayout" name="ServerArea">
             <item>
              <layout class="QHBoxLayout" name="horizontalLayout_14">
               <item>
@@ -922,7 +934,11 @@ image:None;
              </layout>
             </item>
             <item>
-             <widget class="QListView" name="UserListView"/>
+             <widget class="QListView" name="UserListView">
+              <property name="verticalScrollMode">
+               <enum>QAbstractItemView::ScrollPerPixel</enum>
+              </property>
+             </widget>
             </item>
            </layout>
           </item>
@@ -1003,7 +1019,11 @@ image:None;
              </layout>
             </item>
             <item>
-             <widget class="QListView" name="AllExamPapersListView3"/>
+             <widget class="QListView" name="AllExamPapersListView3">
+              <property name="verticalScrollMode">
+               <enum>QAbstractItemView::ScrollPerPixel</enum>
+              </property>
+             </widget>
             </item>
            </layout>
           </item>
@@ -1089,7 +1109,11 @@ image:None;
                </layout>
               </item>
               <item>
-               <widget class="QListView" name="QsestionListView"/>
+               <widget class="QListView" name="QsestionListView">
+                <property name="verticalScrollMode">
+                 <enum>QAbstractItemView::ScrollPerPixel</enum>
+                </property>
+               </widget>
               </item>
              </layout>
             </widget>

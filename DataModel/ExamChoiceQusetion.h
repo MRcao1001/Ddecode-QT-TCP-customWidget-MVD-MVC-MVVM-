@@ -3,7 +3,7 @@
 
 #include <QString>
 #include <QMetaType>
-
+#include <QDataStream>
 enum Result{
     N = 0,
     A = 1,
@@ -36,6 +36,8 @@ public:
     void setResultB(QString Result);
     void setResultC(QString Result);
     void setResultD(QString Result);
+    friend QDataStream &operator<<(QDataStream & , const ExamChoiceQusetion &);
+    friend QDataStream &operator>>(QDataStream & , ExamChoiceQusetion &);
 private:
     bool m_isMarked;
     bool m_isCollection;

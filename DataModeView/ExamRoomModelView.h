@@ -25,6 +25,9 @@ public:
     int SavePaperToLib();
     int SaveQuestionToLib(ExamChoiceQusetion* question);
     int DeleteQuestion(ExamChoiceQusetion* question,int index);
+
+    QString serialization();
+    void re_serialization(QString InfoList);
 };
 
 #endif // EXAMROOMMODELVIEW_H

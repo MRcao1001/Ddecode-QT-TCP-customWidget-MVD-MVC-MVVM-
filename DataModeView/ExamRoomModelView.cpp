@@ -23,12 +23,18 @@ void ExamRoomModelView::InitModel()
 
     examRoom->QuestionLib = new ExamPaperModel();
     // 该数据模型通过初始化时遍历数据库来生成
-    GetQuestionLib(examRoom->QuestionLib);
+    if(DBManager != nullptr)
+    {
+        GetQuestionLib(examRoom->QuestionLib);
+    }
     examRoom->QuestionLibView = new ExamPaperDelegate(examRoom->QuestionLib);
 
     examRoom->AllPaperList = new QStringList();
     // 遍历数据库填充StringList
-    GetPaperLib(examRoom->AllPaperList);
+    if(DBManager != nullptr)
+    {
+        GetPaperLib(examRoom->AllPaperList);
+    }
     examRoom->AllPaperListModel = new QStringListModel();
     examRoom->AllPaperListModel->setStringList(*examRoom->AllPaperList);
 
@@ -161,6 +167,108 @@ int ExamRoomModelView::DeleteQuestion(ExamChoiceQusetion *question, int index)
     if(state == SQLERROR)
         return -4;
     return 0;
+}
+
+
+
+/**
+ * @brief ExamRoomModelView::serialization
+ * @return stringlist： 结构
+ * 是否可以复制#是否可以粘贴#是否自动判卷#自动统计
+ * 试卷名#试卷总时间
+ * 试题1的信息（&分割）#试题2的信息（$分割）
+ */
+QString ExamRoomModelView::serialization()
+{
+    QString ExamRoomInfo;
+    ExamRoomInfo.append(QString::number(examRoom->AllowCopy));
+    ExamRoomInfo.append("##");
+    ExamRoomInfo.append(QString::number(examRoom->AllowPaste));
+    ExamRoomInfo.append("##");
+    ExamRoomInfo.append(QString::number(examRoom->AutoJudging));
+    ExamRoomInfo.append("##");
+    ExamRoomInfo.append(QString::number(examRoom->AutoStatistics));
+
+    QString ExamPaperInfo;
+    ExamPaperInfo.append(examRoom->ExamPaper->PaperName);
+    ExamPaperInfo.append("##");
+    ExamPaperInfo.append(examRoom->ExamPaper->TotalTestTime);
+
+    QString ExamQuestions;
+    for(auto i : examRoom->ExamPaper->getExamList())
+    {
+        ExamQuestions.append(i->getScore());
+        ExamQuestions.append("$$");
+        ExamQuestions.append(QString::number(i->getNumber()));
+        ExamQuestions.append("$$");
+        ExamQuestions.append(i->getResultA());
+        ExamQuestions.append("$$");
+        ExamQuestions.append(i->getResultB());
+        ExamQuestions.append("$$");
+        ExamQuestions.append(i->getResultC());
+        ExamQuestions.append("$$");
+        ExamQuestions.append(i->getResultD());
+        ExamQuestions.append("$$");
+        ExamQuestions.append(i->getQuestion());
+        ExamQuestions.append("$$");
+        ExamQuestions.append(i->getTrueResult());
+        if(i != examRoom->ExamPaper->getExamList().back())
+        {
+            ExamQuestions.append("##");
+        }
+    }
+    QString tempList;
+    tempList.append(ExamRoomInfo);
+    tempList.append("%%");
+    tempList.append(ExamPaperInfo);
+    tempList.append("%%");
+    tempList.append(ExamQuestions);
+    return tempList;
+}
+
+void ExamRoomModelView::re_serialization(QString InfoListString)
+{
+    QStringList InfoList = InfoListString.split("%%");
+    if(InfoList.length() == 3)
+    {
+        QString ExamRoomInfo = InfoList.at(0);
+        QStringList ExamRoomInfoSplit = ExamRoomInfo.split("##");
+        if(ExamRoomInfoSplit.length() == 4)
+        {
+            QVariant temp = ExamRoomInfoSplit.at(0);
+            examRoom->AllowCopy = temp.toBool();
+            temp = ExamRoomInfoSplit.at(1);
+            examRoom->AllowPaste = temp.toBool();
+            temp = ExamRoomInfoSplit.at(2);
+            examRoom->AutoJudging = temp.toBool();
+            temp = ExamRoomInfoSplit.at(3);
+            examRoom->AutoStatistics = temp.toBool();
+        }
+        QString ExamPaperInfo = InfoList.at(1);
+        QStringList ExamPaperInfoSplit = ExamPaperInfo.split("##");
+        if(ExamPaperInfoSplit.length() == 2)
+        {
+            examRoom->ExamPaper->PaperName = ExamRoomInfoSplit.at(0);
+            examRoom->ExamPaper->TotalTestTime = ExamRoomInfoSplit.at(1);
+        }
+        QString ExamQuestions = InfoList.at(2);
+        QStringList ExamQuestionsSplit = ExamQuestions.split("##");
+        for(auto ExamQuestionInfo : ExamQuestionsSplit)
+        {
+            ExamChoiceQusetion* examcq = new ExamChoiceQusetion();
+            QStringList examinfo = ExamQuestionInfo.split("$$");
+            examcq->setScore(examinfo.at(0));
+            examcq->setNumber(examinfo.at(1).toInt());
+            examcq->setResultA(examinfo.at(2));
+            examcq->setResultB(examinfo.at(3));
+            examcq->setResultC(examinfo.at(4));
+            examcq->setResultD(examinfo.at(5));
+            examcq->setQuestion(examinfo.at(6));
+            examcq->setTrueResult(examinfo.at(7));
+            examRoom->ExamPaper->add(examcq);
+
+        }
+    }
 }
 
 

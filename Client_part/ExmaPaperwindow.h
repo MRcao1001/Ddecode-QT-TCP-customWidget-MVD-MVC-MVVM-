@@ -16,10 +16,11 @@ public:
     explicit ExmaPaperwindow(QWidget *parent = 0);
     ~ExmaPaperwindow();
     void InitViewModelDelegate();
-private:
-    Ui::ExmaPaperwindow *ui;
     ExamPaperModel *m_examPaperModel;
     ExamPaperDelegate *m_examPaperDelegate;
+private:
+    Ui::ExmaPaperwindow *ui;
+
 };
 
 #endif // EXMAPAPERWINDOW_H

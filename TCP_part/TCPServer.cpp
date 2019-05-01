@@ -84,7 +84,8 @@ void TCPServer::ReadData()
     // 由于readyRead信号并未提供SocketDecriptor，所以需要遍历所有客户端
     for(int i=0; i<tcpClient.length(); i++)
     {
-        QByteArray buffer = tcpClient[i]->readAll();
+        QByteArray recivebuffer = tcpClient[i]->readAll();
+        QString buffer = QString::fromLocal8Bit(recivebuffer);
         if(buffer.isEmpty())    continue;
 
         static QString IP_Port, IP_Port_Pre;
@@ -150,6 +151,7 @@ void TCPServer::on_btnClear_clicked()
     ui->edtRecv_2->clear();
 }
 
+
 void TCPServer::on_ServerSendInfo_clicked()
 {
     QString data = ui->edtSend_2->toPlainText();
@@ -191,6 +193,15 @@ void TCPServer::SendInfoToClient(QString IP,int Port, QString Info)
             tcpClient[i]->write(Info.toLatin1());
             return; //ip:port唯一，无需继续检索
         }
+    }
+
+}
+
+void TCPServer::BroadCast(QString data)
+{
+    for(int i=0; i<tcpClient.length(); i++)
+    {
+        tcpClient[i]->write(data.toLocal8Bit()); //qt5除去了.toAscii()
     }
 
 }

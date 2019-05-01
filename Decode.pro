@@ -49,9 +49,9 @@ SOURCES += \
     DataDelegate/UserInfoDelegate.cpp \
     Server_part/ServerWindow.cpp\
     Client_part/ClientWindow.cpp\
-    Client_part/ExmaPaperwindow.cpp\
     Client_part/LeftBar.cpp \
-    Client_part/AnswerSheet.cpp
+    Client_part/AnswerSheet.cpp \
+    Client_part/ExmaPaperwindow.cpp
 
 HEADERS += \
         Public_part/Decode.h \

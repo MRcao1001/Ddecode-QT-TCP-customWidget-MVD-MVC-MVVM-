@@ -113,6 +113,30 @@ void ExamPaperModel::Clear()
     mutex->unlock();
 }
 
+QDataStream &operator<<(QDataStream &output, const ExamPaperModel &obj)
+{
+    output <<obj.PaperName<<obj.indexNumber<<obj.TotalTestTime;
+    QList<ExamChoiceQusetion* >tempList = obj.m_examChoiceQusetionList;
+    while(!tempList.empty())
+    {
+        output<<tempList.front();
+        tempList.pop_front();
+    }
+    return output;
+}
+
+QDataStream &operator>>(QDataStream &input, ExamPaperModel &obj)
+{
+    input  >> obj.PaperName>>obj.indexNumber>>obj.TotalTestTime;
+    while (!input.atEnd())
+    {
+          ExamChoiceQusetion examcq;
+          input>>examcq;
+          obj.m_examChoiceQusetionList.push_back(&examcq);
+    }
+    return input;
+}
+
 QList<ExamChoiceQusetion *> ExamPaperModel::getExamList()
 {
     return m_examChoiceQusetionList;

@@ -90,6 +90,16 @@ void TCPClient::ReadData()
     {
         emit DoRegiste(-1);
     }
+    // 开始考试
+    QString str(buffer);
+    QStringList strList = str.split("%%");
+    if(strList.length() >= 1)
+    {
+        if(strList.at(0) == "ExaminationBegins")
+        {
+            emit ExaminationBegins(buffer);
+        }
+    }
     if(!buffer.isEmpty())
     {
         ui->edtRecv->append(buffer);

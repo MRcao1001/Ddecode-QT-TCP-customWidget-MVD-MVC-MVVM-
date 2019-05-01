@@ -6,6 +6,7 @@
 #include <DataModel/ExamChoiceQusetion.h>
 #include <QMutex>
 #include <qglobal.h>
+#include <QDataStream>
 class ExamPaperModel : public QAbstractListModel
 {
     Q_OBJECT
@@ -25,6 +26,9 @@ public:
     ExamChoiceQusetion *at(int index);
     void remove(int index);
     void Clear();
+    friend QDataStream &operator<<(QDataStream & , const ExamPaperModel &);
+    friend QDataStream &operator>>(QDataStream & , ExamPaperModel &);
+public:
     /// 获取模型中的试题集合
     QList<ExamChoiceQusetion* > getExamList();
     QString PaperName;

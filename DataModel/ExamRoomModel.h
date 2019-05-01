@@ -2,6 +2,7 @@
 #define EXAMROOMMODEL_H
 
 #include <QObject>
+#include <QDataStream>
 #include <DataModel/ExamPaperModel.h>
 #include <DataDelegate/ExamPaperDelegate.h>
 #include <DataModel/UserInfoModel.h>
@@ -34,15 +35,18 @@ public:
     /// 考试时间（min）
     int TotalTestTime;
     /// 已经过去的时间
-    int PastTestTime;
+    int PastTestTime = 0;
     /// 是否允许复制
-    bool AllowCopy;
+    bool AllowCopy = false;
     /// 是否允许粘贴
-    bool AllowPaste;
+    bool AllowPaste = false;
     /// 是否自动判卷
-    bool AutoJudging;
+    bool AutoJudging = false;
     /// 是否自动统计不及格学生名单
-    bool AutoStatistics;
+    bool AutoStatistics = false;
+public:
+    friend QDataStream &operator<<(QDataStream & , const ExamRoomModel &);
+    friend QDataStream &operator>>(QDataStream & , ExamRoomModel &);
 signals:
 
 public slots:

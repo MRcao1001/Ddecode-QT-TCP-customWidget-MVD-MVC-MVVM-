@@ -35,6 +35,7 @@ public slots:
     void on_btnClear_clicked();
     void on_ServerSendInfo_clicked();
     void SendInfoToClient(QString IP, int Port, QString Info);
+    void BroadCast(QString data);
 
 signals:
     void LoginRequest(QString LoginInfo);

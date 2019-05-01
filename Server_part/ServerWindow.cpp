@@ -38,8 +38,7 @@ void ServerWindow::SetUserInfoModel(UserInfoModel *userInfoModel)
  */
 void ServerWindow::InitUI()
 {
-
-
+    ui->TotalTestTime->setValidator(new QRegExpValidator(QRegExp("[0-9]+$")));
     //设置阴影效果
     TopBarFrameShadow = new QGraphicsDropShadowEffect;
     TopBarFrameShadow->setOffset(0,0);
@@ -47,6 +46,7 @@ void ServerWindow::InitUI()
     TopBarFrameShadow->setBlurRadius(20);
     ui->TopBarFrame->setGraphicsEffect(TopBarFrameShadow);
 
+    // 置入TCP服务器控制台
     // 读取qss
     QFile file(":/qss/Checked_TopBar.css");
     file.open(QIODevice::ReadOnly);
@@ -155,7 +155,7 @@ void ServerWindow::SetTcpServer(TCPServer *tcp)
     if(tcp != nullptr)
     {
         this->m_tcpServer = tcp;
-        //this->ui->ServerArea->addWidget(m_tcpServer);
+        this->ui->ServerArea->addWidget(m_tcpServer);
         this->m_tcpServer->on_btnConnect_clicked();
         // 绑定接收到数据信号和判断槽函数
         connect(m_tcpServer, SIGNAL(LoginRequest(QString)), this, SLOT(GetLoginRequest(QString)));
@@ -195,6 +195,23 @@ void ServerWindow::ToolButtonCliced()
     }
 
 }
+
+/**
+ * @brief ServerWindow::ExamRoomStartAndStop 考试开始和结束的槽函数
+ */
+void ServerWindow::ExamRoomStartAndStop()
+{
+    ExamRoom->examRoom->PastTestTime += 1;
+
+    ui->lcdNumber->display(QString::number(ExamRoom->examRoom->TotalTestTime-ExamRoom->examRoom->PastTestTime));
+    ui->progressBar->setValue(ExamRoom->examRoom->PastTestTime);
+    if(ExamRoom->examRoom->PastTestTime == ExamRoom->examRoom->TotalTestTime)
+    {
+         m_tcpServer->BroadCast("EndOfExamination");
+         ExamRoomStartAndStopTimer->stop();
+    }
+}
+
 
 // login Info : "LoginRequset"+ip-port+name+number+Ticket;
 /**
@@ -382,4 +399,46 @@ void ServerWindow::on_DeleteQuestion_clicked()
     else {
         messageWindow->ShowMessage(m_parent,"删除时出现错误，错误代码:"+ QString::number(ret));
     }
+}
+
+/**
+ * @brief ServerWindow::on_ExamStart_clicked 开始考试
+ */
+void ServerWindow::on_ExamStart_clicked()
+{
+    /// 设定考场对象
+    ExamRoomModel *examRoom = ExamRoom->examRoom;
+    if(ui->TotalTestTime->text() == "")
+    {
+        messageWindow->ShowMessage(m_parent,"您还未输入输入考试时间！");
+        return;
+    }
+    examRoom->TotalTestTime = ui->TotalTestTime->text().toInt();
+    if(ui->allowCopy->isChecked())
+    {
+        examRoom->AllowCopy = true;
+    }
+    if(ui->allowPaste->isChecked())
+    {
+        examRoom->AllowPaste = true;
+    }
+    if(ui->AutoJudging->isChecked())
+    {
+        examRoom->AutoJudging = true;
+    }
+    if(ui->AutoStatistics->isChecked())
+    {
+        examRoom->AutoStatistics = true;
+    }
+    // 序列化现在的考场模型类
+    QString temp = ExamRoom->serialization();
+    // 使用TCP发送试卷库信息
+    m_tcpServer->BroadCast("ExaminationBegins%%"+temp);
+    // 开始考试计时
+    ui->lcdNumber->display(QString::number(ExamRoom->examRoom->TotalTestTime-ExamRoom->examRoom->PastTestTime));
+    ui->progressBar->setRange(0, examRoom->TotalTestTime);
+    ui->progressBar->setValue(0);
+    ExamRoomStartAndStopTimer = new QTimer();
+    connect(ExamRoomStartAndStopTimer, SIGNAL(timeout()),this,SLOT(ExamRoomStartAndStop()));
+    ExamRoomStartAndStopTimer->start(60000);
 }
