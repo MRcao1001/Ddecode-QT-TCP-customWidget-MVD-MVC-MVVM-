@@ -51,7 +51,8 @@ SOURCES += \
     Client_part/ClientWindow.cpp\
     Client_part/LeftBar.cpp \
     Client_part/AnswerSheet.cpp \
-    Client_part/ExmaPaperwindow.cpp
+    Client_part/ExmaPaperwindow.cpp \
+    Public_part/QFlowLayout.cpp
 
 HEADERS += \
         Public_part/Decode.h \
@@ -78,7 +79,8 @@ HEADERS += \
     Client_part/ClientWindow.h\
     Client_part/LeftBar.h \
     Client_part/ExmaPaperwindow.h \
-    Client_part/AnswerSheet.h
+    Client_part/AnswerSheet.h \
+    Public_part/QFlowLayout.h
 
 FORMS += \
     Public_part/Decode.ui \

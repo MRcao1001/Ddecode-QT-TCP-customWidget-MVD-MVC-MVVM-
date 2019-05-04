@@ -476,7 +476,22 @@ image:None;
           <layout class="QVBoxLayout" name="ExampaperArea"/>
          </item>
          <item>
-          <layout class="QVBoxLayout" name="AnswerSheetArea"/>
+          <layout class="QVBoxLayout" name="verticalLayout_3">
+           <item>
+            <layout class="QVBoxLayout" name="AnswerSheetArea"/>
+           </item>
+           <item>
+            <layout class="QVBoxLayout" name="verticalLayout_4">
+             <item>
+              <widget class="QPushButton" name="HandInHand">
+               <property name="text">
+                <string>交卷</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+          </layout>
          </item>
         </layout>
        </widget>

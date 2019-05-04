@@ -59,7 +59,8 @@ void TCPClient::DisConnectToServer()
 
 void TCPClient::ReadData()
 {
-    QByteArray buffer = tcpClient->readAll();
+    QByteArray recivebuffer = tcpClient->readAll();
+    QString buffer = QString::fromLocal8Bit(recivebuffer);
     // 接收到许可证正确指令
     if(buffer == "Licence_Is_Right")
     {
@@ -89,6 +90,11 @@ void TCPClient::ReadData()
     if(buffer == "USER_EXIST")
     {
         emit DoRegiste(-1);
+    }
+    // 收卷
+    if(buffer == "HandInPaper")
+    {
+        emit DoHandInPaper();
     }
     // 开始考试
     QString str(buffer);

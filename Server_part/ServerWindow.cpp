@@ -12,6 +12,7 @@ ServerWindow::ServerWindow(QWidget *parent) :
     QString tableColums = "IP varchar(255) not NULL, PORT varchar(255) not NULL,Name varchar(255) not NULL,Number varchar(255) primary key not NULL,Ticket varchar(255) not NULL";
     DBManager->createDataTable("ExamineeInfo",tableColums);
     m_parent = parent;
+    ExamRoomStartAndStopTimer = new QTimer();
     InitExamRoom();
     InitUI();
 
@@ -70,6 +71,7 @@ void ServerWindow::InitUI()
     connect(this->ui->TAB_Students, SIGNAL(clicked()), this, SLOT(ToolButtonCliced()));
     connect(this->ui->TAB_ExamPaperSet, SIGNAL(clicked()), this, SLOT(ToolButtonCliced()));
     connect(this->ui->TAB_ExamQusetionSet, SIGNAL(clicked()), this, SLOT(ToolButtonCliced()));
+    connect(ExamRoomStartAndStopTimer, SIGNAL(timeout()),this,SLOT(ExamRoomStartAndStop()));
 }
 
 /**
@@ -406,6 +408,15 @@ void ServerWindow::on_DeleteQuestion_clicked()
  */
 void ServerWindow::on_ExamStart_clicked()
 {
+    if(ExamStarting)
+    {
+        ExamRoomStartAndStopTimer->stop();
+        ui->ExamStart->setText("开始本场考试");
+        ui->lcdNumber->display("0:00");
+        ui->progressBar->setValue(0);
+        m_tcpServer->BroadCast("HandInPaper");
+        return;
+    }
     /// 设定考场对象
     ExamRoomModel *examRoom = ExamRoom->examRoom;
     if(ui->TotalTestTime->text() == "")
@@ -438,7 +449,6 @@ void ServerWindow::on_ExamStart_clicked()
     ui->lcdNumber->display(QString::number(ExamRoom->examRoom->TotalTestTime-ExamRoom->examRoom->PastTestTime));
     ui->progressBar->setRange(0, examRoom->TotalTestTime);
     ui->progressBar->setValue(0);
-    ExamRoomStartAndStopTimer = new QTimer();
-    connect(ExamRoomStartAndStopTimer, SIGNAL(timeout()),this,SLOT(ExamRoomStartAndStop()));
     ExamRoomStartAndStopTimer->start(60000);
+    ui->ExamStart->setText("结束本场考试");
 }

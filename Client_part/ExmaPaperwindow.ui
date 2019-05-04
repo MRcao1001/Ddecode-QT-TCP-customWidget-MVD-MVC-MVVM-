@@ -98,7 +98,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QLabel" name="label_3">
+        <widget class="QLabel" name="QuestionNum">
          <property name="text">
           <string>0</string>
          </property>
@@ -128,31 +128,41 @@
      </item>
      <item>
       <layout class="QHBoxLayout" name="horizontalLayout_2">
+       <property name="leftMargin">
+        <number>100</number>
+       </property>
        <item>
-        <widget class="QCheckBox" name="checkBox">
+        <widget class="QRadioButton" name="checkedA">
          <property name="text">
-          <string>check A</string>
+          <string>A</string>
          </property>
         </widget>
        </item>
        <item>
-        <widget class="QCheckBox" name="checkBox_2">
+        <widget class="QRadioButton" name="checkedB">
          <property name="text">
-          <string>check B</string>
+          <string>B</string>
          </property>
         </widget>
        </item>
        <item>
-        <widget class="QCheckBox" name="checkBox_3">
+        <widget class="QRadioButton" name="checkedC">
          <property name="text">
-          <string>check C</string>
+          <string>C</string>
          </property>
         </widget>
        </item>
        <item>
-        <widget class="QCheckBox" name="checkBox_4">
+        <widget class="QRadioButton" name="checkedD">
          <property name="text">
-          <string>check D</string>
+          <string>D</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QRadioButton" name="checkedNA">
+         <property name="text">
+          <string>本题未做选择</string>
          </property>
         </widget>
        </item>

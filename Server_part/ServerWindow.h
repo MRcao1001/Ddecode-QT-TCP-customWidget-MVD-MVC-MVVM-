@@ -37,7 +37,7 @@ private:
     QWidget *m_parent;
     ExamRoomModelView *ExamRoom;
     ExamChoiceQusetion *TempQuestion;
-
+    bool ExamStarting = false;
     QTimer *ExamRoomStartAndStopTimer;
     void SetupINFOtoUI(ExamChoiceQusetion* exq);
     ExamChoiceQusetion* GetINFOfromUI();

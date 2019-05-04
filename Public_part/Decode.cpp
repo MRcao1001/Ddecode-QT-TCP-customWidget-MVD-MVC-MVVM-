@@ -103,4 +103,5 @@ void Decode::on_LoginSuccessfuly_emit()
 {
     this->LARW->setVisible(false);
     this->CW->setVisible(true);
+    this->CW->InitFinish = true;
 }

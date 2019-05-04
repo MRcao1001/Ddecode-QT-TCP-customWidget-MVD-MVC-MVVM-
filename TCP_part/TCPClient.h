@@ -18,6 +18,7 @@ public:
     ~TCPClient();
     void InitTcp(QTcpSocket *getTcpClient);
     QTcpSocket *tcpClient;
+
     void InitFuncMap();
     void ConnectToServer(QString Ip, quint16 Port);
     void DisConnectToServer();
@@ -38,6 +39,7 @@ signals:
     void DoLogin(int type);
     void DoRegiste(int type);
     void ExaminationBegins(QString ExamRoomInfo);
+    void DoHandInPaper();
 };
 
 #endif // TCPCLIENT_H

@@ -7,7 +7,7 @@ ExamChoiceQusetion::ExamChoiceQusetion()
     this->m_number = 1;
     this->m_questionText = "";
     this->m_score = "0";
-    this->m_checkResult = "A";
+    this->m_checkResult = "N/A";
     this->m_trueResult = "A";
 }
 
