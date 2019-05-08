@@ -264,7 +264,28 @@ image:None;
                   <cursorShape>PointingHandCursor</cursorShape>
                  </property>
                  <property name="styleSheet">
-                  <string notr="true"/>
+                  <string notr="true">.QPushButton,.QToolButton{
+border-style:none;
+border-left:5px solid #2ea5e0;
+color: #2ea5e0;
+padding-left:5;
+min-height:60px;
+border-radius:0px;
+background:qlineargradient(spread:pad,x1:0,y1:0,x2:1,y2:0,stop:0 #fff,stop:1 #fff);
+}
+
+.QPushButton:hover,.QToolButton:hover{
+background:qlineargradient(spread:pad,x1:0,y1:0,x2:1,y2:0,stop:0 #F6F6F6,stop:1 #fff);
+}
+
+.QPushButton:pressed,.QToolButton:pressed{
+background:qlineargradient(spread:pad,x1:0,y1:0,x2:1,y2:0,stop:0 #E4E4E4,stop:1 #fff);
+}
+
+.QToolButton::menu-indicator{
+image:None;
+}
+</string>
                  </property>
                  <property name="text">
                   <string>    欢迎使用</string>
@@ -386,6 +407,9 @@ image:None;
                </item>
                <item>
                 <widget class="QToolButton" name="TAB_INFO">
+                 <property name="enabled">
+                  <bool>false</bool>
+                 </property>
                  <property name="minimumSize">
                   <size>
                    <width>200</width>
@@ -430,6 +454,9 @@ image:None;
                </item>
                <item>
                 <widget class="QToolButton" name="TAB_UPDATE">
+                 <property name="enabled">
+                  <bool>false</bool>
+                 </property>
                  <property name="minimumSize">
                   <size>
                    <width>200</width>
@@ -499,7 +526,7 @@ image:None;
              </font>
             </property>
             <property name="currentIndex">
-             <number>1</number>
+             <number>0</number>
             </property>
             <widget class="QWidget" name="page_3">
              <layout class="QHBoxLayout" name="horizontalLayout_17">
@@ -574,13 +601,13 @@ image:None;
                 <item>
                  <layout class="QHBoxLayout" name="horizontalLayout_19">
                   <property name="spacing">
-                   <number>0</number>
+                   <number>5</number>
                   </property>
                   <item>
                    <widget class="QLabel" name="label_7">
                     <property name="maximumSize">
                      <size>
-                      <width>80</width>
+                      <width>99999</width>
                       <height>16777215</height>
                      </size>
                     </property>
@@ -591,15 +618,15 @@ image:None;
                      </font>
                     </property>
                     <property name="text">
-                     <string>已为您设考</string>
+                     <string>已在本机为</string>
                     </property>
                    </widget>
                   </item>
                   <item>
-                   <widget class="QLabel" name="label_17">
+                   <widget class="QLabel" name="userNum">
                     <property name="maximumSize">
                      <size>
-                      <width>28</width>
+                      <width>9999</width>
                       <height>16777215</height>
                      </size>
                     </property>
@@ -629,9 +656,22 @@ image:None;
                      </font>
                     </property>
                     <property name="text">
-                     <string>次</string>
+                     <string>位用户设考</string>
                     </property>
                    </widget>
+                  </item>
+                  <item>
+                   <spacer name="horizontalSpacer_8">
+                    <property name="orientation">
+                     <enum>Qt::Horizontal</enum>
+                    </property>
+                    <property name="sizeHint" stdset="0">
+                     <size>
+                      <width>40</width>
+                      <height>20</height>
+                     </size>
+                    </property>
+                   </spacer>
                   </item>
                  </layout>
                 </item>
@@ -1306,9 +1346,6 @@ padding:5px;
                             </item>
                             <item>
                              <layout class="QHBoxLayout" name="horizontalLayout_10">
-                              <property name="spacing">
-                               <number>0</number>
-                              </property>
                               <item>
                                <widget class="QLineEdit" name="ExamRoomLicence">
                                 <property name="minimumSize">
@@ -1849,6 +1886,9 @@ padding:5px;
                          <layout class="QVBoxLayout" name="verticalLayout_13">
                           <item>
                            <layout class="QHBoxLayout" name="horizontalLayout_6">
+                            <property name="spacing">
+                             <number>0</number>
+                            </property>
                             <item>
                              <widget class="QLineEdit" name="Ticket">
                               <property name="minimumSize">
@@ -1859,7 +1899,7 @@ padding:5px;
                               </property>
                               <property name="maximumSize">
                                <size>
-                                <width>9999</width>
+                                <width>0</width>
                                 <height>41</height>
                                </size>
                               </property>
@@ -1873,6 +1913,87 @@ border:none;</string>
                              </widget>
                             </item>
                             <item>
+                             <widget class="QComboBox" name="TICKETChoice">
+                              <property name="minimumSize">
+                               <size>
+                                <width>0</width>
+                                <height>50</height>
+                               </size>
+                              </property>
+                              <property name="font">
+                               <font>
+                                <family>苹方 常规</family>
+                                <pointsize>11</pointsize>
+                               </font>
+                              </property>
+                              <property name="styleSheet">
+                               <string notr="true">QLineEdit,QTextEdit,QPlainTextEdit,QSpinBox,QDoubleSpinBox,QComboBox,QDateEdit,QTimeEdit,QDateTimeEdit{
+border:0px solid #B6B6B6;
+border-radius03px;
+padding:2px;
+background-color: rgb(241, 239, 242);
+selection-background-color:#00BB9E;
+selection-color:#FFFFFF;
+	font: 11pt &quot;苹方 常规&quot;;
+}
+QLineEdit:focus,QTextEdit:focus,QPlainTextEdit:focus,QSpinBox:focus,QDoubleSpinBox:focus,QComboBox:focus,QDateEdit:focus,QTimeEdit:focus,QDateTimeEdit:focus,QLineEdit:hover,QTextEdit:hover,QPlainTextEdit:hover,QSpinBox:hover,QDoubleSpinBox:hover,QComboBox:hover,QDateEdit:hover,QTimeEdit:hover,QDateTimeEdit:hover{
+border:0px solid #B6B6B6;
+}
+QComboBox::down-arrow,QDateEdit[calendarPopup=&quot;true&quot;]::down-arrow,QTimeEdit[calendarPopup=&quot;true&quot;]::down-arrow,QDateTimeEdit[calendarPopup=&quot;true&quot;]::down-arrow{
+image:url(:/qss/flatwhite/add_bottom.png);
+width:10px;
+height:10px;
+right:2px;
+}
+
+QComboBox::drop-down,QDateEdit::drop-down,QTimeEdit::drop-down,QDateTimeEdit::drop-down{
+subcontrol-origin:padding;
+subcontrol-position:top right;
+width:15px;
+border-left-width:0px;
+border-left-style:solid;
+border-top-right-radius:3px;
+border-bottom-right-radius:3px;
+border-left-color:#B6B6B6;
+}
+
+QComboBox::drop-down:on{
+top:1px;
+}
+
+QComboBox QAbstractItemView::item{
+min-height:40px;
+min-width:10px;
+}
+
+QTableView[model=&quot;true&quot;]::item{
+padding:50px;
+margin:0px;
+}
+
+QTableView QLineEdit,QTableView QComboBox,QTableView QSpinBox,QTableView QDoubleSpinBox,QTableView QDateEdit,QTableView QTimeEdit,QTableView QDateTimeEdit{
+border-width:0px;
+border-radius:0px;
+}
+
+QTableView QLineEdit:focus,QTableView QComboBox:focus,QTableView QSpinBox:focus,QTableView QDoubleSpinBox:focus,QTableView QDateEdit:focus,QTableView QTimeEdit:focus,QTableView QDateTimeEdit:focus{
+border-width:0px;
+border-radius:0px;
+}
+
+QLineEdit,QTextEdit,QPlainTextEdit,QSpinBox,QDoubleSpinBox,QComboBox,QDateEdit,QTimeEdit,QDateTimeEdit{
+background:rgb(241, 239, 242);;
+}</string>
+                              </property>
+                              <property name="editable">
+                               <bool>true</bool>
+                              </property>
+                              <property name="currentIndex">
+                               <number>-1</number>
+                              </property>
+                             </widget>
+                            </item>
+                            <item>
                              <widget class="QPushButton" name="ERTip_4">
                               <property name="minimumSize">
                                <size>
@@ -1882,7 +2003,7 @@ border:none;</string>
                               </property>
                               <property name="maximumSize">
                                <size>
-                                <width>999</width>
+                                <width>40</width>
                                 <height>999</height>
                                </size>
                               </property>

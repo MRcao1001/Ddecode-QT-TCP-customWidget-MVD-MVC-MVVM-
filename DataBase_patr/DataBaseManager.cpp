@@ -60,14 +60,14 @@ DBState DataBaseManager::createDataTable(QString tabelName, QString colums)
 {
     sql_query = new QSqlQuery();
     QString sqlSentence = "create table if not exists "+ tabelName+"( "+colums+" )";
-    qDebug()<<"创建新表的语句是："<<sqlSentence;
+    qDebug()<<"\nSQL SENTENCE IS:"<<sqlSentence;
     if(!sql_query->exec(sqlSentence))
     {
-        qWarning() << "Error: Fail to create table."<< sql_query->lastError();
+        qWarning() << "\n Error: Fail to create table."<< sql_query->lastError();
     }
     else
     {
-        qInfo() << "Table created!";
+        qInfo() << "\n Table created!";
     }
     delete sql_query;
 }
@@ -120,7 +120,7 @@ DBState DataBaseManager::searchUserData( UserInfo *userinfo)
         while (sql_query->next()) {
             QString Number = sql_query->value(3).toString();
             QString Ticket = sql_query->value(4).toString();
-            if(Number ==QString::number( userinfo->getUserID()) && Ticket == userinfo->getUserTicket())
+            if(Number == userinfo->getUserID() && Ticket == userinfo->getUserTicket())
             {
                 delete sql_query;
                 return NOERROR;
@@ -245,6 +245,7 @@ DBState DataBaseManager::InsertNewPaper(ExamPaperModel *newPaperModel)
         return SQLERROR;
     }
     delete sql_query;
+    return NOERROR;
 }
 
 DBState DataBaseManager::InsertNewQuestion(ExamChoiceQusetion *newExamChoiceQuestion)
@@ -319,4 +320,53 @@ DBState DataBaseManager::DeleteQuestion(ExamChoiceQusetion *examChoiceQuestion)
     }
     delete sql_query;
     return NOERROR;
+}
+
+DBState DataBaseManager::InsertNewExamHistory(QString Time, QString UserNumber, QString Score, QString Decision)
+{
+    sql_query = new QSqlQuery();
+    sql_query->prepare("INSERT INTO ExamHistory VALUES (NULL,:TIME,:USERNUMBER,:SCORE,:DECISION)");
+    if(Time == "" || UserNumber == "" || Score=="" || Decision == "")
+    {
+        delete  sql_query;
+        return INFONOTTRUE;
+    }
+    sql_query->bindValue(":TIME", Time);
+    sql_query->bindValue(":USERNUMBER", UserNumber);
+    sql_query->bindValue(":SCORE", Score);
+    sql_query->bindValue(":DECISION", Decision);
+
+    if(!sql_query->exec())
+    {
+        qWarning()<<sql_query->lastError();
+        delete sql_query;
+        return SQLERROR;
+    }
+    delete sql_query;
+    return NOERROR;
+}
+
+DBState DataBaseManager::GetExamHistory(QStringList &targetList, QString &UserNumber)
+{
+    sql_query = new QSqlQuery();
+    sql_query->prepare("SELECT * FROM ExamHistory WHERE USERNUMBER = :USERNUMBER");
+    sql_query->bindValue(":USERNUMBER", UserNumber);
+    if(!sql_query->exec())
+    {
+        qWarning()<<sql_query->lastError();
+        delete sql_query;
+        return SQLERROR;
+    }
+    else
+    {
+        while (sql_query->next()) {
+            QString Time = sql_query->value(1).toString();
+            QString UserNumber = sql_query->value(2).toString();
+            QString Score = sql_query->value(3).toString();
+            QString Decision = sql_query->value(4).toString();
+            targetList.append(Time+" "+UserNumber+" "+Score+" "+Decision);
+        }
+        delete sql_query;
+        return NOERROR;
+    }
 }

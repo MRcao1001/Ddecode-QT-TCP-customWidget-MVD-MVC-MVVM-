@@ -24,7 +24,7 @@ public:
 private:
 
     void InitUI();
-    int QustionIndex = 0;
+    int QuestionIndex = 0;
     Ui::ExmaPaperwindow *ui;
     ExamRoomModelView *m_ExamRoom;
     QButtonGroup *btnGroup;
@@ -35,8 +35,12 @@ private slots:
     void on_checkedB_toggled(bool checked);
     void on_checkedC_toggled(bool checked);
     void on_checkedD_toggled(bool checked);
+    void on_checkedNA_toggled(bool checked);
+public slots:
+    void LocateToQuestion(int index);
+
 signals:
-    void Checked(int num);
+    void Checked(int num,int type);
 };
 
 #endif // EXMAPAPERWINDOW_H

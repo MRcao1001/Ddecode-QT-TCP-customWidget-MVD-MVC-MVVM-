@@ -27,7 +27,9 @@ public:
     int DeleteQuestion(ExamChoiceQusetion* question,int index);
 
     QString serialization();
-    void re_serialization(QString InfoList);
+    int re_serialization(QString InfoList);
+    // 该考场的试卷总分
+    int TotalScore = 0;
 };
 
 #endif // EXAMROOMMODELVIEW_H

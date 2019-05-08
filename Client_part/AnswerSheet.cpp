@@ -21,6 +21,7 @@ AnswerSheet::~AnswerSheet()
         i->deleteLater();
     }
     PushButtonList->clear();
+    delete PushButtonList;
     flowLayout->deleteLater();
 }
 
@@ -28,27 +29,47 @@ void AnswerSheet::InitAnswerSheet(ExamRoomModelView *ExamRoom)
 {
     if(PushButtonList->count() >= 1)
     {
-        for(auto i : *PushButtonList)
-        {
-            flowLayout->removeWidget(i);
-            PushButtonList->removeOne(i);
-            i->deleteLater();
-        }
+        QList<QPushButton* > *tempvec = new QList<QPushButton* >();
+        PushButtonList->swap(*tempvec);
+        tempvec->clear();
+        delete tempvec;
     }
     //根据试卷内容自动生成对应的按钮
     ExamPaperModel *examPaper = ExamRoom->examRoom->ExamPaper;
     for(auto examQuestion : examPaper->getExamList())
     {
+        //创建答题卡按钮
         QPushButton * tempPushButton = new QPushButton(QString::number(examQuestion->getNumber()));
+        //绑定信号槽
+        connect(tempPushButton, &QPushButton::clicked, this, &AnswerSheet::AnswersheetClicked);
         flowLayout->addWidget(tempPushButton);
         PushButtonList->append(tempPushButton);
     }
 }
 
-void AnswerSheet::setAnswerSheetStyle(int num)
+void AnswerSheet::setAnswerSheetStyle(int num, int type)
 {
    if(num >=0 && num < PushButtonList->count())
    {
-       PushButtonList->at(num)->setStyleSheet("background: #800880");
+       if(type == 1)
+       {
+           PushButtonList->at(num)->setStyleSheet("background: #007acc; color: #fff");
+       }
+       else {
+           PushButtonList->at(num)->setStyleSheet("background: #fff; color: #007acc");
+       }
+
    }
+}
+
+void AnswerSheet::AnswersheetClicked()
+{
+    QPushButton *btn = qobject_cast<QPushButton*>(sender());
+    for(int i = 0; i < PushButtonList->length(); i++)
+    {
+        if(btn == PushButtonList->at(i))
+        {
+            emit LocateTo(i);
+        }
+    }
 }

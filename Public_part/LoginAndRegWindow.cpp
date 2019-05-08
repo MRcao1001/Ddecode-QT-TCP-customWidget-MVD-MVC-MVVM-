@@ -9,6 +9,7 @@ LoginAndRegWindow::LoginAndRegWindow(QWidget *parent) :
 {
     m_parent = parent;
     ui->setupUi(this);
+    ReadConfig();
     InitUI();
 
 }
@@ -120,10 +121,21 @@ void LoginAndRegWindow::GetLoginResult(int Result)
     if(Result == 0)
     {
         //登录成功
+        //写入配置信息到文件
+        if(!Tickets->contains(ui->TICKETChoice->lineEdit()->text()))
+        {
+            Tickets->append(ui->TICKETChoice->lineEdit()->text());
+            IPs->append(ui->ServerIp->text());
+            Ports->append(ui->ServerPort->text());
+            Names->append(ui->UserName->text());
+            Numbers->append(ui->UserNumber->text());
+            WriteConfig();
+        }
+
         QMessageBox message(QMessageBox::NoIcon, "提示", "登录成功");
         message.setIconPixmap(QPixmap(":/img/Tip.png"));
         message.exec();
-        emit LoginSuccessfuly();
+        emit LoginSuccessfuly(LoginInfo);
     }
     else {
         //登录失败
@@ -152,11 +164,12 @@ void LoginAndRegWindow::GetRegistResult(int Result)
 void LoginAndRegWindow::on_SignIn_clicked()
 {
     m_tcpClient->ConnectToServer(ui->ServerIp->text(),ui->ServerPort->text().toUShort());
-    QString info = "LoginRequest_"+ui->ServerIp->text()+":"+ui->ServerPort->text()+"_"+ui->UserName->text()+"_"+ui->UserNumber->text()+"_"+ui->Ticket->text();
+    QString info = "LoginRequest_"+ui->ServerIp->text()+":"+ui->ServerPort->text()+"_"+ui->UserName->text()+"_"+ui->UserNumber->text()+"_"+ui->TICKETChoice->lineEdit()->text();
     char*  LoginRequest;
     QByteArray ba = info.toLatin1();
     LoginRequest=ba.data();
     m_tcpClient->SendInfo(LoginRequest);
+    LoginInfo = info;
 }
 
 void LoginAndRegWindow::on_SignUp_clicked()
@@ -216,6 +229,13 @@ void LoginAndRegWindow::InitUI()
         fileB.close();
     }
 
+    //设置下拉输入框的数据源
+    TICKETModel = new QStringListModel();
+    TICKETModel->setStringList(*Tickets);
+    ui->TICKETChoice->setModel(TICKETModel);
+
+    // 设置当前使用人数
+    ui->userNum->setText(QString::number(Tickets->length()));
     //设置阴影效果
     CreateGroupBoxEffect = new QGraphicsDropShadowEffect;
     CreateGroupBoxEffect->setOffset(0,0);
@@ -236,4 +256,90 @@ void LoginAndRegWindow::InitUI()
 void LoginAndRegWindow::on_GetLicence_clicked()
 {
 
+}
+
+void LoginAndRegWindow::ReadConfig()
+{
+    QString ConfigDirectory  = QApplication::applicationDirPath() + "/Config/";
+    QString logFileName = ConfigDirectory + (QApplication::applicationName()+".Config");
+    QFile file;
+    Tickets = new QStringList();
+    IPs = new QStringList();
+    Ports = new QStringList();
+    Names = new QStringList();
+    Numbers = new QStringList();
+    Licences = new QStringList();
+    file.setFileName(logFileName);
+    if(file.open(QIODevice::ReadOnly))
+    {
+        QByteArray t ;
+        while(!file.atEnd())
+        {
+            t += file.readLine();
+            QList<QByteArray> strlist = t.split(',');
+            if(strlist.at(0) == "ClientConfig" && strlist.count() == 7)
+            {
+                Tickets->append(strlist.at(1));
+                IPs->append(strlist.at(2));
+                Ports->append(strlist.at(3));
+                Names->append(strlist.at(4));
+                Numbers->append(strlist.at(5));
+            }
+            else if(strlist.at(0) == "ServerConfig" && strlist.count() == 3)
+            {
+                Licences->append(strlist.at(1));
+            }
+        }
+        file.close();
+    }
+
+}
+
+void LoginAndRegWindow::WriteConfig()
+{
+    QString ConfigDirectory  = QApplication::applicationDirPath() + "/Config/";
+    QDir dir(ConfigDirectory);
+    if(!dir.exists())
+        dir.mkdir(ConfigDirectory);
+    QString logFileName = ConfigDirectory + (QApplication::applicationName()+".Config");
+    QString text;
+    QFile file;
+    file.setFileName(logFileName);
+    file.open(QIODevice::WriteOnly);
+    QTextStream textStream;
+    textStream.setDevice(&file);
+    for(int i = 0; i <Tickets->length(); i++)
+    {
+        text += "ClientConfig,";
+        text += Tickets->at(i) + ",";
+        text += IPs->at(i) + ",";
+        text += Ports->at(i) + ",";
+        text += Names->at(i) + ",";
+        text += Numbers->at(i) + ",";
+        textStream << text << endl;
+        text = "";
+    }
+    for(auto i : *Licences)
+    {
+        text += "ServerConfig,";
+        text += i;
+        textStream << text << endl;
+    }
+    file.close();
+}
+
+
+void LoginAndRegWindow::on_TICKETChoice_currentIndexChanged(const QString &arg1)
+{
+    for(int i =0 ; i <Tickets->length(); i++)
+    {
+        if(Tickets->at(i) == arg1)
+        {
+            ui->Ticket->setText(Tickets->at(i));
+            ui->ServerIp->setText(IPs->at(i));
+            ui->ServerPort->setText(Ports->at(i));
+            ui->UserName->setText(Names->at(i));
+            ui->UserNumber->setText(Numbers->at(i));
+        }
+    }
 }

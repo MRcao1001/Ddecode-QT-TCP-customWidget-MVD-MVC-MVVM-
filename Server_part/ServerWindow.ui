@@ -153,19 +153,6 @@ border-image: url(:/img/LogoBG.png);</string>
           </widget>
          </item>
          <item>
-          <spacer name="horizontalSpacer">
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>40</width>
-             <height>20</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
-         <item>
           <widget class="QFrame" name="TopBarButtonFrame">
            <property name="minimumSize">
             <size>
@@ -491,7 +478,7 @@ image:None;
       <item>
        <widget class="QStackedWidget" name="stackedWidget">
         <property name="currentIndex">
-         <number>2</number>
+         <number>0</number>
         </property>
         <widget class="QWidget" name="page">
          <layout class="QHBoxLayout" name="horizontalLayout_9">
@@ -755,7 +742,7 @@ image:None;
                </widget>
               </item>
               <item>
-               <widget class="QPushButton" name="pushButton_8">
+               <widget class="QPushButton" name="SetPaper">
                 <property name="text">
                  <string>设为本场考试试卷</string>
                 </property>

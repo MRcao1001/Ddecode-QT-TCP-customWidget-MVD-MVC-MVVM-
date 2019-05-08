@@ -40,6 +40,8 @@ signals:
     void DoRegiste(int type);
     void ExaminationBegins(QString ExamRoomInfo);
     void DoHandInPaper();
+    void SetExamHistory(QString ExamHistory);
+    void SetInfomation(QString Infomation);
 };
 
 #endif // TCPCLIENT_H

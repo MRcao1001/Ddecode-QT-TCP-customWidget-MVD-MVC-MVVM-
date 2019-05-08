@@ -7,13 +7,13 @@ class UserInfo
 {
 public://属性set方法
     UserInfo();
-    void setUserID(int getUserID);
+    void setUserID(QString getUserID);
     void setUserName(QString Name);
     void setUserIP(QString IP);
     void setUserPort(QString Port);
     void setUserTicket(QString Ticket);
 public://属性get方法
-    int getUserID();
+    QString getUserID();
     QString getUserName();
     QString getUserIP();
     QString getUserPort();
@@ -22,7 +22,7 @@ private://字段
     QString m_ip;
     QString m_Port;
     QString m_name;
-    int m_id;
+    QString m_id;
     QString m_Ticket;
     QList<ExamPaperModel* > HistoryExamPaper;
 };

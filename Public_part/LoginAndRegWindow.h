@@ -3,11 +3,13 @@
 
 #include <QWidget>
 #include <QMovie>
+#include <QStringListModel>
 #include <QGraphicsBlurEffect>
 #include "TCP_part/TCPClient.h"
 #include "DecodeAnimation.h"
 #include "DataModel/UserInfoModel.h"
 #include <QFile>
+#include <QDir>
 namespace Ui {
 class LoginAndRegWindow;
 }
@@ -38,9 +40,11 @@ private slots:
     void on_SignUp_clicked();
     // 侧边栏按钮点击槽
     void ToolButtonCliced();
-
-
     void on_GetLicence_clicked();
+    // 读取本地配置文件，若没有配置文件
+    void ReadConfig();
+    void WriteConfig();
+    void on_TICKETChoice_currentIndexChanged(const QString &arg1);
 
 private:
     Ui::LoginAndRegWindow *ui;
@@ -49,11 +53,21 @@ private:
     QMovie *IndexMovie;
     QString qss_Checked;
     QString qss_Unchecked;
+    QString LoginInfo;
     QWidget *m_parent;
     QGraphicsDropShadowEffect *CreateGroupBoxEffect;
+
+    QStringList *Tickets;
+    QStringListModel *TICKETModel;
+    QStringList *IPs;
+    QStringList *Ports;
+    QStringList *Names;
+    QStringList *Numbers;
+    QStringList *Licences;
+    QStringListModel *LICENCEModel;
 signals:
     void CreateExamRoomSuccess();
-    void LoginSuccessfuly();
+    void LoginSuccessfuly(QString LoginInfo);
     void RegistSuccessfuly();
 
 };

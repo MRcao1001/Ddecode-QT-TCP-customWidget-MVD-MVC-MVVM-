@@ -65,38 +65,45 @@ void TCPClient::ReadData()
     if(buffer == "Licence_Is_Right")
     {
         emit LicenceResult(0);
+        return;
     }
     // 接收到许可证不正确指令
     if(buffer == "Licence_Is_False")
     {
         emit LicenceResult(-1);
+        return;
     }
     // 登陆操作-是
     if(buffer == "INFO_IS_RIGHT")
     {
         emit DoLogin(0);
+        return;
     }
     // 登陆操作-否
     if(buffer == "INFO_IS_NOT_RIGHT")
     {
         emit DoLogin(-1);
+        return;
     }
     // 注册操作-是
     if(buffer == "REGIST_SUCCESS")
     {
         emit DoRegiste(0);
+        return;
     }
     // 注册操作-否
     if(buffer == "USER_EXIST")
     {
         emit DoRegiste(-1);
+        return;
     }
     // 收卷
     if(buffer == "HandInPaper")
     {
         emit DoHandInPaper();
+        return;
     }
-    // 开始考试
+    // 接收考卷信息/历史记录信息/通知信息
     QString str(buffer);
     QStringList strList = str.split("%%");
     if(strList.length() >= 1)
@@ -105,6 +112,15 @@ void TCPClient::ReadData()
         {
             emit ExaminationBegins(buffer);
         }
+        else if(strList.at(0) == "ExamHistory")
+        {
+            emit SetExamHistory(buffer);
+        }
+        else if (strList.at(0) == "Infomation")
+        {
+            emit SetInfomation(buffer);
+        }
+        return;
     }
     if(!buffer.isEmpty())
     {
@@ -164,7 +180,7 @@ void TCPClient::on_btnSend_clicked()
     QString data = ui->edtSend->toPlainText();
     if(data != "")
     {
-        tcpClient->write(data.toLatin1()); //qt5出去了.toAscii()
+        tcpClient->write(data.toLocal8Bit()); //qt5出去了.toAscii()
     }
 }
 

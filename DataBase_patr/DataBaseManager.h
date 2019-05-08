@@ -93,6 +93,22 @@ public:
      * @brief deleteData 删除数据
      */
     DBState DeleteQuestion(ExamChoiceQusetion *examChoiceQuestion);
+    /**
+     * @brief InsertNewExamHistory 添加一条考试记录
+     * @param Time
+     * @param Name
+     * @param Score
+     * @param Decision
+     * @return
+     */
+    DBState InsertNewExamHistory(QString Time, QString UserNumber, QString Score, QString Decision);
+    /**
+     * @brief GetExamHistory 获取所有对应的考试记录
+     * @param targetList
+     * @return
+     */
+    DBState GetExamHistory(QStringList &targetList, QString &UserNumber);
+
 };
 
 #endif // DATABASEMANAGER_H

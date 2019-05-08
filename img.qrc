@@ -32,5 +32,9 @@
         <file>img/LoginBG.png</file>
         <file>img/LogoBG.png</file>
         <file>img/birdLogowhite.png</file>
+        <file>img/InfoFrameBackground.png</file>
+        <file>img/Edit.png</file>
+        <file>img/ExamNumber.png</file>
+        <file>img/HeadIcon.png</file>
     </qresource>
 </RCC>

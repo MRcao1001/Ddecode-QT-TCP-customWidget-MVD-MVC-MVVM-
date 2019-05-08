@@ -39,7 +39,7 @@ void ExmaPaperwindow::InitUI()
 
 void ExmaPaperwindow::on_Questions_clicked(const QModelIndex &index)
 {
-    QustionIndex = index.row();
+    QuestionIndex = index.row();
     CheckedQuestion = m_ExamRoom->examRoom->ExamPaper->at(index.row());
     if(CheckedQuestion->getCheckResult() == "N/A")
     {
@@ -69,7 +69,7 @@ void ExmaPaperwindow::on_checkedA_toggled(bool checked)
     if(CheckedQuestion != nullptr && checked)
     {
         CheckedQuestion->setCheckResult("A");
-        emit Checked(QustionIndex);
+        emit Checked(QuestionIndex,1);
     }
 }
 
@@ -78,7 +78,7 @@ void ExmaPaperwindow::on_checkedB_toggled(bool checked)
     if(CheckedQuestion != nullptr&& checked)
     {
         CheckedQuestion->setCheckResult("B");
-        emit Checked(QustionIndex);
+        emit Checked(QuestionIndex,1);
     }
 }
 
@@ -87,7 +87,7 @@ void ExmaPaperwindow::on_checkedC_toggled(bool checked)
     if(CheckedQuestion != nullptr&& checked)
     {
         CheckedQuestion->setCheckResult("C");
-        emit Checked(QustionIndex);
+        emit Checked(QuestionIndex,1);
     }
 }
 
@@ -96,6 +96,20 @@ void ExmaPaperwindow::on_checkedD_toggled(bool checked)
     if(CheckedQuestion != nullptr&& checked)
     {
         CheckedQuestion->setCheckResult("D");
-        emit Checked(QustionIndex);
+        emit Checked(QuestionIndex,1);
     }
+}
+
+void ExmaPaperwindow::on_checkedNA_toggled(bool checked)
+{
+    if(CheckedQuestion != nullptr&& checked)
+    {
+        CheckedQuestion->setCheckResult("N/A");
+        emit Checked(QuestionIndex,0);
+    }
+}
+
+void ExmaPaperwindow::LocateToQuestion(int index)
+{
+    ui->Questions->setCurrentIndex(m_ExamRoom->examRoom->ExamPaper->index(index));
 }

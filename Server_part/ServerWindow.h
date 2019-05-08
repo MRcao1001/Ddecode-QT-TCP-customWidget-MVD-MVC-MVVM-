@@ -24,6 +24,7 @@ public:
     void SetTcpServer(TCPServer *tcp);
     void SetUserInfoModel(UserInfoModel *userInfoModel);
     void InitUI();
+    void InitDataBase();
     void SetTopBarButtonStyleDefult();
     void InitExamRoom();
 private:
@@ -46,6 +47,8 @@ public slots:
     void GetRegistRequest(QString RegistInfo);
     void ToolButtonCliced();
     void ExamRoomStartAndStop();
+    void WriteToDB(QString buffer);
+    void SendExamHistory(QString buffer, int Port, QString Ip);
 private slots:
     void on_ExamPaperListView_clicked(const QModelIndex &index);
     void on_AllExamPapersListView_clicked(const QModelIndex &index);
@@ -59,8 +62,8 @@ private slots:
     void on_EditQuestion_clicked();
     void on_QsestionListView_clicked(const QModelIndex &index);
     void on_DeleteQuestion_clicked();
-
     void on_ExamStart_clicked();
+    void on_SetPaper_clicked();
 };
 
 #endif // SERVERWINDOW_H

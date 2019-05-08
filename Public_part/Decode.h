@@ -27,14 +27,14 @@ public:
     ~Decode();
     void InitUI();
     void InitObject();
-private slots:
+public slots:
     void on_pushButton_clicked();
 
     void on_pushButton_3_clicked();
     // 创建考场成功-显示考场界面
     void on_CreateExamRoomSuccess_emit();
     // 登录成功-显示用户界面
-    void on_LoginSuccessfuly_emit();
+    void on_LoginSuccessfuly_emit(QString LoginInfo);
 private:
     Ui::Decode *ui;
     UserInfoModel *m_userInfoModel;

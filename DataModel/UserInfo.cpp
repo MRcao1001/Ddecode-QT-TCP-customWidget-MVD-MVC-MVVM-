@@ -3,13 +3,13 @@
 UserInfo::UserInfo()
 {
     m_name = "";
-    m_id = 0;
+    m_id = "0000000";
     m_ip = "127.0.0.1";
     m_Port = "0000";
     m_Ticket = "zn-000000";
 }
 
-void UserInfo::setUserID(int ID)
+void UserInfo::setUserID(QString ID)
 {
     this->m_id = ID;
 }
@@ -34,7 +34,7 @@ void UserInfo::setUserTicket(QString Ticket)
     this->m_Ticket = Ticket;
 }
 
-int UserInfo::getUserID()
+QString UserInfo::getUserID()
 {
     return m_id;
 }

@@ -12,7 +12,7 @@ void ExamRoomModelView::InitModel()
     examRoom = new ExamRoomModel();
 
     examRoom->UserList = new UserInfoModel();
-    examRoom->UserList->add("123","12345",1234,"name","123243251");
+    examRoom->UserList->add("123","12345","1234","name","123243251");
     // 用户登陆时将生成的用户数据对象添加到用户数据视图模型中
     examRoom->UserListView = new UserInfoDelegate(examRoom->UserList );
 
@@ -197,21 +197,21 @@ QString ExamRoomModelView::serialization()
     QString ExamQuestions;
     for(auto i : examRoom->ExamPaper->getExamList())
     {
-        ExamQuestions.append(i->getScore());
+        ExamQuestions.append(i->getScore()!= ""?i->getScore():"NOINFO!");
         ExamQuestions.append("$$");
-        ExamQuestions.append(QString::number(i->getNumber()));
+        ExamQuestions.append(QString::number(i->getNumber())!= ""?QString::number(i->getNumber()):"NOINFO!");
         ExamQuestions.append("$$");
-        ExamQuestions.append(i->getResultA());
+        ExamQuestions.append(i->getResultA()!=""?i->getResultA():"NOINFO!");
         ExamQuestions.append("$$");
-        ExamQuestions.append(i->getResultB());
+        ExamQuestions.append(i->getResultB()!=""?i->getResultB():"NOINFO!");
         ExamQuestions.append("$$");
-        ExamQuestions.append(i->getResultC());
+        ExamQuestions.append(i->getResultC()!=""?i->getResultC():"NOINFO!");
         ExamQuestions.append("$$");
-        ExamQuestions.append(i->getResultD());
+        ExamQuestions.append(i->getResultD()!=""?i->getResultD():"NOINFO!");
         ExamQuestions.append("$$");
-        ExamQuestions.append(i->getQuestion());
+        ExamQuestions.append(i->getQuestion()!=""?i->getQuestion():"NOINFO!");
         ExamQuestions.append("$$");
-        ExamQuestions.append(i->getTrueResult());
+        ExamQuestions.append(i->getTrueResult()!=""?i->getTrueResult():"N/A");
         if(i != examRoom->ExamPaper->getExamList().back())
         {
             ExamQuestions.append("##");
@@ -226,7 +226,7 @@ QString ExamRoomModelView::serialization()
     return tempList;
 }
 
-void ExamRoomModelView::re_serialization(QString InfoListString)
+int ExamRoomModelView::re_serialization(QString InfoListString)
 {
     QStringList InfoList = InfoListString.split("%%");
     if(InfoList.length() == 3)
@@ -248,8 +248,8 @@ void ExamRoomModelView::re_serialization(QString InfoListString)
         QStringList ExamPaperInfoSplit = ExamPaperInfo.split("##");
         if(ExamPaperInfoSplit.length() == 2)
         {
-            examRoom->ExamPaper->PaperName = ExamRoomInfoSplit.at(0);
-            examRoom->ExamPaper->TotalTestTime = ExamRoomInfoSplit.at(1);
+            examRoom->ExamPaper->PaperName = ExamPaperInfoSplit.at(0);
+            examRoom->ExamPaper->TotalTestTime = ExamPaperInfoSplit.at(1);
         }
         QString ExamQuestions = InfoList.at(2);
         QStringList ExamQuestionsSplit = ExamQuestions.split("##");
@@ -257,18 +257,25 @@ void ExamRoomModelView::re_serialization(QString InfoListString)
         {
             ExamChoiceQusetion* examcq = new ExamChoiceQusetion();
             QStringList examinfo = ExamQuestionInfo.split("$$");
-            examcq->setScore(examinfo.at(0));
-            examcq->setNumber(examinfo.at(1).toInt());
-            examcq->setResultA(examinfo.at(2));
-            examcq->setResultB(examinfo.at(3));
-            examcq->setResultC(examinfo.at(4));
-            examcq->setResultD(examinfo.at(5));
-            examcq->setQuestion(examinfo.at(6));
-            examcq->setTrueResult(examinfo.at(7));
+            if(examinfo.length() == 8)
+            {
+                examcq->setScore(examinfo.at(0));
+                examcq->setNumber(examinfo.at(1).toInt());
+                examcq->setResultA(examinfo.at(2));
+                examcq->setResultB(examinfo.at(3));
+                examcq->setResultC(examinfo.at(4));
+                examcq->setResultD(examinfo.at(5));
+                examcq->setQuestion(examinfo.at(6));
+                examcq->setTrueResult(examinfo.at(7));
+            }
+            else {
+                return -1;
+            }
             examRoom->ExamPaper->add(examcq);
 
         }
     }
+    return 0;
 }
 
 

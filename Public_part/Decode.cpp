@@ -9,29 +9,6 @@ Decode::Decode(QWidget *parent) :
 
     InitObject();//初始化所有对象
     InitUI();//初始化界面
-
-//    int i = DBManager->searchData(m_userInfoModel,"UserInfo","EncreCroe","1234567890");
-//    if(i == 0)
-//    {
-//       QMessageBox::information(this, "info", "ok", QMessageBox::Yes);
-//    }
-
-//    //this->ui->tableView->setModel(userInfoModel);
-//    m_userInfoModel = new UserInfoModel(this);
-//    m_userInfoDelegate = new UserInfoDelegate(m_userInfoModel,this);
-//    ui->listView->setModel(m_userInfoModel);
-//    ui->listView->setItemDelegate(m_userInfoDelegate);
-
-//    m_examPaperModel = new ExamPaperModel(this);
-//    m_examPaperDelegate = new ExamPaperDelegate(m_examPaperModel, this);
-//    ui->listView_2->setModel(m_examPaperModel);
-//    ui->listView_2->setItemDelegate(m_examPaperDelegate);
-
-
-//    mtc->show();
-//    mts->show();
-//    ui->horizontalLayout->addWidget(mtc);
-//    ui->horizontalLayout->addWidget(mts);
 }
 
 Decode::~Decode()
@@ -78,7 +55,7 @@ void Decode::InitObject()
     // 获取到许可证验证通过的信号和槽函数
     connect(LARW, SIGNAL(CreateExamRoomSuccess()), this, SLOT(on_CreateExamRoomSuccess_emit()));
     // 登录成功的信号和槽的绑定
-    connect(LARW, SIGNAL(LoginSuccessfuly()), this, SLOT(on_LoginSuccessfuly_emit()));
+    connect(LARW, SIGNAL(LoginSuccessfuly(QString)), this, SLOT(on_LoginSuccessfuly_emit(QString)));
 
 }
 
@@ -99,9 +76,10 @@ void Decode::on_CreateExamRoomSuccess_emit()
     this->SW->setVisible(true);
 }
 
-void Decode::on_LoginSuccessfuly_emit()
+void Decode::on_LoginSuccessfuly_emit(QString LoginInfo)
 {
     this->LARW->setVisible(false);
     this->CW->setVisible(true);
     this->CW->InitFinish = true;
+    this->CW->InitUserInfo(LoginInfo);
 }

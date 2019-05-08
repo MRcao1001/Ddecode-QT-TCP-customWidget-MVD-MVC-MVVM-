@@ -40,6 +40,8 @@ public slots:
 signals:
     void LoginRequest(QString LoginInfo);
     void RegistRequset(QString RegistInfo);
+    void HandInPaper(QString Score);
+    void GetExamHistoryRequest(QString Requset, int IP, QString port);
 };
 
 #endif // TCPSERVER_H

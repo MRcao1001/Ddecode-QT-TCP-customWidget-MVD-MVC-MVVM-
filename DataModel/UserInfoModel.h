@@ -17,7 +17,7 @@ public:
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
 
     ///向模型中添加数据
-    void add(QString IP, QString Port, int ID, QString Name, QString Ticket);
+    void add(QString IP, QString Port, QString ID, QString Name, QString Ticket);
     void add(UserInfo* userInfo);
     ///以下标来获取模型中的Item
     UserInfo *at(int index);

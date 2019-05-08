@@ -22,7 +22,10 @@ private:
     QFlowLayout *flowLayout;
     Ui::AnswerSheet *ui;
 public slots:
-    void setAnswerSheetStyle(int num);
+    void setAnswerSheetStyle(int num, int type);
+    void AnswersheetClicked();
+signals:
+    void LocateTo(int index);
 };
 
 #endif // ANSWERSHEET_H

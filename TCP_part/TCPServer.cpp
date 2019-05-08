@@ -89,8 +89,15 @@ void TCPServer::ReadData()
         if(buffer.isEmpty())    continue;
 
         static QString IP_Port, IP_Port_Pre;
-        IP_Port = tr("[%1:%2]:").arg(tcpClient[i]->peerAddress().toString().split("::ffff:")[1])\
-                .arg(tcpClient[i]->peerPort());
+        QString Ip = tcpClient[i]->peerAddress().toString().split("::ffff:")[1];
+        int Port = tcpClient[i]->peerPort();
+        IP_Port = tr("[%1:%2]:").arg(tcpClient[i]->peerAddress().toString().split("::ffff:")[1]).arg(tcpClient[i]->peerPort());
+        // 如果是请求获取历史记录
+        if(buffer == "GetHistory")
+        {
+            emit GetExamHistoryRequest(buffer, Port ,Ip);
+            return;
+        }
         if(buffer.split('_').count() > 0)
         {
             QString i = buffer.split('_')[0];
@@ -98,12 +105,22 @@ void TCPServer::ReadData()
             if(i == "LoginRequest")
             {
                 emit LoginRequest(buffer);
+                return;
             }
             // 如果时请求注册的消息
             if(i == "RegistRequset")
             {
                 emit RegistRequset(buffer);
+                return;
             }
+            //如果是交卷的消息
+            if(i == "HandInPaper")
+            {
+                emit HandInPaper(buffer);
+                return;
+            }
+
+
         }
         // 若此次消息的地址与上次不同，则需显示此次消息的客户端地址
         if(IP_Port != IP_Port_Pre)

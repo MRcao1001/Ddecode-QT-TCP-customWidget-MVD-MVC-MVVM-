@@ -9,8 +9,7 @@ ServerWindow::ServerWindow(QWidget *parent) :
     ui->setupUi(this);
     /// 初始化对应的数据库，如果不存在该表则创建表
     this->DBManager = new DataBaseManager();
-    QString tableColums = "IP varchar(255) not NULL, PORT varchar(255) not NULL,Name varchar(255) not NULL,Number varchar(255) primary key not NULL,Ticket varchar(255) not NULL";
-    DBManager->createDataTable("ExamineeInfo",tableColums);
+    InitDataBase();
     m_parent = parent;
     ExamRoomStartAndStopTimer = new QTimer();
     InitExamRoom();
@@ -72,6 +71,22 @@ void ServerWindow::InitUI()
     connect(this->ui->TAB_ExamPaperSet, SIGNAL(clicked()), this, SLOT(ToolButtonCliced()));
     connect(this->ui->TAB_ExamQusetionSet, SIGNAL(clicked()), this, SLOT(ToolButtonCliced()));
     connect(ExamRoomStartAndStopTimer, SIGNAL(timeout()),this,SLOT(ExamRoomStartAndStop()));
+}
+
+void ServerWindow::InitDataBase()
+{
+    //创建考生表如果不存在的话
+    QString tableColums = "IP varchar(255) not NULL, PORT varchar(255) not NULL,Name varchar(255) not NULL,Number varchar(255) primary key not NULL,Ticket varchar(255) not NULL";
+    DBManager->createDataTable("ExamineeInfo",tableColums);
+    //创建考试记录表如果不存在的话
+    tableColums = "NUMBER integer PRIMARY KEY autoincrement,TIME varchar(12)not null,USERNUMBER varchar(50) not null,SCORE varchar(20)not null ,DECISION varchar(12) not null";
+    DBManager->createDataTable("ExamHistory",tableColums);
+    //创建题库表如果不存在的话
+    tableColums = "ID varchar(255)  primary key not NULL, SCORE varchar(255) not NULL,RESULT varchar(255) not NULL,TEXT varchar(255) not NULL";
+    DBManager->createDataTable("ExamQuestionLib",tableColums);
+    //创建试卷库表如果不存在的话
+    tableColums = "ID  varchar(255) primary key not NULL, NAME varchar(255) not NULL, QUESTIONS varchar(255) not NULL,TIME varchar(255) not NULL";
+    DBManager->createDataTable("AllPaper",tableColums);
 }
 
 /**
@@ -162,6 +177,8 @@ void ServerWindow::SetTcpServer(TCPServer *tcp)
         // 绑定接收到数据信号和判断槽函数
         connect(m_tcpServer, SIGNAL(LoginRequest(QString)), this, SLOT(GetLoginRequest(QString)));
         connect(m_tcpServer, SIGNAL(RegistRequset(QString)), this, SLOT(GetRegistRequest(QString)));
+        connect(m_tcpServer, SIGNAL(HandInPaper(QString)), this, SLOT(WriteToDB(QString)));
+        connect(m_tcpServer, SIGNAL(GetExamHistoryRequest(QString, int, QString)), this, SLOT(SendExamHistory(QString, int, QString)));
     }
 }
 
@@ -214,6 +231,40 @@ void ServerWindow::ExamRoomStartAndStop()
     }
 }
 
+/**
+ * @brief ServerWindow::WriteToDB 将考试记录写入buffer
+ * @param buffer HandInPaper_年月日时分 星期_学号_得分_等级判定
+ */
+void ServerWindow::WriteToDB(QString buffer)
+{
+    // 将数据写入到考试记录表中
+    QStringList strList = buffer.split("_");
+    if(strList.length() == 5)
+    {
+        if(DBManager->InsertNewExamHistory(strList.at(1),strList.at(2),strList.at(3),strList.at(4)) != DBState::NOERROR)
+        {
+            //提示出错
+        }
+    }
+}
+
+/**
+ * @brief ServerWindow::SendExamHistory 发送历史记录信息
+ */
+void ServerWindow::SendExamHistory(QString buffer,int Port, QString Ip)
+{
+    QStringList strList;
+    QString UserNumber =  buffer.split("_").at(1);
+    DBManager->GetExamHistory(strList, UserNumber);
+    QString ExamHistory = "ExamHistory";
+    for(auto i : strList)
+    {
+        ExamHistory.append("%%");
+        ExamHistory.append(i);
+    }
+    m_tcpServer->SendInfoToClient(Ip, Port, ExamHistory);
+}
+
 
 // login Info : "LoginRequset"+ip-port+name+number+Ticket;
 /**
@@ -229,7 +280,7 @@ void ServerWindow::GetLoginRequest(QString LoginInfo)
     userInfo->setUserIP(requset.at(1).split(':').at(0));
     userInfo->setUserPort(requset.at(1).split(':').at(1));
     userInfo->setUserName(requset.at(2));
-    userInfo->setUserID(requset.at(3).toInt());
+    userInfo->setUserID(requset.at(3));
     userInfo->setUserTicket(requset.at(4));
     int result = DBManager->searchUserData(userInfo);
     if(result == 0)
@@ -258,7 +309,7 @@ void ServerWindow::GetRegistRequest(QString RegistInfo)
     userInfo->setUserIP(requset.at(1).split(':').at(0));
     userInfo->setUserPort(requset.at(1).split(':').at(1));
     userInfo->setUserName(requset.at(2));
-    userInfo->setUserID(requset.at(3).toInt());
+    userInfo->setUserID(requset.at(3));
     userInfo->setUserTicket(requset.at(4));
     int result = DBManager->insertUserData(userInfo);
     if(result == 0)
@@ -410,13 +461,16 @@ void ServerWindow::on_ExamStart_clicked()
 {
     if(ExamStarting)
     {
+        //结束考试
         ExamRoomStartAndStopTimer->stop();
         ui->ExamStart->setText("开始本场考试");
         ui->lcdNumber->display("0:00");
         ui->progressBar->setValue(0);
         m_tcpServer->BroadCast("HandInPaper");
+        ExamStarting = false;
         return;
     }
+    ExamStarting = true;
     /// 设定考场对象
     ExamRoomModel *examRoom = ExamRoom->examRoom;
     if(ui->TotalTestTime->text() == "")
@@ -451,4 +505,13 @@ void ServerWindow::on_ExamStart_clicked()
     ui->progressBar->setValue(0);
     ExamRoomStartAndStopTimer->start(60000);
     ui->ExamStart->setText("结束本场考试");
+}
+
+void ServerWindow::on_SetPaper_clicked()
+{
+    QMap<int , QVariant> currentItem = ExamRoom->examRoom->AllPaperListModel->itemData(ui->AllExamPapersListView2->currentIndex());
+    QString data = currentItem.last().toString();
+    QString PaperName = currentItem.last().toString().split(',').at(0);
+    ///为试卷列表绑定的model赋值
+    ExamRoom->SetPaper(ExamRoom->examRoom->ExamPaper,ExamRoom->GetPaperQuestionList(PaperName),data);
 }

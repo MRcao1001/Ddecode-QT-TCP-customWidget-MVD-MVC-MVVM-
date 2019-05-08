@@ -54,7 +54,7 @@ QVariant UserInfoModel::data(const QModelIndex &index, int role) const
     return QVariant();
 }
 
-void UserInfoModel::add(QString IP, QString Port,int ID, QString Name, QString Ticket)
+void UserInfoModel::add(QString IP, QString Port,QString ID, QString Name, QString Ticket)
 {
     UserInfo* userinfo = new UserInfo();
     userinfo->setUserID(ID);
