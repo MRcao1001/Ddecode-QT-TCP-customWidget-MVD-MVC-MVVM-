@@ -78,6 +78,12 @@ public:
      */
     DBState InsertNewPaper(ExamPaperModel *newPaperModel);
     /**
+     * @brief UpdatePaperInfo 更新试卷信息
+     * @param PaperModel
+     * @return
+     */
+    DBState UpdatePaperInfo(ExamPaperModel *PaperModel);
+    /**
      * @brief InsertNewQueStIon 新增试题到题库
      * @param newExamChoiceQuestion
      * @return

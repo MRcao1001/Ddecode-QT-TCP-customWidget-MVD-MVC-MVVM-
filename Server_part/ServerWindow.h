@@ -41,10 +41,10 @@ private:
     bool ExamStarting = false;
     QTimer *ExamRoomStartAndStopTimer;
     void SetupINFOtoUI(ExamChoiceQusetion* exq);
-    ExamChoiceQusetion* GetINFOfromUI();
+    ExamChoiceQusetion* GetINFOfromUI(int type);
 public slots:
-    void GetLoginRequest(QString LoginInfo);
-    void GetRegistRequest(QString RegistInfo);
+    void GetLoginRequest(QString IP, int Port,QString LoginInfo);
+    void GetRegistRequest(QString IP, int Port,QString RegistInfo);
     void ToolButtonCliced();
     void ExamRoomStartAndStop();
     void WriteToDB(QString buffer);
@@ -64,6 +64,7 @@ private slots:
     void on_DeleteQuestion_clicked();
     void on_ExamStart_clicked();
     void on_SetPaper_clicked();
+    void on_AllExamPapersListView2_clicked(const QModelIndex &index);
 };
 
 #endif // SERVERWINDOW_H

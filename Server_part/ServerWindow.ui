@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1097</width>
-    <height>675</height>
+    <width>1383</width>
+    <height>819</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -477,259 +477,404 @@ image:None;
       </item>
       <item>
        <widget class="QStackedWidget" name="stackedWidget">
+        <property name="styleSheet">
+         <string notr="true">.QStackedWidget{
+background-color: rgb(236, 239, 241);
+}</string>
+        </property>
         <property name="currentIndex">
          <number>0</number>
         </property>
         <widget class="QWidget" name="page">
-         <layout class="QHBoxLayout" name="horizontalLayout_9">
+         <layout class="QHBoxLayout" name="horizontalLayout_8" stretch="1,5,0,3,1">
+          <property name="topMargin">
+           <number>20</number>
+          </property>
+          <property name="bottomMargin">
+           <number>20</number>
+          </property>
           <item>
-           <layout class="QVBoxLayout" name="verticalLayout_4">
-            <item>
-             <layout class="QHBoxLayout" name="horizontalLayout_8">
-              <item>
-               <widget class="QLabel" name="label_5">
-                <property name="text">
-                 <string>试卷库</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QPushButton" name="pushButton_6">
-                <property name="text">
-                 <string>删除选中的试卷</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QPushButton" name="pushButton_7">
-                <property name="text">
-                 <string>编辑选中的试卷</string>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </item>
-            <item>
-             <widget class="QListView" name="AllExamPapersListView">
-              <property name="verticalScrollMode">
-               <enum>QAbstractItemView::ScrollPerPixel</enum>
-              </property>
-             </widget>
-            </item>
-           </layout>
+           <layout class="QVBoxLayout" name="verticalLayout_7"/>
           </item>
           <item>
-           <layout class="QVBoxLayout" name="verticalLayout_2">
-            <item>
-             <layout class="QHBoxLayout" name="horizontalLayout_3">
-              <item>
-               <widget class="QLabel" name="label">
-                <property name="text">
-                 <string>试卷内容预览</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QPushButton" name="RemoveExamItem">
-                <property name="text">
-                 <string>删除选中的试题</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QPushButton" name="pushButton_5">
-                <property name="text">
-                 <string>编辑选中的试题</string>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </item>
-            <item>
-             <layout class="QHBoxLayout" name="horizontalLayout_17">
-              <item>
-               <widget class="QLabel" name="label_12">
-                <property name="text">
-                 <string>试卷名称</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QLineEdit" name="ExamPaperName"/>
-              </item>
-             </layout>
-            </item>
-            <item>
-             <layout class="QHBoxLayout" name="horizontalLayout_25">
-              <item>
-               <widget class="QLabel" name="label_18">
-                <property name="text">
-                 <string>考试时间</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QLineEdit" name="ExampaperTime"/>
-              </item>
-             </layout>
-            </item>
-            <item>
-             <widget class="QListView" name="ExamPaperListView">
-              <property name="verticalScrollMode">
-               <enum>QAbstractItemView::ScrollPerPixel</enum>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QPushButton" name="SaveExamPaperToLib">
-              <property name="text">
-               <string>保存到试卷库</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QPushButton" name="SaveExamPaper">
-              <property name="text">
-               <string>保存编辑</string>
-              </property>
-             </widget>
-            </item>
-           </layout>
+           <widget class="QFrame" name="ExamPaperView">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>100</height>
+             </size>
+            </property>
+            <property name="frameShape">
+             <enum>QFrame::StyledPanel</enum>
+            </property>
+            <property name="frameShadow">
+             <enum>QFrame::Raised</enum>
+            </property>
+            <layout class="QVBoxLayout" name="verticalLayout_2">
+             <item>
+              <layout class="QHBoxLayout" name="horizontalLayout_14">
+               <property name="topMargin">
+                <number>10</number>
+               </property>
+               <item>
+                <widget class="QLineEdit" name="ExampaperTime">
+                 <property name="minimumSize">
+                  <size>
+                   <width>0</width>
+                   <height>40</height>
+                  </size>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>200</width>
+                   <height>16777215</height>
+                  </size>
+                 </property>
+                 <property name="placeholderText">
+                  <string>考试时长</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLineEdit" name="ExamPaperName">
+                 <property name="minimumSize">
+                  <size>
+                   <width>0</width>
+                   <height>40</height>
+                  </size>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>200</width>
+                   <height>16777215</height>
+                  </size>
+                 </property>
+                 <property name="placeholderText">
+                  <string>试卷名</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QPushButton" name="RemoveExamItem">
+                 <property name="minimumSize">
+                  <size>
+                   <width>100</width>
+                   <height>40</height>
+                  </size>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>100</width>
+                   <height>16777215</height>
+                  </size>
+                 </property>
+                 <property name="text">
+                  <string>删除试题</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QPushButton" name="SaveExamPaperToLib">
+                 <property name="minimumSize">
+                  <size>
+                   <width>0</width>
+                   <height>40</height>
+                  </size>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>200</width>
+                   <height>16777215</height>
+                  </size>
+                 </property>
+                 <property name="text">
+                  <string>新建试卷</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QPushButton" name="SaveExamPaper">
+                 <property name="minimumSize">
+                  <size>
+                   <width>0</width>
+                   <height>40</height>
+                  </size>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>200</width>
+                   <height>16777215</height>
+                  </size>
+                 </property>
+                 <property name="text">
+                  <string>保存编辑</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </item>
+             <item>
+              <widget class="QListView" name="ExamPaperListView">
+               <property name="maximumSize">
+                <size>
+                 <width>9999</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+               <property name="verticalScrollMode">
+                <enum>QAbstractItemView::ScrollPerPixel</enum>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
           </item>
           <item>
-           <layout class="QVBoxLayout" name="verticalLayout_3">
-            <item>
-             <layout class="QHBoxLayout" name="horizontalLayout_4">
-              <item>
-               <widget class="QLabel" name="label_2">
-                <property name="text">
-                 <string>试题分值</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QLineEdit" name="ExamQuestionSocre"/>
-              </item>
-             </layout>
-            </item>
-            <item>
-             <layout class="QHBoxLayout" name="horizontalLayout_5">
-              <item>
-               <widget class="QLabel" name="label_3">
-                <property name="text">
-                 <string>试题答案</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QLineEdit" name="ExamQuestionReSult"/>
-              </item>
-             </layout>
-            </item>
-            <item>
-             <layout class="QHBoxLayout" name="horizontalLayout_6">
-              <item>
-               <widget class="QLabel" name="label_4">
-                <property name="text">
-                 <string>试题内容</string>
-                </property>
-                <property name="alignment">
-                 <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QTextEdit" name="ExamQuestionText"/>
-              </item>
-             </layout>
-            </item>
-            <item>
-             <layout class="QHBoxLayout" name="horizontalLayout_24">
-              <item>
-               <widget class="QLabel" name="label_17">
-                <property name="text">
-                 <string>选项A</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QLineEdit" name="ResultA"/>
-              </item>
-             </layout>
-            </item>
-            <item>
-             <layout class="QHBoxLayout" name="horizontalLayout_23">
-              <item>
-               <widget class="QLabel" name="label_16">
-                <property name="text">
-                 <string>选项B</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QLineEdit" name="ResultB"/>
-              </item>
-             </layout>
-            </item>
-            <item>
-             <layout class="QHBoxLayout" name="horizontalLayout_22">
-              <item>
-               <widget class="QLabel" name="label_15">
-                <property name="text">
-                 <string>选项C</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QLineEdit" name="ResultC"/>
-              </item>
-             </layout>
-            </item>
-            <item>
-             <layout class="QHBoxLayout" name="horizontalLayout_21">
-              <item>
-               <widget class="QLabel" name="label_14">
-                <property name="text">
-                 <string>选项D</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QLineEdit" name="ResultD"/>
-              </item>
-             </layout>
-            </item>
-            <item>
-             <layout class="QHBoxLayout" name="horizontalLayout_7">
-              <item>
-               <widget class="QPushButton" name="SaveQuestion">
-                <property name="text">
-                 <string>保存</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QPushButton" name="SaveExamQuestionToLib">
-                <property name="text">
-                 <string>保存为新试题</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QPushButton" name="AddExamQuestion">
-                <property name="text">
-                 <string>添加到当前试卷</string>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </item>
-           </layout>
+           <spacer name="horizontalSpacer_4">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeType">
+             <enum>QSizePolicy::Fixed</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <widget class="QFrame" name="frame">
+            <property name="minimumSize">
+             <size>
+              <width>100</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="frameShape">
+             <enum>QFrame::StyledPanel</enum>
+            </property>
+            <property name="frameShadow">
+             <enum>QFrame::Raised</enum>
+            </property>
+            <layout class="QVBoxLayout" name="verticalLayout_4">
+             <item>
+              <layout class="QHBoxLayout" name="horizontalLayout_4">
+               <item>
+                <widget class="QLabel" name="label_2">
+                 <property name="text">
+                  <string>试题分值</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLineEdit" name="ExamQuestionSocre">
+                 <property name="minimumSize">
+                  <size>
+                   <width>0</width>
+                   <height>40</height>
+                  </size>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </item>
+             <item>
+              <layout class="QHBoxLayout" name="horizontalLayout_5">
+               <item>
+                <widget class="QLabel" name="label_3">
+                 <property name="text">
+                  <string>试题答案</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLineEdit" name="ExamQuestionReSult">
+                 <property name="minimumSize">
+                  <size>
+                   <width>0</width>
+                   <height>40</height>
+                  </size>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </item>
+             <item>
+              <layout class="QHBoxLayout" name="horizontalLayout_6">
+               <item>
+                <widget class="QLabel" name="label_4">
+                 <property name="text">
+                  <string>试题内容</string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QTextEdit" name="ExamQuestionText">
+                 <property name="documentTitle">
+                  <string/>
+                 </property>
+                 <property name="undoRedoEnabled">
+                  <bool>true</bool>
+                 </property>
+                 <property name="acceptRichText">
+                  <bool>false</bool>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </item>
+             <item>
+              <layout class="QHBoxLayout" name="horizontalLayout_24">
+               <item>
+                <widget class="QLabel" name="label_17">
+                 <property name="text">
+                  <string>选项A</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLineEdit" name="ResultA">
+                 <property name="minimumSize">
+                  <size>
+                   <width>0</width>
+                   <height>40</height>
+                  </size>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </item>
+             <item>
+              <layout class="QHBoxLayout" name="horizontalLayout_23">
+               <item>
+                <widget class="QLabel" name="label_16">
+                 <property name="text">
+                  <string>选项B</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLineEdit" name="ResultB">
+                 <property name="minimumSize">
+                  <size>
+                   <width>0</width>
+                   <height>40</height>
+                  </size>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </item>
+             <item>
+              <layout class="QHBoxLayout" name="horizontalLayout_22">
+               <item>
+                <widget class="QLabel" name="label_15">
+                 <property name="text">
+                  <string>选项C</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLineEdit" name="ResultC">
+                 <property name="minimumSize">
+                  <size>
+                   <width>0</width>
+                   <height>40</height>
+                  </size>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </item>
+             <item>
+              <layout class="QHBoxLayout" name="horizontalLayout_21">
+               <item>
+                <widget class="QLabel" name="label_14">
+                 <property name="text">
+                  <string>选项D</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLineEdit" name="ResultD">
+                 <property name="minimumSize">
+                  <size>
+                   <width>0</width>
+                   <height>40</height>
+                  </size>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </item>
+             <item>
+              <layout class="QHBoxLayout" name="horizontalLayout_7">
+               <item>
+                <widget class="QPushButton" name="SaveQuestion">
+                 <property name="minimumSize">
+                  <size>
+                   <width>0</width>
+                   <height>40</height>
+                  </size>
+                 </property>
+                 <property name="text">
+                  <string>保存到试题库</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QPushButton" name="AddExamQuestion">
+                 <property name="minimumSize">
+                  <size>
+                   <width>0</width>
+                   <height>40</height>
+                  </size>
+                 </property>
+                 <property name="text">
+                  <string>只添加到试卷</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QPushButton" name="SaveExamQuestionToLib">
+                 <property name="minimumSize">
+                  <size>
+                   <width>0</width>
+                   <height>40</height>
+                  </size>
+                 </property>
+                 <property name="text">
+                  <string>保存并添加</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item>
+           <layout class="QVBoxLayout" name="verticalLayout_3"/>
           </item>
          </layout>
         </widget>
         <widget class="QWidget" name="page_2">
-         <layout class="QHBoxLayout" name="horizontalLayout_13">
+         <layout class="QHBoxLayout" name="horizontalLayout_13" stretch="1,2,5,1">
+          <property name="topMargin">
+           <number>20</number>
+          </property>
+          <property name="bottomMargin">
+           <number>20</number>
+          </property>
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_3"/>
+          </item>
           <item>
            <layout class="QVBoxLayout" name="verticalLayout_5">
             <item>
@@ -755,10 +900,62 @@ image:None;
                 </property>
                </widget>
               </item>
+              <item>
+               <widget class="QLabel" name="label_5">
+                <property name="maximumSize">
+                 <size>
+                  <width>60</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+                <property name="text">
+                 <string>当前试卷：</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLabel" name="NowPaper">
+                <property name="maximumSize">
+                 <size>
+                  <width>100</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+                <property name="text">
+                 <string>TextLabel</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="pushButton_6">
+                <property name="maximumSize">
+                 <size>
+                  <width>100</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+                <property name="text">
+                 <string>删除</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="pushButton_7">
+                <property name="maximumSize">
+                 <size>
+                  <width>100</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+                <property name="text">
+                 <string>编辑</string>
+                </property>
+               </widget>
+              </item>
              </layout>
             </item>
             <item>
-             <widget class="QListView" name="AllExamPapersListView2">
+             <widget class="QListView" name="AllExamPapersListView">
               <property name="verticalScrollMode">
                <enum>QAbstractItemView::ScrollPerPixel</enum>
               </property>
@@ -877,14 +1074,23 @@ image:None;
             </item>
            </layout>
           </item>
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_9"/>
+          </item>
          </layout>
         </widget>
         <widget class="QWidget" name="page_3">
-         <layout class="QHBoxLayout" name="horizontalLayout_15">
+         <layout class="QHBoxLayout" name="horizontalLayout_15" stretch="1,7,1">
           <item>
-           <layout class="QVBoxLayout" name="ServerArea">
+           <layout class="QHBoxLayout" name="horizontalLayout_17"/>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_26" stretch="2,5">
             <item>
-             <layout class="QHBoxLayout" name="horizontalLayout_14">
+             <layout class="QVBoxLayout" name="verticalLayout_8">
+              <property name="leftMargin">
+               <number>10</number>
+              </property>
               <item>
                <widget class="QLabel" name="label_10">
                 <property name="text">
@@ -892,80 +1098,30 @@ image:None;
                 </property>
                </widget>
               </item>
+              <item>
+               <widget class="QListView" name="UserListView">
+                <property name="verticalScrollMode">
+                 <enum>QAbstractItemView::ScrollPerPixel</enum>
+                </property>
+               </widget>
+              </item>
              </layout>
             </item>
             <item>
-             <widget class="QListView" name="UserListView">
-              <property name="verticalScrollMode">
-               <enum>QAbstractItemView::ScrollPerPixel</enum>
-              </property>
-             </widget>
+             <layout class="QHBoxLayout" name="ServerArea"/>
             </item>
            </layout>
           </item>
           <item>
-           <layout class="QVBoxLayout" name="verticalLayout_8">
-            <item>
-             <widget class="QPushButton" name="pushButton_12">
-              <property name="minimumSize">
-               <size>
-                <width>0</width>
-                <height>40</height>
-               </size>
-              </property>
-              <property name="text">
-               <string>发送弹窗警告</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QPushButton" name="pushButton_13">
-              <property name="minimumSize">
-               <size>
-                <width>0</width>
-                <height>40</height>
-               </size>
-              </property>
-              <property name="text">
-               <string>踢出考场</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QPushButton" name="pushButton_15">
-              <property name="minimumSize">
-               <size>
-                <width>0</width>
-                <height>40</height>
-               </size>
-              </property>
-              <property name="text">
-               <string>重置该考生考试时间</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QTextEdit" name="textEdit_2"/>
-            </item>
-            <item>
-             <widget class="QPushButton" name="pushButton_14">
-              <property name="minimumSize">
-               <size>
-                <width>0</width>
-                <height>40</height>
-               </size>
-              </property>
-              <property name="text">
-               <string>发送公告</string>
-              </property>
-             </widget>
-            </item>
-           </layout>
+           <layout class="QHBoxLayout" name="horizontalLayout_25"/>
           </item>
          </layout>
         </widget>
         <widget class="QWidget" name="page_4">
-         <layout class="QHBoxLayout" name="horizontalLayout_18">
+         <layout class="QHBoxLayout" name="horizontalLayout_18" stretch="1,6,1,1">
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_27"/>
+          </item>
           <item>
            <layout class="QVBoxLayout" name="verticalLayout_10">
             <item>
@@ -1047,106 +1203,107 @@ image:None;
             </item>
            </layout>
           </item>
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_28"/>
+          </item>
          </layout>
         </widget>
         <widget class="QWidget" name="page_5">
-         <layout class="QVBoxLayout" name="verticalLayout_14">
+         <layout class="QHBoxLayout" name="horizontalLayout_29" stretch="1,6,1,1">
           <item>
-           <widget class="QSplitter" name="splitter">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-            <widget class="QWidget" name="layoutWidget">
-             <layout class="QVBoxLayout" name="verticalLayout_12">
+           <layout class="QHBoxLayout" name="horizontalLayout_31"/>
+          </item>
+          <item>
+           <layout class="QVBoxLayout" name="verticalLayout_12">
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_19"/>
+            </item>
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_20">
               <item>
-               <layout class="QHBoxLayout" name="horizontalLayout_19">
-                <item>
-                 <widget class="QLabel" name="label_13">
-                  <property name="text">
-                   <string>题库</string>
-                  </property>
-                 </widget>
-                </item>
-               </layout>
-              </item>
-              <item>
-               <widget class="QListView" name="QsestionListView">
-                <property name="verticalScrollMode">
-                 <enum>QAbstractItemView::ScrollPerPixel</enum>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </widget>
-            <widget class="QWidget" name="layoutWidget">
-             <layout class="QVBoxLayout" name="verticalLayout_13">
-              <property name="sizeConstraint">
-               <enum>QLayout::SetMinAndMaxSize</enum>
-              </property>
-              <item>
-               <widget class="QPushButton" name="EditQuestion">
-                <property name="enabled">
-                 <bool>false</bool>
-                </property>
+               <widget class="QLabel" name="label_13">
                 <property name="text">
-                 <string>编辑试题</string>
+                 <string>题库</string>
                 </property>
                </widget>
               </item>
               <item>
-               <widget class="QPushButton" name="AddQuestion">
-                <property name="text">
-                 <string>添加试题</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QPushButton" name="DeleteQuestion">
-                <property name="enabled">
-                 <bool>false</bool>
-                </property>
-                <property name="text">
-                 <string>删除试题</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <layout class="QHBoxLayout" name="horizontalLayout_20">
-                <item>
-                 <widget class="QLineEdit" name="lineEdit_5">
-                  <property name="minimumSize">
-                   <size>
-                    <width>100</width>
-                    <height>0</height>
-                   </size>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QPushButton" name="pushButton_25">
-                  <property name="text">
-                   <string>查找试题</string>
-                  </property>
-                 </widget>
-                </item>
-               </layout>
-              </item>
-              <item>
-               <spacer name="verticalSpacer_2">
-                <property name="orientation">
-                 <enum>Qt::Vertical</enum>
-                </property>
-                <property name="sizeHint" stdset="0">
+               <widget class="QLineEdit" name="lineEdit_5">
+                <property name="minimumSize">
                  <size>
-                  <width>20</width>
-                  <height>40</height>
+                  <width>100</width>
+                  <height>0</height>
                  </size>
                 </property>
-               </spacer>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="pushButton_25">
+                <property name="text">
+                 <string>查找试题</string>
+                </property>
+               </widget>
               </item>
              </layout>
-            </widget>
-           </widget>
+            </item>
+            <item>
+             <widget class="QListView" name="QsestionListView">
+              <property name="verticalScrollMode">
+               <enum>QAbstractItemView::ScrollPerPixel</enum>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <layout class="QVBoxLayout" name="verticalLayout_13">
+            <property name="sizeConstraint">
+             <enum>QLayout::SetMinAndMaxSize</enum>
+            </property>
+            <item>
+             <widget class="QPushButton" name="EditQuestion">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
+              <property name="text">
+               <string>编辑试题</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="AddQuestion">
+              <property name="text">
+               <string>添加试题</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="DeleteQuestion">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
+              <property name="text">
+               <string>删除试题</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <spacer name="verticalSpacer_2">
+              <property name="orientation">
+               <enum>Qt::Vertical</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>20</width>
+                <height>40</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_30"/>
           </item>
          </layout>
         </widget>

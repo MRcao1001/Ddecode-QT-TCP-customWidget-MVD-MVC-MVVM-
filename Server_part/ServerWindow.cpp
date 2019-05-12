@@ -112,7 +112,7 @@ void ServerWindow::InitExamRoom()
     /// 绑定界面ListView和数据模型
     // 绑定所有试卷列表和数据模型
     ui->AllExamPapersListView->setModel(ExamRoom->examRoom->AllPaperListModel);
-    ui->AllExamPapersListView2->setModel(ExamRoom->examRoom->AllPaperListModel);
+    //ui->AllExamPapersListView2->setModel(ExamRoom->examRoom->AllPaperListModel);
     ui->AllExamPapersListView3->setModel(ExamRoom->examRoom->AllPaperListModel);
 //    修改模型数据后重新绑定
 //    ExamRoom->examRoom->AllPaperList->append("txt");
@@ -149,9 +149,19 @@ void ServerWindow::SetupINFOtoUI(ExamChoiceQusetion *exq)
     ui->ExamQuestionText->setPlainText(exq->getQuestion());
 }
 
-ExamChoiceQusetion *ServerWindow::GetINFOfromUI()
+/**
+ * @brief ServerWindow::GetINFOfromUI
+ * @param type 1->新试题  0->修改试题
+ * @return
+ */
+ExamChoiceQusetion *ServerWindow::GetINFOfromUI(int type)
 {
     ExamChoiceQusetion *newQuestion = new ExamChoiceQusetion();
+    if(type == 1)
+    {
+        newQuestion->setNumber(ExamRoom->examRoom->ExamPaper->ExamNumber++);
+    }
+
     newQuestion->setScore(ui->ExamQuestionSocre->text());
     newQuestion->setTrueResult(ui->ExamQuestionReSult->text());
     newQuestion->setResultA(ui->ResultA->text());
@@ -175,8 +185,8 @@ void ServerWindow::SetTcpServer(TCPServer *tcp)
         this->ui->ServerArea->addWidget(m_tcpServer);
         this->m_tcpServer->on_btnConnect_clicked();
         // 绑定接收到数据信号和判断槽函数
-        connect(m_tcpServer, SIGNAL(LoginRequest(QString)), this, SLOT(GetLoginRequest(QString)));
-        connect(m_tcpServer, SIGNAL(RegistRequset(QString)), this, SLOT(GetRegistRequest(QString)));
+        connect(m_tcpServer, SIGNAL(LoginRequest(QString, int, QString)), this, SLOT(GetLoginRequest(QString, int, QString)));
+        connect(m_tcpServer, SIGNAL(RegistRequset(QString, int, QString)), this, SLOT(GetRegistRequest(QString, int, QString)));
         connect(m_tcpServer, SIGNAL(HandInPaper(QString)), this, SLOT(WriteToDB(QString)));
         connect(m_tcpServer, SIGNAL(GetExamHistoryRequest(QString, int, QString)), this, SLOT(SendExamHistory(QString, int, QString)));
     }
@@ -189,7 +199,7 @@ void ServerWindow::SetTcpServer(TCPServer *tcp)
  */
 void ServerWindow::ToolButtonCliced()
 {
-    QToolButton &btn = *qobject_cast<QToolButton*>(sender());
+    QToolButton &btn = *qobject_cast <QToolButton*>(sender());
     SetTopBarButtonStyleDefult();
     btn.setStyleSheet(qss_Checked);
     if(ui->TAB_ExamPaperSet == &btn)
@@ -272,7 +282,7 @@ void ServerWindow::SendExamHistory(QString buffer,int Port, QString Ip)
  * @param LoginInfo
  * 登陆信号传来时的槽函数，判断登陆信息是否正确
  */
-void ServerWindow::GetLoginRequest(QString LoginInfo)
+void ServerWindow::GetLoginRequest(QString IP, int Port, QString LoginInfo)
 {
     //创建一个用户数据对象
     UserInfo *userInfo = new UserInfo();
@@ -286,12 +296,12 @@ void ServerWindow::GetLoginRequest(QString LoginInfo)
     if(result == 0)
     {
         // 查找到了对应的登陆信息，准许登陆
-        m_tcpServer->SendInfoToClient(userInfo->getUserIP(),userInfo->getUserPort().toInt(), "INFO_IS_RIGHT");
+        m_tcpServer->SendInfoToClient(IP,Port, "INFO_IS_RIGHT");
         //用户对象置入考场的用户表
         ExamRoom->examRoom->UserList->add(userInfo);
     }
     else {
-         m_tcpServer->SendInfoToClient(userInfo->getUserIP(),userInfo->getUserPort().toInt(), "INFO_IS_NOT_RIGHT");
+         m_tcpServer->SendInfoToClient(IP,Port, "INFO_IS_NOT_RIGHT");
     }
 }
 
@@ -301,7 +311,7 @@ void ServerWindow::GetLoginRequest(QString LoginInfo)
  * @param RegistInfo
  * 注册信号传来时的槽函数，并执行注册操作
  */
-void ServerWindow::GetRegistRequest(QString RegistInfo)
+void ServerWindow::GetRegistRequest(QString IP, int Port, QString RegistInfo)
 {
     //创建一个用户数据对象
     UserInfo *userInfo = new UserInfo();
@@ -315,10 +325,10 @@ void ServerWindow::GetRegistRequest(QString RegistInfo)
     if(result == 0)
     {
         //插入成功
-        m_tcpServer->SendInfoToClient(userInfo->getUserIP(),userInfo->getUserPort().toInt(), "REGIST_SUCCESS");
+        m_tcpServer->SendInfoToClient(IP,Port, "REGIST_SUCCESS");
     }
     else {
-        m_tcpServer->SendInfoToClient(userInfo->getUserIP(),userInfo->getUserPort().toInt(), "USER_EXIST");
+        m_tcpServer->SendInfoToClient(IP,Port, "USER_EXIST");
     }
 }
 
@@ -330,29 +340,22 @@ void ServerWindow::on_ExamPaperListView_clicked(const QModelIndex &index)
 
 void ServerWindow::on_AllExamPapersListView_clicked(const QModelIndex &index)
 {
-    if(ExamRoom->examRoom->ExamPaper->rowCount() != 0)
-    {
-        short result = messageWindow->ShowMessage(m_parent,"当前试卷非空，您是否需要先将试题保存到试题库中");
-        if(result == 1)
-        {
-            on_SaveQuestion_clicked();
-        }
-    }
-    QMap<int , QVariant> currentItem = ExamRoom->examRoom->AllPaperListModel->itemData(index);
-    QString data = currentItem.last().toString();
-    QString PaperName = currentItem.last().toString().split(',').at(0);
-    ///为试卷列表绑定的model赋值
-    ExamRoom->SetPaper(ExamRoom->examRoom->ExamPaper,ExamRoom->GetPaperQuestionList(PaperName),data);
+//    if(ExamRoom->examRoom->ExamPaper->rowCount() != 0)
+//    {
+//        short result = messageWindow->ShowMessage(m_parent,"当前试卷非空，您是否需要先将试题保存到试题库中");
+//        if(result == 1)
+//        {
+//            on_SaveQuestion_clicked();
+//        }
+//    }
+//    QMap<int , QVariant> currentItem = ExamRoom->examRoom->AllPaperListModel->itemData(index);
+//    QString data = currentItem.last().toString();
+//    QString PaperName = currentItem.last().toString().split(',').at(0);
+//    ///为试卷列表绑定的model赋值
+//    ExamRoom->SetPaper(ExamRoom->examRoom->ExamPaper,ExamRoom->GetPaperQuestionList(PaperName),data);
 }
 
-/**
- * @brief ServerWindow::on_AddExamQuestion_clicked 新增试题
- */
-void ServerWindow::on_AddExamQuestion_clicked()
-{
-    ExamChoiceQusetion *newQuestion = GetINFOfromUI();
-    ExamRoom->examRoom->ExamPaper->add(newQuestion);
-}
+
 
 void ServerWindow::on_RemoveExamItem_clicked()
 {
@@ -360,28 +363,53 @@ void ServerWindow::on_RemoveExamItem_clicked()
     ExamRoom->examRoom->ExamPaper->remove(index.row());
 }
 
-
-void ServerWindow::on_SaveExamPaperToLib_clicked()
+/**
+ * @brief ServerWindow::on_AddExamQuestion_clicked 新增试题,需要考虑题号
+ */
+void ServerWindow::on_AddExamQuestion_clicked()
 {
-    on_SaveExamPaper_clicked();
-    int ret = ExamRoom->SavePaperToLib();
-    if(ret == 0)
-        messageWindow->ShowMessage(m_parent,"保存成功");
-    else {
-        messageWindow->ShowMessage(m_parent,"保存时出现错误，错误代码:"+ QString::number(ret));
-    }
+    ExamChoiceQusetion *newQuestion = GetINFOfromUI(1);
+    ExamRoom->examRoom->ExamPaper->add(newQuestion);
+    ExamRoom->TempExamQuestionNum++;
 }
 
-void ServerWindow::on_SaveExamPaper_clicked()
+/**
+ * @brief ServerWindow::on_SaveExamPaperToLib_clicked 创建一个新的试卷
+ */
+void ServerWindow::on_SaveExamPaperToLib_clicked()
 {
     if(ui->ExamPaperName->text()=="" || ui->ExampaperTime->text() =="")
     {
         messageWindow->ShowMessage(m_parent,"还未完成对试卷时长和试卷名称的配置");
         return;
     }
+
     ExamRoom->examRoom->ExamPaper->PaperName = ui->ExamPaperName->text();
     ExamRoom->examRoom->ExamPaper->TotalTestTime = ui->ExampaperTime->text();
+    ExamRoom->examRoom->ExamPaper->Clear();
+    ExamRoom->examRoom->ExamPaper->ExamNumber = 0;
+    int ret = ExamRoom->SavePaperToLib(0);
+    if(ret == 0)
+        messageWindow->ShowMessage(m_parent,"创建成功成功");
+    else if(ret == -9) {
+        messageWindow->ShowMessage(m_parent,"试卷名已经存在，请重试");
+    }
+    else {
+         messageWindow->ShowMessage(m_parent,"保存数据出现错误，详情请查阅日志");
+    }
+}
 
+/**
+ * @brief ServerWindow::on_SaveExamPaper_clicked  保存对试卷的修改
+ */
+void ServerWindow::on_SaveExamPaper_clicked()
+{
+    int ret = ExamRoom->SavePaperToLib(1);
+    if(ret == 0)
+        messageWindow->ShowMessage(m_parent,"保存成功");
+    else {
+         messageWindow->ShowMessage(m_parent,"保存数据出现错误，详情请查阅日志");
+    }
 }
 
 /**
@@ -389,11 +417,11 @@ void ServerWindow::on_SaveExamPaper_clicked()
  */
 void ServerWindow::on_SaveExamQuestionToLib_clicked()
 {
-    ExamChoiceQusetion *newQuestion = GetINFOfromUI();
+    ExamChoiceQusetion *newQuestion = GetINFOfromUI(0);
     ExamRoom->examRoom->QuestionLib->add(newQuestion);
-    int ret = ExamRoom->SaveQuestionToLib(newQuestion);
+    int ret = ExamRoom->SaveQuestionToLib(newQuestion,1);
     if(ret == 0)
-        messageWindow->ShowMessage(m_parent,"保存成功");
+        messageWindow->ShowMessage(m_parent,"新增试题成功");
     else {
         messageWindow->ShowMessage(m_parent,"保存时出现错误，错误代码:"+ QString::number(ret));
     }
@@ -406,8 +434,8 @@ void ServerWindow::on_AddQuestion_clicked()
 
 void ServerWindow::on_SaveQuestion_clicked()
 {
-    TempQuestion= GetINFOfromUI();
-    int ret = ExamRoom->SaveQuestionToLib(TempQuestion);
+    TempQuestion= GetINFOfromUI(0);
+    int ret = ExamRoom->SaveQuestionToLib(TempQuestion,0);
     if(ret == 0)
         messageWindow->ShowMessage(m_parent,"保存成功");
     else {
@@ -478,7 +506,7 @@ void ServerWindow::on_ExamStart_clicked()
         messageWindow->ShowMessage(m_parent,"您还未输入输入考试时间！");
         return;
     }
-    examRoom->TotalTestTime = ui->TotalTestTime->text().toInt();
+    examRoom->ExamPaper->TotalTestTime = ui->TotalTestTime->text();
     if(ui->allowCopy->isChecked())
     {
         examRoom->AllowCopy = true;
@@ -500,6 +528,7 @@ void ServerWindow::on_ExamStart_clicked()
     // 使用TCP发送试卷库信息
     m_tcpServer->BroadCast("ExaminationBegins%%"+temp);
     // 开始考试计时
+    ExamRoom->examRoom->TotalTestTime = ExamRoom->examRoom->ExamPaper->TotalTestTime.toInt();
     ui->lcdNumber->display(QString::number(ExamRoom->examRoom->TotalTestTime-ExamRoom->examRoom->PastTestTime));
     ui->progressBar->setRange(0, examRoom->TotalTestTime);
     ui->progressBar->setValue(0);
@@ -509,9 +538,27 @@ void ServerWindow::on_ExamStart_clicked()
 
 void ServerWindow::on_SetPaper_clicked()
 {
-    QMap<int , QVariant> currentItem = ExamRoom->examRoom->AllPaperListModel->itemData(ui->AllExamPapersListView2->currentIndex());
+//    QMap<int , QVariant> currentItem = ExamRoom->examRoom->AllPaperListModel->itemData(ui->AllExamPapersListView->currentIndex());
+//    QString data = currentItem.last().toString();
+//    QString PaperName = currentItem.last().toString().split(',').at(0);
+//    ///为试卷列表绑定的model赋值
+//    ExamRoom->SetPaper(ExamRoom->examRoom->ExamPaper,ExamRoom->GetPaperQuestionList(PaperName),data);
+    if(ExamRoom->examRoom->ExamPaper->rowCount() != 0)
+    {
+        short result = messageWindow->ShowMessage(m_parent,"当前试卷非空，您是否需要先将试题保存到试题库中");
+        if(result == 1)
+        {
+            on_SaveQuestion_clicked();
+        }
+    }
+    QMap<int , QVariant> currentItem = ExamRoom->examRoom->AllPaperListModel->itemData(ui->AllExamPapersListView->currentIndex());
     QString data = currentItem.last().toString();
     QString PaperName = currentItem.last().toString().split(',').at(0);
     ///为试卷列表绑定的model赋值
     ExamRoom->SetPaper(ExamRoom->examRoom->ExamPaper,ExamRoom->GetPaperQuestionList(PaperName),data);
+}
+
+void ServerWindow::on_AllExamPapersListView2_clicked(const QModelIndex &index)
+{
+
 }

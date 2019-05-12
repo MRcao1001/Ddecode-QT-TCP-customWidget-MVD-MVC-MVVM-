@@ -5,6 +5,7 @@ ClientWindow::ClientWindow(QWidget *parent):
     ui(new Ui::ClientWindow)
 {
     ui->setupUi(this);
+    ExamRoomStartAndStopTimer = new QTimer();
     InitUI();
     SetConnect();
 }
@@ -70,6 +71,7 @@ void ClientWindow::SetConnect()
     connect(this->ui->TAB_ExamRoomConfigure, SIGNAL(clicked()), this, SLOT(ToolButtonCliced()));
     connect(this->ui->TAB_ExamPaperSet, SIGNAL(clicked()), this, SLOT(ToolButtonCliced()));
     connect(this->ui->TAB_ExamQusetionSet, SIGNAL(clicked()), this, SLOT(ToolButtonCliced()));
+    connect(ExamRoomStartAndStopTimer, SIGNAL(timeout()),this,SLOT(ExamRoomStartAndStop()));
 }
 
 void ClientWindow::SetTopBarButtonStyleDefult()
@@ -125,6 +127,10 @@ void ClientWindow::InitUserInfo(QString LoginInfo)
 
 void ClientWindow::markExamPapers()
 {
+    if(Marked)
+        return;
+    //停止计时
+    ExamRoomStartAndStopTimer->stop();
     //判卷
     int score = 0;
     QString Decision = "";
@@ -158,7 +164,7 @@ void ClientWindow::markExamPapers()
     else if (score == ExamRoom->TotalScore) {
         Decision = "SSS";
     }
-    QString info = "HandInPaper_"+QDateTime::currentDateTime().toString("yyyy.MM.dd hh:mm ddd")+"_"+userInfo->getUserID()+QString::number(score)+"_"+Decision;
+    QString info = "HandInPaper_"+QDateTime::currentDateTime().toString("yyyy.MM.dd hh:mm ddd")+"_"+userInfo->getUserID()+"_"+QString::number(score)+"_"+Decision;
     QString temp = QDateTime::currentDateTime().toString("yyyy.MM.dd hh:mm ddd") +" "+ userInfo->getUserID() +" "+QString::number(score)+" "+Decision;
     ExamHiStoryList->insert(0,temp);
     ExamHistoryModel->setStringList(*ExamHiStoryList);
@@ -168,6 +174,7 @@ void ClientWindow::markExamPapers()
     msgBox.exec();
     // 收卷
     ExamRoom->examRoom->ExamPaper->Clear();
+    Marked = true;
 }
 
 void ClientWindow::ToolButtonCliced()
@@ -239,10 +246,18 @@ void ClientWindow::GetInfomation(QString Infomation)
     }
 }
 
+void ClientWindow::ExamRoomStartAndStop()
+{
+    ExamRoom->examRoom->PastTestTime += 1;
+    ui->lcdNumber->display(QString::number(ExamRoom->examRoom->TotalTestTime-ExamRoom->examRoom->PastTestTime));
+    ui->progressBar->setValue(ExamRoom->examRoom->PastTestTime);
+}
+
 void ClientWindow::ExaminationBegins(QString ExamRoomInfo)
 {
     if(InitFinish)
     {
+        ui->HandInHand->setEnabled(true);
         QStringList strlist = ExamRoomInfo.split("%%");
         QString tempstr = strlist.at(1)+"%%"+strlist.at(2)+"%%"+strlist.at(3);
         ExamRoom->re_serialization(tempstr);
@@ -254,6 +269,15 @@ void ClientWindow::ExaminationBegins(QString ExamRoomInfo)
         ui->PaperName->setText(ExamRoom->examRoom->ExamPaper->PaperName);
         ui->TotalTime->setText(ExamRoom->examRoom->ExamPaper->TotalTestTime);
         ui->TotalScore->setText(QString::number(ExamRoom->TotalScore));
+
+        // 开始考试计时
+        ExamRoom->examRoom->PastTestTime = 0;
+        ExamRoom->examRoom->TotalTestTime = ExamRoom->examRoom->ExamPaper->TotalTestTime.toInt();
+        ui->lcdNumber->display(ExamRoom->examRoom->ExamPaper->TotalTestTime);
+        ui->progressBar->setRange(0, ExamRoom->examRoom->ExamPaper->TotalTestTime.toInt());
+        ui->progressBar->setValue(0);
+        ExamRoomStartAndStopTimer->start(60000);
+        Marked = false;
     }
 }
 

@@ -159,7 +159,7 @@ DBState DataBaseManager::searchExamQuestionLib(ExamPaperModel *examPaper)
             examQusetion->setScore(sql_query->value(1).toString());
             examQusetion->setTrueResult(sql_query->value(1).toString());
             examQusetion->setQuestion(sql_query->value(3).toString());
-            QStringList DefultResult = sql_query->value(4).toString().split(',');
+            QStringList DefultResult = sql_query->value(4).toString().split("%%");
             if(DefultResult.count() != 4)
                 return SQLERROR;
             examQusetion->setResultA(DefultResult.at(0));
@@ -167,6 +167,7 @@ DBState DataBaseManager::searchExamQuestionLib(ExamPaperModel *examPaper)
             examQusetion->setResultC(DefultResult.at(2));
             examQusetion->setResultD(DefultResult.at(3));
             examPaper->add(examQusetion);
+            examPaper->ExamNumber++;
         }
         delete sql_query;
         return NOERROR;
@@ -248,14 +249,38 @@ DBState DataBaseManager::InsertNewPaper(ExamPaperModel *newPaperModel)
     return NOERROR;
 }
 
+DBState DataBaseManager::UpdatePaperInfo(ExamPaperModel *PaperModel)
+{
+    sql_query = new QSqlQuery();
+    sql_query->prepare("UPDATE AllPaper SET QUESTIONS = :QUESTIONS WHERE NAME = :NAME");
+    QString QUESTIONS;
+    QList<ExamChoiceQusetion* > examList = PaperModel->getExamList();
+    foreach(ExamChoiceQusetion *ecq, examList)
+    {
+        QUESTIONS += QString::number(ecq->getNumber());
+        QUESTIONS += ",";
+    }
+    QUESTIONS = QUESTIONS.left(QUESTIONS.length()-1);
+    sql_query->bindValue(":QUESTIONS", QUESTIONS);
+    sql_query->bindValue(":NAME",PaperModel->PaperName);
+    if(!sql_query->exec())
+    {
+        qWarning()<<sql_query->lastError();
+        delete sql_query;
+        return SQLERROR;
+    }
+    delete sql_query;
+    return NOERROR;
+}
+
 DBState DataBaseManager::InsertNewQuestion(ExamChoiceQusetion *newExamChoiceQuestion)
 {
     sql_query = new QSqlQuery();
-    sql_query->prepare("INSERT INTO ExamQuestionLib VALUES (NULL,:SCORE,:RESULT,:TEXT,:DEFULTRESULT)");
+    sql_query->prepare("INSERT INTO ExamQuestionLib VALUES (NULL,:SCORE,:RESULT,:TEXT,:DEFULTRESULT,:DELETED)");
     QString DEFULTRESULT;
-    DEFULTRESULT += newExamChoiceQuestion->getResultA() + ",";
-    DEFULTRESULT += newExamChoiceQuestion->getResultB() + ",";
-    DEFULTRESULT += newExamChoiceQuestion->getResultC() + ",";
+    DEFULTRESULT += newExamChoiceQuestion->getResultA() + "%%";
+    DEFULTRESULT += newExamChoiceQuestion->getResultB() + "%%";
+    DEFULTRESULT += newExamChoiceQuestion->getResultC() + "%%";
     DEFULTRESULT += newExamChoiceQuestion->getResultD();
     if(newExamChoiceQuestion->getScore() == "" || newExamChoiceQuestion->getTrueResult() == "" || newExamChoiceQuestion->getQuestion()=="" || DEFULTRESULT == ",,,")
     {
@@ -266,7 +291,7 @@ DBState DataBaseManager::InsertNewQuestion(ExamChoiceQusetion *newExamChoiceQues
     sql_query->bindValue(":RESULT",newExamChoiceQuestion->getTrueResult());
     sql_query->bindValue(":TEXT", newExamChoiceQuestion->getQuestion());
     sql_query->bindValue(":DEFULTRESULT", DEFULTRESULT);
-
+    sql_query->bindValue(":DELETED", "GENERAL");
     if(!sql_query->exec())
     {
         qWarning()<<sql_query->lastError();

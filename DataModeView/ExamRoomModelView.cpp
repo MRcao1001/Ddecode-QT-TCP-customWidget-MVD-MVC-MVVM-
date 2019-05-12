@@ -115,21 +115,30 @@ QStringList ExamRoomModelView::GetPaperQuestionList(QString PaperName)
 /**
  * @brief ExamRoomModelView::SavePaperToLib 保存当前试卷到试卷库
  */
-int  ExamRoomModelView::SavePaperToLib()
+int  ExamRoomModelView::SavePaperToLib(int type)
 {
-    for(int i = 0; i< examRoom->AllPaperList->size();++i)
-    {
-        if(examRoom->AllPaperList->at(i).split(',').at(0) == examRoom->ExamPaper->PaperName)
-        {
-            return -9;
-        }
-    }
-    examRoom->AllPaperList->append(examRoom->ExamPaper->PaperName);
-    examRoom->AllPaperListModel->setStringList(*examRoom->AllPaperList);
     //将试卷保存到试卷库
-    DBState state = DBManager->InsertNewPaper(examRoom->ExamPaper);
-    if(state == SQLERROR)
-        return -4;
+    if(type == 0)
+    {
+        for(int i = 0; i< examRoom->AllPaperList->size();++i)
+        {
+            if(examRoom->AllPaperList->at(i).split(',').at(0) == examRoom->ExamPaper->PaperName)
+            {
+                return -9;
+            }
+        }
+        examRoom->AllPaperList->append(examRoom->ExamPaper->PaperName+","+examRoom->ExamPaper->TotalTestTime);
+        examRoom->AllPaperListModel->setStringList(*examRoom->AllPaperList);
+        DBState state = DBManager->InsertNewPaper(examRoom->ExamPaper);
+        if(state == SQLERROR)
+            return -4;
+    }
+    else {
+        DBState state = DBManager->UpdatePaperInfo(examRoom->ExamPaper);
+        if(state == SQLERROR)
+            return -4;
+    }
+
     return 0;
 }
 
@@ -138,20 +147,24 @@ int  ExamRoomModelView::SavePaperToLib()
  * @param question
  * @return
  */
-int ExamRoomModelView::SaveQuestionToLib(ExamChoiceQusetion *question)
+int ExamRoomModelView::SaveQuestionToLib(ExamChoiceQusetion *question, int type)
 {
-    //判断是否存在此ID的题目
-    for(auto i:examRoom->QuestionLib->getExamList())
+    //判断是否存在此ID的题目,如果保存现有的则判断是否现有，否则存为新的
+    if(type == 0)
     {
-        if(i->getNumber() == question->getNumber())
+        for(auto i:examRoom->QuestionLib->getExamList())
         {
-            //执行修改
-            DBState state = DBManager->UpdataQuestion(question);
-            if(state == SQLERROR)
-                return -4;
-            return 0;
+            if(i->getNumber() == question->getNumber())
+            {
+                //执行修改
+                DBState state = DBManager->UpdataQuestion(question);
+                if(state == SQLERROR)
+                    return -4;
+                return 0;
+            }
         }
     }
+    question->setNumber(examRoom->QuestionLib->ExamNumber++);
     //执行新增
     DBState state = DBManager->InsertNewQuestion(question);
     if(state == SQLERROR)

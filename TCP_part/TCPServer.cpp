@@ -104,13 +104,13 @@ void TCPServer::ReadData()
             // 如果是请求登陆的消息
             if(i == "LoginRequest")
             {
-                emit LoginRequest(buffer);
+                emit LoginRequest(Ip, Port, buffer);
                 return;
             }
             // 如果时请求注册的消息
             if(i == "RegistRequset")
             {
-                emit RegistRequset(buffer);
+                emit RegistRequset(Ip, Port, buffer);
                 return;
             }
             //如果是交卷的消息
@@ -135,12 +135,12 @@ void TCPServer::ReadData()
 
 void TCPServer::on_btnConnect_clicked()
 {
-    if(ui->btnConnect->text()=="建立考场")
+    if(ui->btnConnect->text()=="考场已关闭，点击建立考场")
     {
         bool ok = tcpServer->listen(QHostAddress::Any, ui->edtPort->text().toInt());
         if(ok)
         {
-            ui->btnConnect->setText("关闭考场");
+            ui->btnConnect->setText("考场开启中，点击关闭考场");
             //ui->btnSend_2->setEnabled(true);
         }
     }
@@ -158,7 +158,7 @@ void TCPServer::on_btnConnect_clicked()
 //            tcpClient.removeAt(i);  //从保存的客户端列表中取去除
         }
         tcpServer->close();     //不再监听端口
-        ui->btnConnect->setText("建立考场");
+        ui->btnConnect->setText("考场已关闭，点击建立考场");
         //ui->btnSend_2->setEnabled(false);
     }
 }
@@ -171,13 +171,15 @@ void TCPServer::on_btnClear_clicked()
 
 void TCPServer::on_ServerSendInfo_clicked()
 {
-    QString data = ui->edtSend_2->toPlainText();
+    QString data = "Infomation%%";
+    data += ui->edtSend_2->toPlainText();
     if(data == "")  return;    // 文本输入框为空时
     //全部连接
+
     if(ui->cbxConnection->currentIndex() == 0)
     {
         for(int i=0; i<tcpClient.length(); i++)
-            tcpClient[i]->write(data.toLatin1()); //qt5除去了.toAscii()
+            tcpClient[i]->write(data.toLocal8Bit()); //qt5除去了.toAscii()
     }
     //指定连接
     else

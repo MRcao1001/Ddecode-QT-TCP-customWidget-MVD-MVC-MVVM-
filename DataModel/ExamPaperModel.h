@@ -35,6 +35,7 @@ public:
     /// 考试时间（min）
     QString TotalTestTime;
     QString TotalScore;
+    int ExamNumber = 0;
 private:
     QList<ExamChoiceQusetion* > m_examChoiceQusetionList;
     int indexNumber;

@@ -3,6 +3,7 @@
 
 #include <QFrame>
 #include <QPushButton>
+#include <QDebug>
 #include <DataModeView/ExamRoomModelView.h>
 #include <Public_part/QFlowLayout.h>
 namespace Ui {

@@ -39,9 +39,6 @@ void DecodeBaseWindow::mousePressEvent(QMouseEvent *event)
             dragPosition = event->globalPos() - this->frameGeometry().topLeft();
         }
         break;
-    case Qt::RightButton:
-        this->close();
-        break;
     default:
         break;
         //QDialog::mousePressEvent(event);

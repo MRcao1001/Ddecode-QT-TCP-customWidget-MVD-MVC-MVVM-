@@ -38,8 +38,8 @@ public slots:
     void BroadCast(QString data);
 
 signals:
-    void LoginRequest(QString LoginInfo);
-    void RegistRequset(QString RegistInfo);
+    void LoginRequest(QString IP, int Port,QString LoginInfo);
+    void RegistRequset(QString IP, int Port,QString RegistInfo);
     void HandInPaper(QString Score);
     void GetExamHistoryRequest(QString Requset, int IP, QString port);
 };

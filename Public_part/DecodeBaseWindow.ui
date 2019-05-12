@@ -58,7 +58,7 @@ background-color:rgba(255,255,255);
        <number>0</number>
       </property>
       <property name="bottomMargin">
-       <number>5</number>
+       <number>0</number>
       </property>
       <item>
        <layout class="QHBoxLayout" name="horizontalLayout">
@@ -465,8 +465,11 @@ background-color:rgba(238,0,0,128);
       </item>
       <item>
        <layout class="QVBoxLayout" name="MainArea">
+        <property name="spacing">
+         <number>0</number>
+        </property>
         <property name="bottomMargin">
-         <number>10</number>
+         <number>0</number>
         </property>
        </layout>
       </item>

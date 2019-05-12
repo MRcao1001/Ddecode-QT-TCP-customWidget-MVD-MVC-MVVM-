@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include <QString>
+#include <QTimer>
 #include "TCP_part/TCPClient.h"
 #include <DataModeView/ExamRoomModelView.h>
 #include "ExmaPaperwindow.h"
@@ -44,7 +45,8 @@ private:
     // 消息通知数据源和模型
     QStringList *InfoList;
     QStringListModel *InfoListModel;
-
+    QTimer *ExamRoomStartAndStopTimer;
+    bool Marked = false;
     void InitUI();
     void InitExamRoom();
     void SetConnect();
@@ -64,6 +66,8 @@ public slots:
     void GetExamHistory(QString Historys);
     // 获取/更新消息列表
     void GetInfomation(QString Infomation);
+    // 计时器更新信号
+    void ExamRoomStartAndStop();
 private slots:
     void on_HandInHand_clicked();
     void on_EditInfo_clicked();

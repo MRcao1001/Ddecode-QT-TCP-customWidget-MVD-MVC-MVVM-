@@ -50,14 +50,14 @@ void LoginAndRegWindow::SetToolButtonToDefult()
 
 void LoginAndRegWindow::on_CreateExamRoom_clicked()
 {
-    if(ui->ExamRoomIP->text() == "")
-    {
-        this->ui->ERTip->setIcon(QIcon(":/img/error.png"));
-        return;
-    }
-    else {
-        this->ui->ERTip->setIcon(QIcon(":/img/yes.png"));
-    }
+//    if(ui->ExamRoomIP->text() == "")
+//    {
+//        this->ui->ERTip->setIcon(QIcon(":/img/error.png"));
+//        return;
+//    }
+//    else {
+//        this->ui->ERTip->setIcon(QIcon(":/img/yes.png"));
+//    }
 
     if(ui->Invigilator->text() == "")
     {
@@ -97,6 +97,7 @@ void LoginAndRegWindow::LicenceProofreading(QString Licence)
 
 void LoginAndRegWindow::GetLicenceResult(int Result)
 {
+
     if(Result == 0)
     {
         this->ui->ERLTip->setIcon(QIcon(":/img/yes.png"));
@@ -172,15 +173,6 @@ void LoginAndRegWindow::on_SignIn_clicked()
     LoginInfo = info;
 }
 
-void LoginAndRegWindow::on_SignUp_clicked()
-{
-    m_tcpClient->ConnectToServer(ui->ServerIp->text(),ui->ServerPort->text().toUShort());
-    QString info = "RegistRequest"+ui->ServerIp->text()+":"+ui->ServerPort->text()+"_"+ui->UserName->text()+"_"+ui->UserNumber->text()+"_"+ui->Ticket->text();
-    char*  RegistRequest;
-    QByteArray ba = info.toLatin1();
-    RegistRequest=ba.data();
-    m_tcpClient->SendInfo(RegistRequest);
-}
 
 void LoginAndRegWindow::ToolButtonCliced()
 {
@@ -248,6 +240,11 @@ void LoginAndRegWindow::InitUI()
     connect(this->ui->TAB_SIGNIN, SIGNAL(clicked()), this, SLOT(ToolButtonCliced()));
     connect(this->ui->TAB_UPDATE, SIGNAL(clicked()), this, SLOT(ToolButtonCliced()));
     connect(this->ui->TAB_CREATEER, SIGNAL(clicked()), this, SLOT(ToolButtonCliced()));
+
+    ui->ERTip->hide();
+    ui->ExamRoomIP->hide();
+
+    ui->TICKETChoice->lineEdit()->setPlaceholderText("准考证号");
 }
 
 
@@ -342,4 +339,25 @@ void LoginAndRegWindow::on_TICKETChoice_currentIndexChanged(const QString &arg1)
             ui->UserNumber->setText(Numbers->at(i));
         }
     }
+}
+
+void LoginAndRegWindow::on_Regist_clicked()
+{
+    m_tcpClient->ConnectToServer(ui->ServerIpRegist->text(),ui->ServerPortRegist->text().toUShort());
+    QString info = "RegistRequest"+ui->ServerIpRegist->text()+":"+ui->ServerPortRegist->text()+"_"+ui->UserNameRegist->text()+"_"+ui->UserNumberRegist->text()+"_"+ui->TicketRegist->text();
+    char*  RegistRequest;
+    QByteArray ba = info.toLocal8Bit();
+    RegistRequest=ba.data();
+    m_tcpClient->SendInfo(RegistRequest);
+}
+
+
+void LoginAndRegWindow::on_SignUp_clicked()
+{
+    ui->LoginTabItem->setCurrentIndex(1);
+}
+
+void LoginAndRegWindow::on_SignUp_2_clicked()
+{
+    ui->LoginTabItem->setCurrentIndex(0);
 }

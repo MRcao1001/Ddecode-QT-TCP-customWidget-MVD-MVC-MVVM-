@@ -29,10 +29,13 @@ void AnswerSheet::InitAnswerSheet(ExamRoomModelView *ExamRoom)
 {
     if(PushButtonList->count() >= 1)
     {
-        QList<QPushButton* > *tempvec = new QList<QPushButton* >();
-        PushButtonList->swap(*tempvec);
-        tempvec->clear();
-        delete tempvec;
+        for(auto i : *PushButtonList)
+        {
+            flowLayout->removeWidget(i);
+            delete  i;
+        }
+        PushButtonList->clear();
+        qInfo()<<"AnswerSheetClearFinish";
     }
     //根据试卷内容自动生成对应的按钮
     ExamPaperModel *examPaper = ExamRoom->examRoom->ExamPaper;

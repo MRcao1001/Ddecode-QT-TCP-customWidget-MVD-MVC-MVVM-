@@ -15,6 +15,7 @@ public:
     ExamRoomModelView(DataBaseManager *DBManager);
     ExamRoomModel *examRoom;
     DataBaseManager *DBManager;
+    int TempExamQuestionNum = 0;
     void InitModel();
     int SetPaper(ExamPaperModel *ExamPaper, QStringList ExamQuestionsList, QString PaperName);
     ExamChoiceQusetion *FindQuestionByID(QString ID);
@@ -22,8 +23,8 @@ public:
     void GetPaperLib(QStringList *paperList);
     QStringList GetPaperQuestionList(QString PaperName);
     QStringList GetQuestionIDList(QString PaperName);
-    int SavePaperToLib();
-    int SaveQuestionToLib(ExamChoiceQusetion* question);
+    int SavePaperToLib(int type);
+    int SaveQuestionToLib(ExamChoiceQusetion* question, int type);
     int DeleteQuestion(ExamChoiceQusetion* question,int index);
 
     QString serialization();

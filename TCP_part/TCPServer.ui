@@ -83,7 +83,7 @@
           <item>
            <widget class="QPushButton" name="btnConnect">
             <property name="text">
-             <string>建立考场</string>
+             <string>考场已关闭，点击建立考场</string>
             </property>
            </widget>
           </item>

@@ -188,3 +188,8 @@ void TCPClient::on_pushButton_clicked()
 {
     ui->edtRecv->clear();
 }
+
+void TCPClient::on_btnConnect_2_clicked()
+{
+    DisConnectToServer();
+}

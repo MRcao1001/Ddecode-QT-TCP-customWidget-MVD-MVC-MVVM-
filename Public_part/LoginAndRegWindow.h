@@ -45,6 +45,10 @@ private slots:
     void ReadConfig();
     void WriteConfig();
     void on_TICKETChoice_currentIndexChanged(const QString &arg1);
+    void on_Regist_clicked();
+
+
+    void on_SignUp_2_clicked();
 
 private:
     Ui::LoginAndRegWindow *ui;
