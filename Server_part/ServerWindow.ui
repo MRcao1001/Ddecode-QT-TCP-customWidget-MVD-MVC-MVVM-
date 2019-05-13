@@ -483,7 +483,7 @@ background-color: rgb(236, 239, 241);
 }</string>
         </property>
         <property name="currentIndex">
-         <number>0</number>
+         <number>2</number>
         </property>
         <widget class="QWidget" name="page">
          <layout class="QHBoxLayout" name="horizontalLayout_8" stretch="1,5,0,3,1">
@@ -1093,6 +1093,12 @@ background-color: rgb(236, 239, 241);
               </property>
               <item>
                <widget class="QLabel" name="label_10">
+                <property name="font">
+                 <font>
+                  <family>苹方 常规</family>
+                  <pointsize>11</pointsize>
+                 </font>
+                </property>
                 <property name="text">
                  <string>考生列表</string>
                 </property>
@@ -1100,6 +1106,18 @@ background-color: rgb(236, 239, 241);
               </item>
               <item>
                <widget class="QListView" name="UserListView">
+                <property name="minimumSize">
+                 <size>
+                  <width>400</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>400</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
                 <property name="verticalScrollMode">
                  <enum>QAbstractItemView::ScrollPerPixel</enum>
                 </property>

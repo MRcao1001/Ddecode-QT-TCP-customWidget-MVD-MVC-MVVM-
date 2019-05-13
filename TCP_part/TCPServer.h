@@ -42,6 +42,8 @@ signals:
     void RegistRequset(QString IP, int Port,QString RegistInfo);
     void HandInPaper(QString Score);
     void GetExamHistoryRequest(QString Requset, int IP, QString port);
+    void ShowHelpInfo(QString IP, int Port);
+    void ChangeUserInfo(QString info);
 };
 
 #endif // TCPSERVER_H

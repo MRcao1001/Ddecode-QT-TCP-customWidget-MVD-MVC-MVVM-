@@ -62,10 +62,10 @@ void ExamChoiceQusetionFrame::setSelected(bool selected)
 {
     if(selected)
     {
-        this->setStyleSheet("#ExamChoiceQusetionFrame{border:2px solid red;}");
+        this->setStyleSheet("#ExamChoiceQusetionFrame{border:2px solid #00589a;}");
     }
     else{
-        this->setStyleSheet("#ExamChoiceQusetionFrame{border:none;}");
+        this->setStyleSheet("#ExamChoiceQusetionFrame{border:2px solid #fff;}");
     }
     emit OnSelected();
 }

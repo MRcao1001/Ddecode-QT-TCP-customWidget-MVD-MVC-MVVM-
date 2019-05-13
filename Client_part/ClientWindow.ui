@@ -415,7 +415,7 @@ image:None;
      <item>
       <widget class="QStackedWidget" name="stackedWidget">
        <property name="currentIndex">
-        <number>0</number>
+        <number>1</number>
        </property>
        <widget class="QWidget" name="page_2">
         <layout class="QHBoxLayout" name="horizontalLayout_3">
@@ -997,7 +997,7 @@ image:None;
                  </widget>
                 </item>
                 <item>
-                 <widget class="QLabel" name="label_6">
+                 <widget class="QLabel" name="ExamHistoryNumber">
                   <property name="font">
                    <font>
                     <family>苹方 粗体</family>

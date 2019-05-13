@@ -7,24 +7,30 @@
     <x>0</x>
     <y>0</y>
     <width>400</width>
-    <height>99</height>
+    <height>120</height>
    </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>400</width>
+    <height>0</height>
+   </size>
   </property>
   <property name="windowTitle">
    <string>Frame</string>
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout">
    <property name="leftMargin">
-    <number>0</number>
+    <number>9</number>
    </property>
    <property name="topMargin">
-    <number>0</number>
+    <number>9</number>
    </property>
    <property name="rightMargin">
-    <number>0</number>
+    <number>9</number>
    </property>
    <property name="bottomMargin">
-    <number>0</number>
+    <number>9</number>
    </property>
    <item>
     <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -88,6 +94,12 @@
          <height>0</height>
         </size>
        </property>
+       <property name="font">
+        <font>
+         <family>苹方 常规</family>
+         <pointsize>11</pointsize>
+        </font>
+       </property>
        <property name="text">
         <string>UserName</string>
        </property>
@@ -101,6 +113,12 @@
          <height>0</height>
         </size>
        </property>
+       <property name="font">
+        <font>
+         <family>苹方 常规</family>
+         <pointsize>11</pointsize>
+        </font>
+       </property>
        <property name="text">
         <string>UserName</string>
        </property>
@@ -113,6 +131,12 @@
          <width>200</width>
          <height>0</height>
         </size>
+       </property>
+       <property name="font">
+        <font>
+         <family>苹方 常规</family>
+         <pointsize>11</pointsize>
+        </font>
        </property>
        <property name="text">
         <string>UserName</string>

@@ -36,6 +36,8 @@ private slots:
     void on_pushButton_clicked();
     void on_btnConnect_2_clicked();
 
+    void on_GetHelp_clicked();
+
 signals:
     void LicenceResult(int type);
     void DoLogin(int type);

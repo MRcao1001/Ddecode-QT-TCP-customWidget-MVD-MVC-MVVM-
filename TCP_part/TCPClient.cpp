@@ -193,3 +193,8 @@ void TCPClient::on_btnConnect_2_clicked()
 {
     DisConnectToServer();
 }
+
+void TCPClient::on_GetHelp_clicked()
+{
+    SendInfo("INEEDHELP_0");
+}

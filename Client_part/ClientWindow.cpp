@@ -25,7 +25,7 @@ void ClientWindow::SetClient(TCPClient *tcp)
         connect(m_tcpclient, &TCPClient::DoHandInPaper, this, &ClientWindow::markExamPapers);
         connect(m_tcpclient, SIGNAL(SetExamHistory(QString)), this, SLOT(GetExamHistory(QString)));
         connect(m_tcpclient, SIGNAL(SetInfomation(QString)), this, SLOT(GetInfomation(QString)));
-        m_tcpclient->SendInfo("GetHistory");
+
     }
 }
 
@@ -167,6 +167,7 @@ void ClientWindow::markExamPapers()
     QString info = "HandInPaper_"+QDateTime::currentDateTime().toString("yyyy.MM.dd hh:mm ddd")+"_"+userInfo->getUserID()+"_"+QString::number(score)+"_"+Decision;
     QString temp = QDateTime::currentDateTime().toString("yyyy.MM.dd hh:mm ddd") +" "+ userInfo->getUserID() +" "+QString::number(score)+" "+Decision;
     ExamHiStoryList->insert(0,temp);
+    ui->ExamHistoryNumber->setText(QString::number(ui->ExamHistoryNumber->text().toInt() + 1));
     ExamHistoryModel->setStringList(*ExamHiStoryList);
     m_tcpclient->SendInfo(info.toLocal8Bit());
     QMessageBox msgBox;
@@ -218,6 +219,7 @@ void ClientWindow::GetExamHistory(QString Historys)
                 ExamHiStoryList->insert(0,i);
             }
             ExamHistoryModel->setStringList(*ExamHiStoryList);
+            ui->ExamHistoryNumber->setText(QString::number(ExamHiStoryList->length()));
         }
 
     }
@@ -288,7 +290,23 @@ void ClientWindow::on_HandInHand_clicked()
 
 void ClientWindow::on_EditInfo_clicked()
 {
-
+    if(ui->UserName->isReadOnly())
+    {
+        ui->UserName->setReadOnly(false);
+        ui->IDNumber->setReadOnly(false);
+    }
+    else if(ui->UserName->text()!=""&& ui->IDNumber->text()!=""&&ui->UserName->isReadOnly()==false){
+        ui->UserName->setReadOnly(true);
+        ui->IDNumber->setReadOnly(true);
+        // 保存到数据库
+        QString info = "ChangeUserInfo_"+ui->Ticket->text()+"_"+ui->UserName->text()+"_"+ui->IDNumber->text();
+        m_tcpclient->SendInfo(info.toLocal8Bit());
+    }
+    else {
+        QMessageBox msgBox;
+        msgBox.setText("修改过的信息不允许未空");
+        msgBox.exec();
+    }
 }
 
 

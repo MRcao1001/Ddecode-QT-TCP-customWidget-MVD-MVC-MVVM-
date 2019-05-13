@@ -131,6 +131,23 @@ DBState DataBaseManager::searchUserData( UserInfo *userinfo)
     }
 
 }
+
+DBState DataBaseManager::UpdateUserData(UserInfo *userInfo)
+{
+    sql_query = new QSqlQuery();
+    sql_query->prepare("UPDATE ExamineeInfo SET Name = :NAME, Number = :NUMBER WHERE Ticket = :TICKET");
+    sql_query->bindValue(":NAME", userInfo->getUserName());
+    sql_query->bindValue(":NUMBER",userInfo->getUserID());
+    sql_query->bindValue(":TICKET", userInfo->getUserTicket());
+    if(!sql_query->exec())
+    {
+        qWarning()<<sql_query->lastError();
+        delete sql_query;
+        return SQLERROR;
+    }
+    delete sql_query;
+    return NOERROR;
+}
 /**
  * @brief DataBaseManager::searchExamQuestionLib
  * @param examPaper

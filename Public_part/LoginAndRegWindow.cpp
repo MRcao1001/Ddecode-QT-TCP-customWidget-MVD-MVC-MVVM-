@@ -137,6 +137,8 @@ void LoginAndRegWindow::GetLoginResult(int Result)
         message.setIconPixmap(QPixmap(":/img/Tip.png"));
         message.exec();
         emit LoginSuccessfuly(LoginInfo);
+        QString GetHistoryInfo = "GetHistory_"+ui->UserNumber->text();
+        this->m_tcpClient->SendInfo(GetHistoryInfo.toLocal8Bit());
     }
     else {
         //登录失败
@@ -158,6 +160,10 @@ void LoginAndRegWindow::GetRegistResult(int Result)
         emit RegistSuccessfuly();
     }
     else {
+        // 注册成功
+        QMessageBox message(QMessageBox::NoIcon, "提示", "注册失败，用户信息已经存在");
+        message.setIconPixmap(QPixmap(":/img/Tip.png"));
+        message.exec();
         // 注册失败
     }
 }

@@ -39,6 +39,7 @@ private:
     ExamRoomModelView *ExamRoom;
     ExamChoiceQusetion *TempQuestion;
     bool ExamStarting = false;
+    int UNReadInfo = 0;
     QTimer *ExamRoomStartAndStopTimer;
     void SetupINFOtoUI(ExamChoiceQusetion* exq);
     ExamChoiceQusetion* GetINFOfromUI(int type);
@@ -49,6 +50,8 @@ public slots:
     void ExamRoomStartAndStop();
     void WriteToDB(QString buffer);
     void SendExamHistory(QString buffer, int Port, QString Ip);
+    void ShowHelpInfo(QString IP, int Port);
+    void ChangeUserInfo(QString info);
 private slots:
     void on_ExamPaperListView_clicked(const QModelIndex &index);
     void on_AllExamPapersListView_clicked(const QModelIndex &index);
@@ -65,6 +68,7 @@ private slots:
     void on_ExamStart_clicked();
     void on_SetPaper_clicked();
     void on_AllExamPapersListView2_clicked(const QModelIndex &index);
+
 };
 
 #endif // SERVERWINDOW_H

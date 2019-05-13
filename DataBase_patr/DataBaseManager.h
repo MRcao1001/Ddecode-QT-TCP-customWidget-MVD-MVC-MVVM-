@@ -54,6 +54,12 @@ public:
      */
     DBState searchUserData(UserInfo *userinfo = nullptr);
     /**
+     * @brief UpdateUserData 修改用户信息
+     * @param infoList
+     * @return
+     */
+    DBState UpdateUserData(UserInfo *userInfo);
+    /**
      * @brief searchExamQuestionLib 查找题库内所有的试题
      * @param examPaper
      * @return

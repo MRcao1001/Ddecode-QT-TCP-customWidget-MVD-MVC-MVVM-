@@ -93,18 +93,32 @@ void TCPServer::ReadData()
         int Port = tcpClient[i]->peerPort();
         IP_Port = tr("[%1:%2]:").arg(tcpClient[i]->peerAddress().toString().split("::ffff:")[1]).arg(tcpClient[i]->peerPort());
         // 如果是请求获取历史记录
-        if(buffer == "GetHistory")
-        {
-            emit GetExamHistoryRequest(buffer, Port ,Ip);
-            return;
-        }
+
         if(buffer.split('_').count() > 0)
         {
             QString i = buffer.split('_')[0];
+            //如果是请求修改信息的消息
+            if(i == "ChangeUserInfo")
+            {
+                emit ChangeUserInfo(buffer);
+                return;
+            }
+            //如果是请求帮助的消息
+            if(i == "INEEDHELP")
+            {
+                emit ShowHelpInfo(Ip, Port);
+                buffer = Ip+":"+QString::number(Port)+" 遇到问题，请求协助";
+            }
             // 如果是请求登陆的消息
             if(i == "LoginRequest")
             {
                 emit LoginRequest(Ip, Port, buffer);
+                return;
+            }
+            // 如果是获取历史信息
+            if(i == "GetHistory")
+            {
+                emit GetExamHistoryRequest(buffer, Port ,Ip);
                 return;
             }
             // 如果时请求注册的消息

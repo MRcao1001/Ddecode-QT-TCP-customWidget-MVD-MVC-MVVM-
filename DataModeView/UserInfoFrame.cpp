@@ -33,10 +33,10 @@ void UserInfoFrame::setSelected(bool selected)
 {
     if(selected)
     {
-        this->setStyleSheet("#UserInfoFrame{border:2px solid red;}");
+        this->setStyleSheet("#UserInfoFrame{border:2px solid #00589a;}");
     }
     else{
-        this->setStyleSheet("#UserInfoFrame{border:none;}");
+        this->setStyleSheet("#UserInfoFrame{border:2px solid #fff;}");
     }
 }
 

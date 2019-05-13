@@ -189,6 +189,8 @@ void ServerWindow::SetTcpServer(TCPServer *tcp)
         connect(m_tcpServer, SIGNAL(RegistRequset(QString, int, QString)), this, SLOT(GetRegistRequest(QString, int, QString)));
         connect(m_tcpServer, SIGNAL(HandInPaper(QString)), this, SLOT(WriteToDB(QString)));
         connect(m_tcpServer, SIGNAL(GetExamHistoryRequest(QString, int, QString)), this, SLOT(SendExamHistory(QString, int, QString)));
+        connect(m_tcpServer, SIGNAL(ShowHelpInfo(QString, int)), this, SLOT(ShowHelpInfo(QString, int)));
+        connect(m_tcpServer, SIGNAL(ChangeUserInfo(QString)),this, SLOT(ChangeUserInfo(QString)));
     }
 }
 
@@ -211,6 +213,8 @@ void ServerWindow::ToolButtonCliced()
 
     if(ui->TAB_Students == &btn)
     {
+        ui->TAB_Students->setText("考生管理");
+        UNReadInfo = 0;
         this->ui->stackedWidget->setCurrentIndex(2);
     }
 
@@ -272,7 +276,27 @@ void ServerWindow::SendExamHistory(QString buffer,int Port, QString Ip)
         ExamHistory.append("%%");
         ExamHistory.append(i);
     }
-    m_tcpServer->SendInfoToClient(Ip, Port, ExamHistory);
+    m_tcpServer->SendInfoToClient(Ip, Port, ExamHistory.toLocal8Bit());
+}
+
+void ServerWindow::ShowHelpInfo(QString IP, int Port)
+{
+    UNReadInfo ++;
+    QString ButtonName = "考生管理 ";
+    ButtonName += "(未处理: ";
+    ButtonName += QString::number(UNReadInfo)+")";
+    ui->TAB_Students->setText(ButtonName);
+}
+
+void ServerWindow::ChangeUserInfo(QString info)
+{
+    QStringList strList = info.split("_");
+    UserInfo* tempInfo = new UserInfo();
+    tempInfo->setUserTicket(strList.at(1));
+    tempInfo->setUserName(strList.at(2));
+    tempInfo->setUserID(strList.at(3));
+    DBManager->UpdateUserData(tempInfo);
+    delete tempInfo;
 }
 
 
