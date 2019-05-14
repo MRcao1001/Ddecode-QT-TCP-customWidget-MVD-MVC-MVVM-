@@ -575,14 +575,52 @@ void ServerWindow::on_SetPaper_clicked()
             on_SaveQuestion_clicked();
         }
     }
+
     QMap<int , QVariant> currentItem = ExamRoom->examRoom->AllPaperListModel->itemData(ui->AllExamPapersListView->currentIndex());
     QString data = currentItem.last().toString();
     QString PaperName = currentItem.last().toString().split(',').at(0);
     ///为试卷列表绑定的model赋值
     ExamRoom->SetPaper(ExamRoom->examRoom->ExamPaper,ExamRoom->GetPaperQuestionList(PaperName),data);
+    ui->NowPaper->setText(PaperName);
 }
 
 void ServerWindow::on_AllExamPapersListView2_clicked(const QModelIndex &index)
 {
 
+}
+
+
+void ServerWindow::on_DeletePaper_clicked()
+{
+    if(ui->NowPaper->text() == "未选择试卷")
+    {
+        messageWindow->ShowMessage(m_parent,"请先将选中试卷设为当前试卷，才能对其执行操作");
+        return;
+    }
+    int ret = ExamRoom->DeletePaperInfo(ui->NowPaper->text());
+    if(ret == 0)
+        messageWindow->ShowMessage(m_parent,"删除成功");
+    else {
+        messageWindow->ShowMessage(m_parent,"删除时出现错误，错误代码:"+ QString::number(ret));
+    }
+}
+
+void ServerWindow::on_attach_Update_clicked()
+{
+     this->ui->stackedWidget->setCurrentIndex(0);
+}
+
+void ServerWindow::on_attach_Create_clicked()
+{
+    this->ui->stackedWidget->setCurrentIndex(0);
+}
+
+void ServerWindow::on_attach_Edit_clicked()
+{
+    this->ui->stackedWidget->setCurrentIndex(0);
+}
+
+void ServerWindow::on_attach_Delete_clicked()
+{
+    this->ui->stackedWidget->setCurrentIndex(1);
 }

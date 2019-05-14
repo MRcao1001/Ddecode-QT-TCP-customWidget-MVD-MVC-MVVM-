@@ -142,6 +142,9 @@ void LoginAndRegWindow::GetLoginResult(int Result)
     }
     else {
         //登录失败
+        QMessageBox message(QMessageBox::NoIcon, "提示", "登录失败，登陆信息不正确！");
+        message.setIconPixmap(QPixmap(":/img/Tip.png"));
+        message.exec();
     }
 }
 
@@ -278,7 +281,7 @@ void LoginAndRegWindow::ReadConfig()
         QByteArray t ;
         while(!file.atEnd())
         {
-            t += file.readLine();
+            t = file.readLine();
             QList<QByteArray> strlist = t.split(',');
             if(strlist.at(0) == "ClientConfig" && strlist.count() == 7)
             {
@@ -292,6 +295,7 @@ void LoginAndRegWindow::ReadConfig()
             {
                 Licences->append(strlist.at(1));
             }
+
         }
         file.close();
     }

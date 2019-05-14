@@ -28,7 +28,7 @@ private:
     Ui::ExmaPaperwindow *ui;
     ExamRoomModelView *m_ExamRoom;
     QButtonGroup *btnGroup;
-    ExamChoiceQusetion *CheckedQuestion ;
+    ExamChoiceQusetion *CheckedQuestion = nullptr ;
 private slots:
     void on_Questions_clicked(const QModelIndex &index);
     void on_checkedA_toggled(bool checked);

@@ -364,6 +364,21 @@ DBState DataBaseManager::DeleteQuestion(ExamChoiceQusetion *examChoiceQuestion)
     return NOERROR;
 }
 
+DBState DataBaseManager::DeletePaperInfo(QString PaperName)
+{
+    sql_query = new QSqlQuery();
+    sql_query->prepare("DELETE FROM AllPaper WHERE NAME = :NAME");
+    sql_query->bindValue(":NAME", PaperName);
+    if(!sql_query->exec())
+    {
+        qWarning()<<sql_query->lastError();
+        delete sql_query;
+        return SQLERROR;
+    }
+    delete sql_query;
+    return NOERROR;
+}
+
 DBState DataBaseManager::InsertNewExamHistory(QString Time, QString UserNumber, QString Score, QString Decision)
 {
     sql_query = new QSqlQuery();

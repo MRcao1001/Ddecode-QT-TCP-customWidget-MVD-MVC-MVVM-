@@ -68,7 +68,11 @@ private slots:
     void on_ExamStart_clicked();
     void on_SetPaper_clicked();
     void on_AllExamPapersListView2_clicked(const QModelIndex &index);
-
+    void on_DeletePaper_clicked();
+    void on_attach_Update_clicked();
+    void on_attach_Create_clicked();
+    void on_attach_Edit_clicked();
+    void on_attach_Delete_clicked();
 };
 
 #endif // SERVERWINDOW_H

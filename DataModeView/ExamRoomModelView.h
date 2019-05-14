@@ -16,6 +16,7 @@ public:
     ExamRoomModel *examRoom;
     DataBaseManager *DBManager;
     int TempExamQuestionNum = 0;
+public:
     void InitModel();
     int SetPaper(ExamPaperModel *ExamPaper, QStringList ExamQuestionsList, QString PaperName);
     ExamChoiceQusetion *FindQuestionByID(QString ID);
@@ -26,7 +27,7 @@ public:
     int SavePaperToLib(int type);
     int SaveQuestionToLib(ExamChoiceQusetion* question, int type);
     int DeleteQuestion(ExamChoiceQusetion* question,int index);
-
+    int DeletePaperInfo(QString PaperName);
     QString serialization();
     int re_serialization(QString InfoList);
     // 该考场的试卷总分

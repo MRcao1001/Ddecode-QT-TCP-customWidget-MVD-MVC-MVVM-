@@ -12,12 +12,12 @@ void ExamRoomModelView::InitModel()
     examRoom = new ExamRoomModel();
 
     examRoom->UserList = new UserInfoModel();
-    examRoom->UserList->add("123","12345","1234","name","123243251");
+    //examRoom->UserList->add("123","12345","1234","name","123243251");
     // 用户登陆时将生成的用户数据对象添加到用户数据视图模型中
     examRoom->UserListView = new UserInfoDelegate(examRoom->UserList );
 
     examRoom->ExamPaper = new ExamPaperModel();
-    examRoom->ExamPaper->add(true,true,"sadsafdsfq","12","A","123","234","3524","4532");
+    //examRoom->ExamPaper->add(true,true,"sadsafdsfq","12","A","123","234","3524","4532");
     // 该数据模型在选择列表中的试卷时自动生成，也可新建试卷手动添加
     examRoom->ExamPaperView = new ExamPaperDelegate(examRoom->ExamPaper);
 
@@ -180,6 +180,22 @@ int ExamRoomModelView::DeleteQuestion(ExamChoiceQusetion *question, int index)
     if(state == SQLERROR)
         return -4;
     return 0;
+}
+
+int ExamRoomModelView::DeletePaperInfo(QString PaperName)
+{
+    DBState state = DBManager->DeletePaperInfo(PaperName);
+    if(state == SQLERROR)
+        return -4;
+    for(int i = 0; i< examRoom->AllPaperList->size();++i)
+    {
+        if(examRoom->AllPaperList->at(i).split(',').at(0) == examRoom->ExamPaper->PaperName)
+        {
+            examRoom->AllPaperList->removeAt(i);
+            examRoom->AllPaperListModel->setStringList(*examRoom->AllPaperList);
+            return 0;
+        }
+    }
 }
 
 

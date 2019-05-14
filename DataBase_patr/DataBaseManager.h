@@ -106,6 +106,12 @@ public:
      */
     DBState DeleteQuestion(ExamChoiceQusetion *examChoiceQuestion);
     /**
+     * @brief DeletePaperInfo 删除试卷信息
+     * @param PaperName
+     * @return
+     */
+    DBState DeletePaperInfo(QString PaperName);
+    /**
      * @brief InsertNewExamHistory 添加一条考试记录
      * @param Time
      * @param Name
