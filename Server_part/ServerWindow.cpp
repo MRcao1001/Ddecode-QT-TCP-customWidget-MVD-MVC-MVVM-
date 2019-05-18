@@ -76,7 +76,7 @@ void ServerWindow::InitUI()
 void ServerWindow::InitDataBase()
 {
     //创建考生表如果不存在的话
-    QString tableColums = "IP varchar(255) not NULL, PORT varchar(255) not NULL,Name varchar(255) not NULL,Number varchar(255) primary key not NULL,Ticket varchar(255) not NULL";
+    QString tableColums = "IP varchar(255) not NULL, PORT varchar(255) not NULL,Name varchar(255) not NULL UNIQUE,Number varchar(255) primary key not NULL UNIQUE,Ticket varchar(255) not NULL UNIQUE";
     DBManager->createDataTable("ExamineeInfo",tableColums);
     //创建考试记录表如果不存在的话
     tableColums = "NUMBER integer PRIMARY KEY autoincrement,TIME varchar(12)not null,USERNUMBER varchar(50) not null,SCORE varchar(20)not null ,DECISION varchar(12) not null";
@@ -85,7 +85,7 @@ void ServerWindow::InitDataBase()
     tableColums = "ID varchar(255)  primary key not NULL, SCORE varchar(255) not NULL,RESULT varchar(255) not NULL,TEXT varchar(255) not NULL";
     DBManager->createDataTable("ExamQuestionLib",tableColums);
     //创建试卷库表如果不存在的话
-    tableColums = "ID  varchar(255) primary key not NULL, NAME varchar(255) not NULL, QUESTIONS varchar(255) not NULL,TIME varchar(255) not NULL";
+    tableColums = "ID  varchar(255) primary key not NULL, NAME varchar(255) not NULL, QUESTIONS varchar(255),TIME varchar(255) not NULL";
     DBManager->createDataTable("AllPaper",tableColums);
 }
 
@@ -486,6 +486,8 @@ void ServerWindow::on_QsestionListView_clicked(const QModelIndex &index)
 {
     ui->EditQuestion->setEnabled(true);
     ui->DeleteQuestion->setEnabled(true);
+    ExamChoiceQusetion *tempQuestion = ExamRoom->examRoom->QuestionLib->at(index.row());
+    ExamRoom->examRoom->ExamPaper->ExamNumber = tempQuestion->getNumber();
 }
 
 void ServerWindow::on_DeleteQuestion_clicked()

@@ -247,7 +247,7 @@ DBState DataBaseManager::InsertNewPaper(ExamPaperModel *newPaperModel)
         QUESTIONS += ",";
     }
     QUESTIONS = QUESTIONS.left(QUESTIONS.length()-1);
-    if(newPaperModel->PaperName == "" || QUESTIONS == "" || newPaperModel->TotalTestTime=="")
+    if(newPaperModel->PaperName == "" || newPaperModel->TotalTestTime=="")
     {
         delete  sql_query;
         return INFONOTTRUE;

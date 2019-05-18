@@ -121,8 +121,8 @@ void TCPServer::ReadData()
                 emit GetExamHistoryRequest(buffer, Port ,Ip);
                 return;
             }
-            // 如果时请求注册的消息
-            if(i == "RegistRequset")
+            // 如果时请求注册的消息RegistRequest
+            if(i == "RegistRequest")
             {
                 emit RegistRequset(Ip, Port, buffer);
                 return;

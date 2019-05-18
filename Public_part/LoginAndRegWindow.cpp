@@ -354,7 +354,7 @@ void LoginAndRegWindow::on_TICKETChoice_currentIndexChanged(const QString &arg1)
 void LoginAndRegWindow::on_Regist_clicked()
 {
     m_tcpClient->ConnectToServer(ui->ServerIpRegist->text(),ui->ServerPortRegist->text().toUShort());
-    QString info = "RegistRequest"+ui->ServerIpRegist->text()+":"+ui->ServerPortRegist->text()+"_"+ui->UserNameRegist->text()+"_"+ui->UserNumberRegist->text()+"_"+ui->TicketRegist->text();
+    QString info = "RegistRequest_"+ui->ServerIpRegist->text()+":"+ui->ServerPortRegist->text()+"_"+ui->UserNameRegist->text()+"_"+ui->UserNumberRegist->text()+"_"+ui->TicketRegist->text();
     char*  RegistRequest;
     QByteArray ba = info.toLocal8Bit();
     RegistRequest=ba.data();
